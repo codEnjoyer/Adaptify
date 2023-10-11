@@ -8,13 +8,14 @@ jobs:
         node-version: [ 18.x ]
     steps:
       - uses: actions/checkout@v3
-      - name: Project works on ${{ matrix.node-version }}
+      - name: Проект работает на Ноде версии ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install modules
+      - run: cd frontend
+      - name: Установка модулей
         run: npm install
-      - name: Build project
+      - name: Сборка проекта
         run: npm run build
-      - name: Run dev mode
+      - name: Запуск веб-приложения
         run: npm run dev
