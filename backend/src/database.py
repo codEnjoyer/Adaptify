@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from settings import Settings
 
 metadata = MetaData()
-Base = declarative_base(metadata=metadata)
+BaseModel = declarative_base(metadata=metadata)
 
 engine = create_async_engine(Settings.pg_url)
 async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
@@ -21,8 +21,8 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 async def init_models():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+        await conn.run_sync(BaseModel.metadata.drop_all)
+        await conn.run_sync(BaseModel.metadata.create_all)
 
 
 if __name__ == "__main__":
