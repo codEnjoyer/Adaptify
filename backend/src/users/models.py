@@ -7,4 +7,6 @@ from roles import UserRoles
 
 
 class User(SQLAlchemyBaseUserTableUUID, BaseModel):
+    __tablename__ = "users"
+
     role: Mapped[UserRoles] = mapped_column(Enum, nullable=False, default=UserRoles.Employee)
