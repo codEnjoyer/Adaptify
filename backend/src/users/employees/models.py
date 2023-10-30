@@ -18,4 +18,4 @@ class Employee(BaseModel):
     email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
     hired_at: Mapped[date] = mapped_column(Date, server_default=func.current_date())
 
-    tutor: Mapped[Tutor] = relationship(back_populates='tutor')
+    tutor: Mapped[Tutor] = relationship(back_populates='employee')
