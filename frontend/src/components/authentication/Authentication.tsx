@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import './../../styles/authentication.scss'
+import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 
 const Authentication: React.FC = () => {
     const navigateTo = useNavigate()
@@ -16,9 +17,9 @@ const Authentication: React.FC = () => {
                         <input type="password" className="password__input" placeholder="Пароль"/>
                     </div>
                 </div>
-                <button className="auth__btn">ВОЙТИ</button>
+                <CustomButton additionalClassName="auth__btn" text="ВОЙТИ" handleOnClick={() => null}/>
             </form>
-            <button onClick={() => navigateTo("/")}>Вернуться обратно</button>
+            <CustomButton text="Вернуться обратно" handleOnClick={() => navigateTo('/')}></CustomButton>
         </div>
     );
 };
