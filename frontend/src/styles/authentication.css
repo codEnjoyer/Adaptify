@@ -1,11 +1,26 @@
+.auth_page {
+  position: relative;
+  top: 30%;
+}
+
 .auth__form {
-  width: 700px;
-  height: 500px;
   margin: auto;
   text-align: center;
   border: #2B2A29 2px solid;
   background: #E8E8E8;
   border-radius: 70px;
+}
+@media screen and (min-width: 200px) and (min-height: 500px) and (orientation: portrait) {
+  .auth__form {
+    width: 400px;
+    height: 500px;
+  }
+}
+@media screen and (orientation: landscape) {
+  .auth__form {
+    width: 700px;
+    height: 500px;
+  }
 }
 
 .auth_form_title {
@@ -17,7 +32,7 @@
 .auth_fields {
   margin: auto;
   height: 170px;
-  width: 400px;
+  width: 58%;
 }
 
 .auth_data__field {
