@@ -1,3 +1,4 @@
+import typing
 import uuid
 
 from pydantic import EmailStr
@@ -5,7 +6,9 @@ from sqlalchemy import UUID, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
-from users.employees.models import Employee
+
+if typing.TYPE_CHECKING:
+    from users.employees.models import Employee
 
 
 class Tutor(BaseModel):
@@ -16,4 +19,4 @@ class Tutor(BaseModel):
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
 
-    employees: Mapped[list[Employee]] = relationship(back_populates='tutor')
+    employees: Mapped[list["Employee"]] = relationship(back_populates='tutor')

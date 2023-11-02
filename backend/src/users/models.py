@@ -3,10 +3,10 @@ from sqlalchemy import Enum
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database import BaseModel
-from roles import UserRoles
+from users.roles import UserRoles
 
 
 class User(SQLAlchemyBaseUserTableUUID, BaseModel):
     __tablename__ = "users"
 
-    role: Mapped[UserRoles] = mapped_column(Enum, nullable=False, default=UserRoles.Employee)
+    role: Mapped[UserRoles] = mapped_column(Enum(name='user_roles'), nullable=False, default=UserRoles.Employee)

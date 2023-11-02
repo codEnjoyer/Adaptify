@@ -1,12 +1,15 @@
+import typing
 import uuid
-from datetime import date
+import datetime
 
 from pydantic import EmailStr
 from sqlalchemy import UUID, String, Date, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
-from users.tutors.models import Tutor
+
+if typing.TYPE_CHECKING:
+    from users.tutors.models import Tutor
 
 
 class Employee(BaseModel):
@@ -16,6 +19,6 @@ class Employee(BaseModel):
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
-    hired_at: Mapped[date] = mapped_column(Date, server_default=func.current_date())
+    hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date())
 
-    tutor: Mapped[Tutor] = relationship(back_populates='employee')
+    tutor: Mapped["Tutor"] = relationship(back_populates='employee')

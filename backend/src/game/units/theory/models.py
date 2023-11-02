@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import UUID, Boolean, Integer, Text, String, URL
+from sqlalchemy import UUID, Text, String, URL
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import URLType
 
@@ -23,4 +23,4 @@ class TheoryVideo(BaseModel):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     url: Mapped[URL] = mapped_column(URLType, nullable=False)
 
-    theory: Mapped[Theory] = relationship(back_populates="theory_video")
+    theory: Mapped["Theory"] = relationship(back_populates="theory_video")
