@@ -3,7 +3,7 @@ import uuid
 import datetime
 
 from pydantic import EmailStr
-from sqlalchemy import UUID, String, Date, func
+from sqlalchemy import UUID, String, Date, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
@@ -16,6 +16,7 @@ class Employee(BaseModel):
     __tablename__ = "employees"
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+    tutor_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tutors.id'), nullable=False)
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)

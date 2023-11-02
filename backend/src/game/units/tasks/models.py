@@ -11,6 +11,7 @@ class Task(BaseModel):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     is_accomplished: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    # TODO: Задание не может быть выполнено глобально, нужна таблица для выполненных заданий пользователями
     # requires_review: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     score_reward: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     content: Mapped[str] = mapped_column(Text, nullable=False, default="Текст задания")
