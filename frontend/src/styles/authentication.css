@@ -62,4 +62,11 @@
   margin-top: 60px;
 }
 
+.is-remember-password__checkbox {
+  left: 22%;
+  position: absolute;
+  color: #2B2A29;
+  font-size: 24px;
+}
+
 /*# sourceMappingURL=authentication.css.map */

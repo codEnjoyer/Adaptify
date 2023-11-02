@@ -8,8 +8,8 @@ const WelcomePage: React.FC = () => {
 
     return (
         <div className="welcome-page">
-            <h1>Adaptify</h1>
-            <h2>Welcome page</h2>
+            <h1>ADAPTIFY</h1>
+            <h2>WELCOME PAGE</h2>
             <CustomButton
                 additionalClassName="navigate_to_auth__btn"
                 handleOnClick={() => navigateTo("/authentication")}
