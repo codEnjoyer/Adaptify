@@ -3,9 +3,19 @@
   height: 48px;
   color: #F9F9F9;
   font-size: 16px;
-  background-color: #787878;
+  background-color: #00D29D;
   border: none;
   border-radius: 20px;
+  transition: linear 0.1s;
+}
+.custom__btn:hover {
+  background-color: #D3A6DF;
+}
+.custom__btn:active {
+  background-color: #763186;
+}
+.custom__btn:disabled {
+  background-color: #763186;
 }
 
 /*# sourceMappingURL=customButton.module.css.map */

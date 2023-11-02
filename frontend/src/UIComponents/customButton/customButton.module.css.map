@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["customButton.module.scss"],"names":[],"mappings":"AAAA;EACE;EACA;EAEA;EACA;EAEA;EACA;EACA","file":"customButton.module.css"}
+{"version":3,"sourceRoot":"","sources":["customButton.module.scss","../UIVariablesStyle.scss"],"names":[],"mappings":"AAEA;EACE;EACA;EAEA;EACA;EAEA,kBCTQ;EDUR;EACA;EACA;;AAEA;EACE,kBCda;;ADiBf;EACE,kBCjBY;;ADoBd;EACE,kBCpBc","file":"customButton.module.css"}
