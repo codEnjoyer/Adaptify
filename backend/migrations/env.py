@@ -29,8 +29,21 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
+from game.map.models import Map
+from game.modules.models import Module
+from game.levels.models import Level
+from game.units.tasks.models import Task
+from game.units.theory.models import Theory, TheoryVideo
+
+from users.models import User
+from users.tutors.models import Tutor
+from users.employees.models import Employee
+
+from database import BaseModel
+
+
 # TODO: Добавить metadata из моделей
-target_metadata = None
+target_metadata = BaseModel.metadata
 
 
 # other values from the config, defined by the needs of env.py,
