@@ -6,3 +6,4 @@ pydantic==2.4.2
 pydantic-settings==2.0.3
 python-dotenv==1.0.0
 sqlalchemy==2.0.22
+sqlalchemy-utils==0.41.1
