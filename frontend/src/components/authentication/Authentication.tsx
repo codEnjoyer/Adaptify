@@ -4,8 +4,9 @@ import './../../styles/authentication.scss'
 import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
 import authStore from "../../store/authStore.ts";
+import {observer} from "mobx-react-lite";
 
-const Authentication: React.FC = () => {
+const Authentication: React.FC = observer(() => {
     const navigateTo = useNavigate()
 
     const [isPasswordShows, setIsPasswordShow] = useState(false)
@@ -24,7 +25,10 @@ const Authentication: React.FC = () => {
                 <h2 className="auth-form-title">АВТОРИЗАЦИЯ</h2>
                 <fieldset className="auth-fields">
                     <div className="auth-data__field">
-                        <input type="email" className="login__input" placeholder="Логин"/>
+                        <input type="email" className="login__input"
+                               placeholder="Логин"
+                               value={authStore.userLogin}
+                               onChange={(e) => authStore.changeUserLogin(e.target.value)}/>
                     </div>
                     <div className="auth-data__field">
                         {isPasswordShows
@@ -41,6 +45,6 @@ const Authentication: React.FC = () => {
             <CustomButton text="Вернуться обратно" handleOnClick={() => navigateTo('/')}></CustomButton>
         </div>
     );
-};
+});
 
 export default Authentication;
