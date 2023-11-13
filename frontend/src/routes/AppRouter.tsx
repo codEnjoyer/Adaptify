@@ -5,8 +5,9 @@ import WelcomePage from "../components/welcomePage/WelcomePage.tsx";
 import Authentication from "../components/authentication/Authentication.tsx";
 import MapMenu from "../components/mapMenu/MapMenu.tsx";
 import authStore from "../store/authStore.ts";
+import {observer} from "mobx-react-lite";
 
-const AppRouter: React.FC = () => {
+const AppRouter: React.FC = observer(() => {
     const publicRoutes: RouteType[] = [
         {
             id: 1,
@@ -61,7 +62,7 @@ const AppRouter: React.FC = () => {
                     <Navigate to="/login"/>
             )
     );
-}
+})
 
 
 export default AppRouter;

@@ -19,6 +19,10 @@ const Authentication: React.FC = observer(() => {
         navigateTo('/map')
     }
 
+    const onHandleChangePassword = (target: string) => {
+        authStore.changeUserPassword(target)
+    }
+
     return (
         <div className="auth-page">
             <form className="auth__form">
@@ -32,8 +36,12 @@ const Authentication: React.FC = observer(() => {
                     </div>
                     <div className="auth-data__field">
                         {isPasswordShows
-                            ? <input type="text" className="password__input" placeholder="Пароль"/>
-                            : <input type="password" className="password__input" placeholder="Пароль"/>}
+                            ? <input type="text" className="password__input" value={authStore.userPassword}
+                                     onChange={(e) => onHandleChangePassword(e.target.value)}
+                                     placeholder="Пароль"/>
+                            : <input type="password" className="password__input" value={authStore.userPassword}
+                                     onChange={(e) => onHandleChangePassword(e.target.value)}
+                                     placeholder="Пароль"/>}
 
                     </div>
                 </fieldset>
