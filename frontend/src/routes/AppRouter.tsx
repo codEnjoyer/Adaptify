@@ -1,51 +1,67 @@
 import React from 'react';
+import {Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {RouteType} from "../types/RouteType.ts";
 import WelcomePage from "../components/welcomePage/WelcomePage.tsx";
-import {Route, Routes} from "react-router-dom";
 import Authentication from "../components/authentication/Authentication.tsx";
-import MapMenu from "../components/MapMenu/MapMenu.tsx";
+import MapMenu from "../components/mapMenu/MapMenu.tsx";
 import authStore from "../store/authStore.ts";
-import {observer} from "mobx-react-lite";
 
-const AppRouter: React.FC = observer(() => {
-    // const [isUserAuthorized, setUserAuthorized] = useState<boolean>(false);
-
+const AppRouter: React.FC = () => {
     const publicRoutes: RouteType[] = [
         {
-            id: "1",
-            path: '/',
-            element: <WelcomePage/>
+            id: 1,
+            element: <WelcomePage/>,
+            path: "/"
         },
         {
-            id: "2",
-            path: '/authentication',
-            element: <Authentication/>
+            id: 2,
+            element: <Authentication/>,
+            path: "/login",
         }
     ]
 
     const privateRoutes: RouteType[] = [
         {
-            id: "3",
-            path: '/map',
-            element: <MapMenu/>
+            id: 3,
+            element: <MapMenu/>,
+            path: "/map"
         }
     ]
 
-    // Здесь будет логика авторизации пользователя
-
+    const location = useLocation()
 
     return (
-        <div>
-            {
-                authStore.isUserAuthorized
-                    ? <Routes>{privateRoutes.map(({path, element, id}) =>
-                        <Route path={path} element={element} key={id}/>)} </Routes>
-                    : <Routes>{publicRoutes.map(({path, element, id}) =>
-                        <Route path={path} element={element} key={id}/>)} </Routes>
-            }
-        </div>
+        authStore.isUserAuthorized ?
+            (
+                privateRoutes.findIndex(comp => comp.path === location.pathname) !== -1
+                    ?
+                    <Routes>
+                        {
+                            privateRoutes.map(({path, element}, index) =>
+                                <Route path={path} element={element} key={index}/>
+                            )
+                        }
+                    </Routes>
+                    :
+                    <Navigate to="/"/>
+
+            )
+            :
+            (
+                publicRoutes.findIndex(comp => comp.path === location.pathname) !== -1
+                    ?
+                    <Routes>
+                        {
+                            publicRoutes.map(({path, element}, index) =>
+                                <Route path={path} element={element} key={index}/>
+                            )
+                        }
+                    </Routes>
+                    :
+                    <Navigate to="/login"/>
+            )
     );
-})
+}
 
 
 export default AppRouter;
