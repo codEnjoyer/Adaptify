@@ -6,7 +6,7 @@ import Coins from "./UIMapMenu/Coins.tsx";
 import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile.tsx";
-import Geolocation from "./UIMapMenu/UIChooseModule/Geolocation.tsx";
+import Geolocation from "./UIMapMenu/Level/Geolocation.tsx";
 
 const MapMenu: React.FC = () => {
     const navigate = useNavigate()
@@ -22,7 +22,8 @@ const MapMenu: React.FC = () => {
             level: {
                 levelName: "Уровень 1",
                 title: "Собери помидорки",
-                body: "Я помидорка"
+                body: "Я помидорка",
+                menu: ["theory", "video", "test"]
             }
         },
         {
@@ -30,7 +31,8 @@ const MapMenu: React.FC = () => {
             level: {
                 levelName: "Уровень 2",
                 title: "Собери не помидорки",
-                body: "Я уже не помидорка"
+                body: "Я уже не помидорка",
+                menu: ["theory"]
             }
         },
         {
@@ -38,7 +40,8 @@ const MapMenu: React.FC = () => {
             level: {
                 levelName: "Уровень 3",
                 title: "Начни бить Никиту",
-                body: "Я помидорка"
+                body: "Я помидорка",
+                menu: ["video", "test"]
             }
         },
 
@@ -60,11 +63,5 @@ const MapMenu: React.FC = () => {
         </div>
     );
 };
-
-export interface IModalLevelProps {
-    levelName: string,
-    title: string,
-    body: string
-}
 
 export default MapMenu;

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {IModalLevelProps} from "../../MapMenu.tsx";
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
+import ModalLevelBody, {IModalLevelProps} from "./ModalLevelBody.tsx";
 
 interface IGeolocationProps {
     id: number,
@@ -16,10 +16,10 @@ const Geolocation: React.FC<IGeolocationProps> = ({id, level}) => {
             {isOpenModalWindow
                 ? <ModalWindow
                     onClose={() => setOpenModalWindow(!isOpenModalWindow)}
-                    body={<ModalLevelBody body={level.body} levelName={level.levelName} title={level.title}/>}
+                    body={<ModalLevelBody body={level.body} levelName={level.levelName} title={level.title}
+                                          menu={level.menu}/>}
                 />
                 : ""}
-
 
             <div>
                 <svg width="60" height="104" viewBox="0 0 60 104" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,18 +29,11 @@ const Geolocation: React.FC<IGeolocationProps> = ({id, level}) => {
                 </svg>
             </div>
         </div>
-
     );
 };
 
-const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, body}) => {
-    return (
-        <div>
-            <div className="level-name">{levelName}</div>
-            <div className="level-title">{title}</div>
-            <div className="level-body">{body}</div>
-        </div>
-    );
-};
+
+
+
 
 export default Geolocation;

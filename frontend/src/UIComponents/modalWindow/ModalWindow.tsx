@@ -26,7 +26,7 @@ const ModalWindow: React.FC<ModalWindowProps> =
 
         return (
             <div className="modal-window" onClick={onClose} ref={element}>
-                <div className={`modal-window__content ${windowContentStyles}`}
+                <div className={`modal-window__content${windowContentStyles !== undefined ? windowContentStyles : ""}`}
                      onClick={(e) => e.stopPropagation()}>
                     <div className="modal-window__body" children={body}></div>
                     <div className="modal-window__btn" onClick={() => onClose()}></div>
