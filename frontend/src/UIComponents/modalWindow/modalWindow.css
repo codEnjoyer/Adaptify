@@ -16,8 +16,8 @@
   color: black;
   background: #4e4c4c;
   border-radius: 15px;
-  min-width: 400px;
-  min-height: 250px;
+  min-width: 70vw;
+  min-height: 80vh;
   position: relative;
 }
 

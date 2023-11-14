@@ -16,4 +16,39 @@
   height: 16rem;
 }
 
+.text-info {
+  position: absolute;
+  left: 12%;
+  width: 76%;
+  margin-top: 10px;
+}
+
+.level-title {
+  color: black;
+  font-family: Golos, sans-serif;
+  font-size: 1.625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.1625rem;
+  text-align: left;
+}
+
+.level-body {
+  color: gray;
+  font-family: Golos, sans-serif;
+  font-size: 1.625rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.1625rem;
+  word-break: break-word;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.menu-item {
+  margin-top: 5px;
+}
+
 /*# sourceMappingURL=modalLevelBody.css.map */

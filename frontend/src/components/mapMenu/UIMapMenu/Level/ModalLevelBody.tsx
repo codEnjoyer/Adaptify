@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
@@ -43,8 +43,10 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, body, men
                         return task.name === item ? <div className="menu-item">{task.element}</div> : ""
                     }))}
             </div>
-            <div className="level-title">{title}</div>
-            <div className="level-body">{body}</div>
+            <div className="text-info">
+                <div className="level-title">{title.toUpperCase()}</div>
+                <div className="level-body">{body}</div>
+            </div>
         </div>
     );
 };
