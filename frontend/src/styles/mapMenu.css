@@ -67,4 +67,35 @@
   top: 2.75rem;
 }
 
+.geolocation-1 {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+}
+
+.geolocation-2 {
+  position: absolute;
+  left: 20%;
+  top: 40%;
+}
+
+.geolocation-3 {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+}
+
+.geolocations {
+  position: absolute;
+  left: 0;
+  top: 19vh;
+  width: 100vw;
+  height: 57vh;
+}
+
+.geolocations__wrapper {
+  width: 100%;
+  height: 100%;
+}
+
 /*# sourceMappingURL=mapMenu.css.map */
