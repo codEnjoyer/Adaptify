@@ -1,10 +1,12 @@
+@import "./variablesStyles";
+
 .coins {
   display: inline-flex;
   position: absolute;
   left: 4rem;
   top: 2.75rem;
   border-radius: 1.5rem;
-  background: #787878;
+  background: $mainBGColor;
   width: 10rem;
   height: 3.75rem;
 }
@@ -31,7 +33,7 @@
   margin-top: 3rem;
   width: 16rem;
   height: 4rem;
-  background-color: #787878;
+  background-color: $mainBGColor;
   border-radius: 1.5rem;
 }
 

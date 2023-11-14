@@ -1,3 +1,5 @@
+@import "variablesStyles";
+
 .auth-page {
   position: relative;
   top: 30%;
@@ -15,7 +17,7 @@
   margin: auto;
   text-align: center;
   border: #2B2A29 2px solid;
-  background: #E8E8E8;
+  background: $formsBGColor;
   border-radius: 70px;
 }
 

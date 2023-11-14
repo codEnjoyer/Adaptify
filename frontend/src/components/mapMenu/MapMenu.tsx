@@ -15,6 +15,35 @@ const MapMenu: React.FC = () => {
         authStore.signOutUser()
         navigate('/')
     }
+
+    const geolocations = [
+        {
+            id: 1,
+            level: {
+                levelName: "Уровень 1",
+                title: "Собери помидорки",
+                body: "Я помидорка"
+            }
+        },
+        {
+            id: 2,
+            level: {
+                levelName: "Уровень 2",
+                title: "Собери не помидорки",
+                body: "Я уже не помидорка"
+            }
+        },
+        {
+            id: 3,
+            level: {
+                levelName: "Уровень 3",
+                title: "Начни бить Никиту",
+                body: "Я помидорка"
+            }
+        },
+
+    ]
+
     return (
         <div>
             <Coins coins={100} additionalClassname="coins"/>
@@ -23,14 +52,19 @@ const MapMenu: React.FC = () => {
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    <div className="geolocation-1"><Geolocation/></div>
-                    <div className="geolocation-2"><Geolocation/></div>
-                    <div className="geolocation-3"><Geolocation/></div>
+                    {geolocations.map((geolocation) => <Geolocation id={geolocation.id} level={geolocation.level}
+                                                                    key={geolocation.id}/>)}
                 </div>
             </div>
             <CustomButton text="Выйти" handleOnClick={onHandleSignOut}/>
         </div>
     );
 };
+
+export interface IModalLevelProps {
+    levelName: string,
+    title: string,
+    body: string
+}
 
 export default MapMenu;

@@ -4,7 +4,7 @@ import "./modalWindow.scss"
 
 interface ModalWindowProps {
     body: React.ReactNode,
-    windowContentStyles: string,
+    windowContentStyles?: string,
     onSubmit?: () => void,
     onClose: () => void,
 }

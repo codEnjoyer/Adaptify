@@ -32,7 +32,9 @@ const Authentication: React.FC = observer(() => {
                         <input type="email" className="login__input"
                                placeholder="Логин"
                                value={authStore.userLogin}
-                               onChange={(e) => authStore.changeUserLogin(e.target.value)}/>
+                               onChange={(e) => authStore.changeUserLogin(e.target.value)}
+                               autoFocus={true}
+                        />
                     </div>
                     <div className="auth-data__field">
                         {isPasswordShows
