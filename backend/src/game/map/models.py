@@ -14,6 +14,6 @@ class Map(BaseModel):
     __tablename__ = "maps"
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    name: Mapped[str] = mapped_column(String(length=255), nullable=False)
+    title: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
     modules: Mapped[list["Module"]] = relationship(back_populates='map')
