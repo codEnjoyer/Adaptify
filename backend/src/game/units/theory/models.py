@@ -1,10 +1,14 @@
 import uuid
+from typing import TYPE_CHECKING
 
 from sqlalchemy import UUID, Text, String, URL, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy_utils import URLType
 
 from database import BaseModel
+
+if TYPE_CHECKING:
+    from game.levels.models import Level
 
 
 class TheoryUnit(BaseModel):
@@ -14,7 +18,8 @@ class TheoryUnit(BaseModel):
     theme: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False, default="Текст теории")
 
-    videos: Mapped[list["TheoryVideo"]] = relationship(back_populates="theory_block")
+    # videos: Mapped[list["TheoryVideo"]] = relationship(back_populates="theory_block")
+    level: Mapped[list["Level"]] = relationship(secondary="level_theory_blocks")
 
 
 class TheoryVideo(BaseModel):

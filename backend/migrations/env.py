@@ -30,8 +30,8 @@ if config.config_file_name is not None:
 
 from game.map.models import Map
 from game.modules.models import Module
-from game.levels.models import Level
-from game.units.tasks.models import TaskUnit, EmployeesTasks
+from game.levels.models import Level, LevelTheory, LevelTask
+from game.units.tasks.models import TaskUnit, EmployeesTask
 from game.units.tasks.questions.models import Question, Answer
 from game.units.theory.models import TheoryUnit, TheoryVideo
 

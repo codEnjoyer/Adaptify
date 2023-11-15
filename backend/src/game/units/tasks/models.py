@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import BaseModel
 
 if TYPE_CHECKING:
+    from game.levels.models import Level
     from questions.models import Question
 
 
@@ -31,9 +32,10 @@ class TaskUnit(BaseModel):
     score_reward: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
 
     questions: Mapped[list["Question"]] = relationship()
+    level: Mapped[list["Level"]] = relationship(secondary="level_tasks")
 
 
-class EmployeesTasks(BaseModel):
+class EmployeesTask(BaseModel):
     __tablename__ = 'task_employees'
 
     task_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tasks.id'), primary_key=True)

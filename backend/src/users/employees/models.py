@@ -11,6 +11,7 @@ from database import BaseModel
 if typing.TYPE_CHECKING:
     from users.tutors.models import Tutor
     from game.units.tasks.models import TaskUnit
+    from game.levels.models import Level
 
 
 class Employee(BaseModel):
@@ -25,3 +26,4 @@ class Employee(BaseModel):
 
     tutor: Mapped["Tutor"] = relationship(back_populates='employee')
     tasks: Mapped[list["TaskUnit"]] = relationship(secondary="task_employees", back_populates='employees')
+    levels: Mapped[list["Level"]] = relationship(secondary="level_employees", back_populates='employees')
