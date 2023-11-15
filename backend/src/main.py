@@ -10,10 +10,12 @@ from users.router import router as users_router
 from users.tutors.router import router as tutors_router
 from users.employees.router import router as employees_router
 
+from auth.router import router as auth_router
+
 app = FastAPI(title="Adaptify")
 
 
-def include_routers(routers: list[APIRouter]) -> None:
+def include_routers(*routers: APIRouter) -> None:
     for router in routers:
         app.include_router(router)
 
@@ -23,7 +25,7 @@ async def root() -> str:
     return "Hello, world!"
 
 
-include_routers([
+include_routers(
     levels_router,
     modules_router,
     map_router,
@@ -32,4 +34,5 @@ include_routers([
     users_router,
     tutors_router,
     employees_router,
-])
+    auth_router
+)
