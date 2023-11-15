@@ -8,8 +8,8 @@ from database import BaseModel
 
 if typing.TYPE_CHECKING:
     from game.modules.models import Module
-    from game.units.tasks.models import Task
-    from game.units.theory.models import Theory
+    from game.units.tasks.models import TaskUnit
+    from game.units.theory.models import TheoryUnit
 
 
 class Level(BaseModel):
@@ -21,5 +21,5 @@ class Level(BaseModel):
     is_accomplished: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
     module: Mapped["Module"] = relationship(back_populates='level')
-    theory: Mapped[list["Theory"]] = relationship(back_populates='level')
-    tasks: Mapped[list["Task"]] = relationship(back_populates='level')
+    theory: Mapped[list["TheoryUnit"]] = relationship(back_populates='level')
+    tasks: Mapped[list["TaskUnit"]] = relationship(back_populates='level')

@@ -10,6 +10,7 @@ from database import BaseModel
 
 if typing.TYPE_CHECKING:
     from users.tutors.models import Tutor
+    from game.units.tasks.models import TaskUnit
 
 
 class Employee(BaseModel):
@@ -23,3 +24,4 @@ class Employee(BaseModel):
     hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date())
 
     tutor: Mapped["Tutor"] = relationship(back_populates='employee')
+    tasks: Mapped[list["TaskUnit"]] = relationship(secondary="task_employees", back_populates='employees')

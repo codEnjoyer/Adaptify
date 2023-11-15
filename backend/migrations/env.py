@@ -8,7 +8,6 @@ from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
-
 sys.path.append(os.path.join(sys.path[0], 'src'))
 from settings import Settings
 
@@ -32,8 +31,9 @@ if config.config_file_name is not None:
 from game.map.models import Map
 from game.modules.models import Module
 from game.levels.models import Level
-from game.units.tasks.models import Task
-from game.units.theory.models import Theory, TheoryVideo
+from game.units.tasks.models import TaskUnit, EmployeesTasks
+from game.units.tasks.questions.models import Question, Answer
+from game.units.theory.models import TheoryUnit, TheoryVideo
 
 from users.models import User
 from users.tutors.models import Tutor
@@ -41,8 +41,6 @@ from users.employees.models import Employee
 
 from database import BaseModel
 
-
-# TODO: Добавить metadata из моделей
 target_metadata = BaseModel.metadata
 
 
