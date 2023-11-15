@@ -1,3 +1,3 @@
 from pydantic import BaseModel, ConfigDict
 
-# TODO
+# TODO __ProofBase, ProofRead, ProofCreate, ProofUpdate

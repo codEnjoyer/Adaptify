@@ -13,18 +13,4 @@ class __QuestionBase(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-
-class TaskRead(__QuestionBase):
-    id: UUID
-    task_id: UUID
-
-
-class TaskCreate(__QuestionBase):
-    correct_answers: list[str]
-    task_id: UUID
-
-
-class TaskUpdate(__QuestionBase):
-    question: str | None
-    possible_answers: list[str] | None
-    correct_answers: list[str] | None
+# TODO QuestionRead, QuestionCreate, QuestionUpdate
