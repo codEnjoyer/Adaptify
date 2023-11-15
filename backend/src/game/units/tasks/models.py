@@ -2,7 +2,7 @@ import uuid
 import enum
 from typing import TYPE_CHECKING
 
-from sqlalchemy import UUID, Integer, Text, Enum, ForeignKey, Boolean
+from sqlalchemy import UUID, Integer, Enum, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
@@ -41,11 +41,3 @@ class EmployeesTask(BaseModel):
     task_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tasks.id'), primary_key=True)
     employee_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('employees.id'), primary_key=True)
     state: Mapped[TaskStates] = mapped_column(Enum(name='task_states'), nullable=False, default=TaskStates.NotViewed)
-
-# class Proof(BaseModel):
-#     __tablename__ = "proofs"
-#
-#     content: Mapped[list[URL]] = mapped_column()
-#
-#     user: Mapped[User] = relationship(back_populates="proof")
-#     task: Mapped[Task] = relationship(back_populates="proof")

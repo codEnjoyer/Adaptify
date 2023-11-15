@@ -33,6 +33,7 @@ from game.modules.models import Module
 from game.levels.models import Level, LevelTheory, LevelTask
 from game.units.tasks.models import TaskUnit, EmployeesTask
 from game.units.tasks.questions.models import Question, Answer
+from game.units.tasks.proofs.models import Proof, ProofVideos, ProofImages
 from game.units.theory.models import TheoryUnit, TheoryVideo
 
 from users.models import User
