@@ -21,7 +21,7 @@ class Employee(BaseModel):
     tutor_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tutors.id'), nullable=False)
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
-    email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
+    # email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
     hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date())
 
     tutor: Mapped["Tutor"] = relationship(back_populates='employee')

@@ -17,6 +17,6 @@ class Tutor(BaseModel):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
-    email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
+    # email: Mapped[EmailStr] = mapped_column(String(length=255), nullable=False, unique=True)
 
     employees: Mapped[list["Employee"]] = relationship(back_populates='tutor')
