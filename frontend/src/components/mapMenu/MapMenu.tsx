@@ -7,6 +7,7 @@ import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile.tsx";
 import Geolocation from "./UIMapMenu/Level/Geolocation.tsx";
+import {GeolocationType} from "../../types/GeolocationType.ts";
 
 const MapMenu: React.FC = () => {
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ const MapMenu: React.FC = () => {
         navigate('/')
     }
 
-    const geolocations = [
+    const geolocations: GeolocationType[] = [
         {
             id: 1,
             level: {

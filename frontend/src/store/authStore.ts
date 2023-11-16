@@ -2,6 +2,8 @@ import {makeAutoObservable} from "mobx";
 
 class AuthStore {
     isUserAuthorized: boolean = false
+    userRole: string | null = null
+
     userLogin: string = ""
     userPassword: string = ""
 
@@ -23,6 +25,10 @@ class AuthStore {
 
     changeUserPassword(newPassword: string) {
         this.userPassword = newPassword
+    }
+
+    setUserRole(newUserRole: string) {
+        this.userRole = newUserRole
     }
 }
 

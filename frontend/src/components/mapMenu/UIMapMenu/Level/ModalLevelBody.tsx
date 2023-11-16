@@ -2,26 +2,10 @@ import React, {useState} from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
+import {LevelType} from "../../../../types/LevelType.ts";
 
-export interface IModalLevelProps {
-    levelName: string,
-    title: string,
-    menu: MenuType[]
-}
-
-type MenuType = {
-    taskName: string,
-    body: string
-}
-
-interface taskType {
-    name: string,
-    element: JSX.Element
-}
-
-
-const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, menu}) => {
-    const tasks: taskType[] = [
+const ModalLevelBody: React.FC<LevelType> = ({levelName, title, menu}) => {
+    const tasks = [
         {name: "theory", element: <Theory/>},
         {name: "video", element: <Video/>},
         {name: "test", element: <Test/>}
