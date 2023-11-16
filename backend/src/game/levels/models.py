@@ -3,6 +3,7 @@ import typing
 import uuid
 
 from sqlalchemy import String, Boolean, UUID, ForeignKey, Enum
+from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
@@ -36,7 +37,8 @@ class EmployeesLevel(BaseModel):
 
     level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id'), nullable=False, primary_key=True)
     employee_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('employees.id'), nullable=False, primary_key=True)
-    state: Mapped[LevelStates] = mapped_column(Enum(name='level_states'), nullable=False, default=LevelStates.NotViewed)
+    state: Mapped[LevelStates] = mapped_column(
+        postgresql.ENUM(LevelStates, name='level_states'), nullable=False, default=LevelStates.NotViewed)
 
 
 class LevelTask(BaseModel):

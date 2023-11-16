@@ -3,6 +3,7 @@ import enum
 from typing import TYPE_CHECKING
 
 from sqlalchemy import UUID, Enum, String
+from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
@@ -21,7 +22,7 @@ class Question(BaseModel):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     type: Mapped[QuestionTypes] = mapped_column(
-        Enum(name='question_types'), nullable=False, default=QuestionTypes.SingleChoice)
+        postgresql.ENUM(QuestionTypes, name='question_types'), nullable=False, default=QuestionTypes.SingleChoice)
     question: Mapped[str] = mapped_column(String, nullable=False, default="Вопрос!")
     correct_answer_id: Mapped[uuid.UUID] = mapped_column(UUID, default=uuid.uuid4)
 

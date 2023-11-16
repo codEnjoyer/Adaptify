@@ -2,6 +2,6 @@ from enum import Enum, auto
 
 
 class UserRoles(Enum):
-    EMPLOYEE = auto()
-    TUTOR = auto()
+    Employee = auto()
+    Tutor = auto()
     HR = auto()
