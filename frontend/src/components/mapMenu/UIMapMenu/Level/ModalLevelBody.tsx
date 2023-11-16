@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
@@ -27,6 +27,8 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, menu}) =>
         {name: "test", element: <Test/>}
     ]
 
+    const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
+
     return (
         <div>
             <div className="header-modal">
@@ -42,21 +44,19 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, menu}) =>
             </div>
 
             <div className="menu">
-                {menu.map((item) =>
-                    tasks.map((task, index) => {
+                {menu.map((item, index) =>
+                    tasks.map((task) => {
                         return task.name === item.taskName
-                            ? <div key={index} className="menu-item">{task.element}</div>
+                            ? <div key={index} className="menu-item" onClick={() => {
+                                setCurrentTaskIndex(index)
+                            }}>{task.element}</div>
                             : ""
                     }))}
 
             </div>
             <div className="text-info">
                 <div className="level-title">{title.toUpperCase()}</div>
-                {menu.map((item, index) => <div key={index} className="level-body">{item.body}</div>)}
-                <video style={{width: 400}} controls={true}>
-                    <source
-                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></source>
-                </video>
+                <div className="level-body">{menu[currentTaskIndex].body}</div>
             </div>
         </div>
     );

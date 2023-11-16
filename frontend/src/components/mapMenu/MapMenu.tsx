@@ -43,7 +43,7 @@ const MapMenu: React.FC = () => {
             id: 3,
             level: {
                 levelName: "Уровень 3",
-                title: "Начни бить Никиту",
+                title: "Начни текст",
                 menu: [
                     {
                         taskName: "video",
