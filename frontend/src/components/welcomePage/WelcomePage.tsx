@@ -12,7 +12,7 @@ const WelcomePage: React.FC = () => {
             <h2>WELCOME PAGE</h2>
             <CustomButton
                 additionalClassName="navigate_to_auth__btn"
-                handleOnClick={() => navigateTo("/authentication")}
+                handleOnClick={() => navigateTo("/login")}
                 text="Авторизоваться"/>
         </div>
     );

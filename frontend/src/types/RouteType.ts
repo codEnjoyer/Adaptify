@@ -1,7 +1,7 @@
 import {ReactNode} from "react";
 
 interface RouteType {
-    id: string,
+    id: number
     path: string,
     element: ReactNode
 }

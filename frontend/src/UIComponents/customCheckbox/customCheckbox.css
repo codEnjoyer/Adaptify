@@ -11,8 +11,14 @@
   margin-left: 10px;
 }
 
-.custom_checkbox {
+.custom-checkbox {
   position: absolute;
+  display: inline-flex;
+  align-items: center;
+}
+
+.svg-container {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=customCheckbox.css.map */

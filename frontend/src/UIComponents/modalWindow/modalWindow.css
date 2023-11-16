@@ -1,5 +1,7 @@
 .modal-window {
   position: fixed;
+  height: 100%;
+  width: 100%;
   top: 0;
   bottom: 0;
   right: 0;
@@ -14,10 +16,10 @@
 
 .modal-window__content {
   color: black;
-  padding: 25px;
   background: #4e4c4c;
   border-radius: 15px;
-  min-width: 250px;
+  min-width: 50vw;
+  min-height: 60vh;
   position: relative;
 }
 
