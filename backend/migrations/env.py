@@ -3,11 +3,12 @@ from logging.config import fileConfig
 import os
 import sys
 
+import alembic_postgresql_enum
+
 from sqlalchemy import Connection
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
-
 
 sys.path.append(os.path.join(sys.path[0], 'src'))
 from settings import Settings
@@ -29,8 +30,21 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-# TODO: Добавить metadata из моделей
-target_metadata = None
+from game.map.models import Map
+from game.modules.models import Module
+from game.levels.models import Level, LevelTheory, LevelTask
+from game.units.tasks.models import TaskUnit, EmployeesTask
+from game.units.tasks.questions.models import Question, Answer
+from game.units.tasks.proofs.models import Proof, ProofVideos, ProofImages
+from game.units.theory.models import TheoryUnit, TheoryVideo
+
+from users.models import User
+from users.tutors.models import Tutor
+from users.employees.models import Employee
+
+from database import BaseModel
+
+target_metadata = BaseModel.metadata
 
 
 # other values from the config, defined by the needs of env.py,
