@@ -1,0 +1,74 @@
+.auth-page {
+  position: relative;
+  top: 30%;
+}
+
+.auth__form {
+  margin: auto;
+  text-align: center;
+  border: #2B2A29 2px solid;
+  background: #E8E8E8;
+  border-radius: 70px;
+}
+@media screen and (min-width: 200px) and (min-height: 500px) and (orientation: portrait) {
+  .auth__form {
+    width: 400px;
+    height: 500px;
+  }
+}
+@media screen and (orientation: landscape) {
+  .auth__form {
+    width: 700px;
+    height: 500px;
+  }
+}
+
+.auth-form-title {
+  margin-top: 75px;
+  font-size: 26px;
+  color: #2B2A29;
+}
+
+.auth-fields {
+  height: 170px;
+  width: 58%;
+  border: none;
+  margin: auto auto 20px;
+  box-sizing: border-box;
+}
+
+.auth-data__field {
+  margin-top: 15px;
+  background: #B0B0B0;
+  border-radius: 30px;
+}
+.auth-data__field > input {
+  font-size: 16px;
+  color: #F5F5F5;
+  left: 10%;
+  width: 80%;
+  height: 70px;
+  background: none;
+  border: none;
+}
+.auth-data__field > input:focus {
+  border: none;
+  outline: none;
+}
+
+.pass {
+  margin-bottom: 100px;
+}
+
+.auth__btn {
+  margin-top: 60px;
+}
+
+.is-remember-password__checkbox {
+  left: 22%;
+  position: absolute;
+  color: #2B2A29;
+  font-size: 24px;
+}
+
+/*# sourceMappingURL=authentication.css.map */

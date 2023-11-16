@@ -1,0 +1,101 @@
+.coins {
+  display: inline-flex;
+  position: absolute;
+  left: 4rem;
+  top: 2.75rem;
+  border-radius: 1.5rem;
+  background: #787878;
+  width: 10rem;
+  height: 3.75rem;
+}
+
+.coins-logo {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+.coins-value {
+  position: relative;
+  top: 16%;
+  color: #FFF;
+  font-family: Montserrat, serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.choose-module-window {
+  display: flex;
+  position: relative;
+  margin-top: 3rem;
+  width: 16rem;
+  height: 4rem;
+  background-color: #787878;
+  border-radius: 1.5rem;
+}
+
+.choose-module-window__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  color: #F5F5F5;
+  text-align: center;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Golos, sans-serif;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.1125rem;
+}
+
+.left-arrow {
+  position: absolute;
+  left: 5%;
+}
+
+.right-arrow {
+  position: absolute;
+  right: 5%;
+}
+
+.user-profile {
+  position: absolute;
+  right: 3rem;
+  top: 2.75rem;
+}
+
+.geolocation-1 {
+  position: absolute;
+  left: 5%;
+  top: 5%;
+}
+
+.geolocation-2 {
+  position: absolute;
+  left: 20%;
+  top: 40%;
+}
+
+.geolocation-3 {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+}
+
+.geolocations {
+  position: absolute;
+  left: 0;
+  top: 19vh;
+  width: 100vw;
+  height: 57vh;
+}
+
+.geolocations__wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/*# sourceMappingURL=mapMenu.css.map */
