@@ -16,7 +16,7 @@ const Geolocation: React.FC<IGeolocationProps> = ({id, level}) => {
             {isOpenModalWindow
                 ? <ModalWindow
                     onClose={() => setOpenModalWindow(!isOpenModalWindow)}
-                    body={<ModalLevelBody body={level.body} levelName={level.levelName} title={level.title}
+                    body={<ModalLevelBody levelName={level.levelName} title={level.title}
                                           menu={level.menu}/>}
                 />
                 : ""}
@@ -31,9 +31,6 @@ const Geolocation: React.FC<IGeolocationProps> = ({id, level}) => {
         </div>
     );
 };
-
-
-
 
 
 export default Geolocation;

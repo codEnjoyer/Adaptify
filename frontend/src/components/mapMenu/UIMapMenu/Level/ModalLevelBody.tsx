@@ -6,8 +6,12 @@ import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
 export interface IModalLevelProps {
     levelName: string,
     title: string,
-    body: string,
-    menu: string[]
+    menu: MenuType[]
+}
+
+type MenuType = {
+    taskName: string,
+    body: string
 }
 
 interface taskType {
@@ -16,7 +20,7 @@ interface taskType {
 }
 
 
-const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, body, menu}) => {
+const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, menu}) => {
     const tasks: taskType[] = [
         {name: "theory", element: <Theory/>},
         {name: "video", element: <Video/>},
@@ -39,13 +43,20 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({levelName, title, body, men
 
             <div className="menu">
                 {menu.map((item) =>
-                    tasks.map((task) => {
-                        return task.name === item ? <div className="menu-item">{task.element}</div> : ""
+                    tasks.map((task, index) => {
+                        return task.name === item.taskName
+                            ? <div key={index} className="menu-item">{task.element}</div>
+                            : ""
                     }))}
+
             </div>
             <div className="text-info">
                 <div className="level-title">{title.toUpperCase()}</div>
-                <div className="level-body">{body}</div>
+                {menu.map((item, index) => <div key={index} className="level-body">{item.body}</div>)}
+                <video style={{width: 400}} controls={true}>
+                    <source
+                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></source>
+                </video>
             </div>
         </div>
     );

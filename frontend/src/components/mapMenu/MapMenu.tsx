@@ -22,8 +22,10 @@ const MapMenu: React.FC = () => {
             level: {
                 levelName: "Уровень 1",
                 title: "Собери помидорки",
-                body: "Какая-то информация которая очень хорошо тебе поведает тайну о помидорках и ещё какая-то информация которая очень хорошо тебе поведает тайну о помидорках ",
-                menu: ["theory", "video", "test"]
+                menu: [{
+                    taskName: "test",
+                    body: "Какая-то информация которая очень хорошо тебе поведает тайну о помидорках и ещё какая-то информация которая очень хорошо тебе поведает тайну о помидорках ",
+                }]
             }
         },
         {
@@ -31,8 +33,10 @@ const MapMenu: React.FC = () => {
             level: {
                 levelName: "Уровень 2",
                 title: "Собери не помидорки",
-                body: "Я уже не помидорка",
-                menu: ["theory"]
+                menu: [{
+                    taskName: "theory",
+                    body: "Я уже не помидорка"
+                }]
             }
         },
         {
@@ -40,8 +44,16 @@ const MapMenu: React.FC = () => {
             level: {
                 levelName: "Уровень 3",
                 title: "Начни бить Никиту",
-                body: "Я помидорка",
-                menu: ["video", "test"]
+                menu: [
+                    {
+                        taskName: "video",
+                        body: "Я помидорка"
+                    },
+                    {
+                        taskName: "test",
+                        body: "БУБУБУБУ"
+                    }
+                ]
             }
         },
 
@@ -55,8 +67,8 @@ const MapMenu: React.FC = () => {
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    {geolocations.map((geolocation) => <Geolocation id={geolocation.id} level={geolocation.level}
-                                                                    key={geolocation.id}/>)}
+                    {geolocations.map((geolocation) =>
+                        <Geolocation id={geolocation.id} level={geolocation.level} key={geolocation.id}/>)}
                 </div>
             </div>
             <CustomButton text="Выйти" handleOnClick={onHandleSignOut}/>
