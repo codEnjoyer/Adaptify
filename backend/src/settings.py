@@ -16,7 +16,10 @@ DB_NAME = os.environ.get("POSTGRES_DB")
 
 SECRET_JWT_KEY = os.environ.get("SECRET_JWT_KEY")
 
+BACK_APP_PORT = os.environ.get("BACK_APP_PORT")
+
 
 class Settings(BaseSettings):
     pg_url: ClassVar[PostgresDsn] = f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     secret_jwt: ClassVar[SecretStr] = SECRET_JWT_KEY
+    backend_port: ClassVar[int] = BACK_APP_PORT
