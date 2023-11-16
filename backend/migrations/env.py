@@ -3,6 +3,8 @@ from logging.config import fileConfig
 import os
 import sys
 
+import alembic_postgresql_enum
+
 from sqlalchemy import Connection
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
