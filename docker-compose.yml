@@ -3,11 +3,11 @@ services:
   backend:
     container_name: fastapi_app
     build:
-      context: .
-      dockerfile: ./backend/Dockerfile
+      context: ./backend/
+      dockerfile: ./Dockerfile
     env_file:
       - .env
-    command: [ "sh", "/fastapi_app/backend/docker-launch.sh" ]
+    command: [ "sh", "/app/docker-launch.sh" ]
     ports:
       - "${BACK_APP_PORT}:${BACK_APP_PORT}"
     restart: unless-stopped
