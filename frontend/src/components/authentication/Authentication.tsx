@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import './../../styles/authentication.scss'
 import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
 import authStore from "../../store/authStore.ts";
 import {observer} from "mobx-react-lite";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const Authentication: React.FC = observer(() => {
     const navigateTo = useNavigate()
@@ -13,22 +12,6 @@ const Authentication: React.FC = observer(() => {
     const [isPasswordShows, setIsPasswordShow] = useState(false)
     const changeShowPassword = () => {
         setIsPasswordShow(!isPasswordShows)
-    }
-
-
-    const signIn = () => {
-        axios.post("http://localhost:8000/auth/login", {
-            username: "user@example.com",
-            password: "ashdjashdjsahjdhsadsa",
-        })
-            .then(() => authStore.signInUser())
-            .catch((reason) => alert(reason))
-
-        navigateTo('/map')
-    }
-
-    const onHandleChangePassword = (target: string) => {
-        authStore.changeUserPassword(target)
     }
 
     return (
@@ -47,10 +30,10 @@ const Authentication: React.FC = observer(() => {
                     <div className="auth-data__field">
                         {isPasswordShows
                             ? <input type="text" className="password__input" value={authStore.userPassword}
-                                     onChange={(e) => onHandleChangePassword(e.target.value)}
+                                     onChange={(e) => authStore.changeUserPassword(e.target.value)}
                                      placeholder="Пароль"/>
                             : <input type="password" className="password__input" value={authStore.userPassword}
-                                     onChange={(e) => onHandleChangePassword(e.target.value)}
+                                     onChange={(e) => authStore.changeUserPassword(e.target.value)}
                                      placeholder="Пароль"/>}
 
                     </div>
@@ -58,7 +41,11 @@ const Authentication: React.FC = observer(() => {
                 <CustomCheckbox text="Показать пароль" id="is-remember"
                                 additionalClassName="is-remember-password__checkbox"
                                 handleOnChange={changeShowPassword}/>
-                <CustomButton additionalClassName="auth__btn" text="ВОЙТИ" handleOnClick={signIn}/>
+                <CustomButton additionalClassName="auth__btn" text="ВОЙТИ111" handleOnClick={() => {
+                    authStore.signIn().then(() => navigateTo('/map'))
+                }}/>
+                <CustomButton additionalClassName="auth__btn" text="ЗАРЕГИСТРИРОВАТЬСЯ"
+                              handleOnClick={authStore.signUp}/>
             </form>
             <CustomButton text="Вернуться обратно" handleOnClick={() => navigateTo('/')}></CustomButton>
         </div>
