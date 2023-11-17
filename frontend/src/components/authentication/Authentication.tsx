@@ -17,7 +17,7 @@ const Authentication: React.FC = observer(() => {
 
 
     const signIn = () => {
-        axios.post("https://localhost:8000/auth/register/", {
+        axios.post("http://localhost:8000/auth/register/", {
             username: "adasdasdasd",
             email: "asdasdsa@gmail.com",
             password: "asdasdasdsadsa"
