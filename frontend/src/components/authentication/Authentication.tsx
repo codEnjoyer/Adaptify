@@ -17,12 +17,13 @@ const Authentication: React.FC = observer(() => {
 
 
     const signIn = () => {
-        axios.post("https://localhost:8000/auth/register/", {
-            username: "adasdasdasd",
-            email: "asdasdsa@gmail.com",
-            password: "asdasdasdsadsa"
-        }, {withCredentials: false}).catch(() => console.log(1))
-        authStore.signInUser()
+        axios.post("http://localhost:8000/auth/login", {
+            username: "user@example.com",
+            password: "ashdjashdjsahjdhsadsa",
+        })
+            .then(() => authStore.signInUser())
+            .catch((reason) => alert(reason))
+
         navigateTo('/map')
     }
 
