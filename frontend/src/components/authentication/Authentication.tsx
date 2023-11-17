@@ -5,6 +5,7 @@ import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
 import authStore from "../../store/authStore.ts";
 import {observer} from "mobx-react-lite";
+import axios from "axios";
 
 const Authentication: React.FC = observer(() => {
     const navigateTo = useNavigate()
@@ -14,7 +15,13 @@ const Authentication: React.FC = observer(() => {
         setIsPasswordShow(!isPasswordShows)
     }
 
+
     const signIn = () => {
+        axios.post("https://localhost:8000/auth/register/", {
+            username: "adasdasdasd",
+            email: "asdasdsa@gmail.com",
+            password: "asdasdasdsadsa"
+        }, {withCredentials: false}).catch(() => console.log(1))
         authStore.signInUser()
         navigateTo('/map')
     }
