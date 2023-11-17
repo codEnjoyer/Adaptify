@@ -1,22 +1,36 @@
 from fastapi import FastAPI, APIRouter, status, Depends
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 
-from game.levels.router import router as levels_router
-from game.modules.router import router as modules_router
-from game.map.router import router as map_router
-from game.units.tasks.router import router as tasks_router
-from game.units.theory.router import router as theory_router
-
-from users.router import router as users_router
-from users.tutors.router import router as tutors_router
-from users.employees.router import router as employees_router
+# from game.levels.router import router as levels_router
+# from game.modules.router import router as modules_router
+# from game.map.router import router as map_router
+# from game.units.tasks.router import router as tasks_router
+# from game.units.theory.router import router as theory_router
+#
+# from users.router import router as users_router
+# from users.tutors.router import router as tutors_router
+# from users.employees.router import router as employees_router
 
 from auth.router import router as auth_router
 from auth.base_config import current_active_user
 
-from settings import Settings
+from settings import Settings, FRONT_APP_PORT
 
 app = FastAPI(title="Adaptify")
+
+origins = [
+    "http://localhost",
+    f"http://localhost:{FRONT_APP_PORT}",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def include_routers(*routers: APIRouter) -> None:
