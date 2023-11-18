@@ -27,9 +27,9 @@ class Level(BaseModel):
     module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=False)
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
-    module: Mapped["Module"] = relationship(back_populates='level')
-    theory: Mapped[list["TheoryUnit"]] = relationship(secondary="level_theory_blocks", back_populates='level')
-    tasks: Mapped[list["TaskUnit"]] = relationship(secondary="level_tasks", back_populates='level')
+    module: Mapped["Module"] = relationship(back_populates='levels')
+    # theory: Mapped[list["TheoryUnit"]] = relationship(secondary="level_theory_blocks", back_populates='level')
+    # tasks: Mapped[list["TaskUnit"]] = relationship(secondary="level_tasks", back_populates='level')
 
 
 class EmployeesLevel(BaseModel):

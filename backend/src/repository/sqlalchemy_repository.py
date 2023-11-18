@@ -12,7 +12,7 @@ class SQLAlchemyRepository(AbstractRepository):
 
     async def add_one(self, model: dict[str, typing.Any]) -> uuid.UUID:
         async with async_session_maker() as session:
-            stmt = insert(self.model).values(**model).returning(self.model.id)
+            stmt = insert(self.model).values(**model).returning(self.model)
             res = await session.execute(stmt)
             await session.commit()
             return res.scalar_one()

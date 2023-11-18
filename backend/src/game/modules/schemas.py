@@ -14,7 +14,7 @@ class __ModuleBase(BaseModel):
 
 class ModuleRead(__ModuleBase):
     id: UUID
-    levels_id: list[UUID]
+    levels_ids: list[UUID]
 
 
 class ModuleCreate(__ModuleBase):

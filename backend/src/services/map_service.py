@@ -10,10 +10,9 @@ class MapService:
     def __init__(self, map_repo: type[AbstractRepository]):
         self.__map_repo = map_repo()
 
-    async def create_one(self, map_create: MapCreate) -> uuid.UUID:
+    async def create_one(self, map_create: MapCreate) -> MapRead:
         map_dict = map_create.model_dump()
-        map_id = await self.__map_repo.add_one(map_dict)
-        return map_id
+        return await self.__map_repo.add_one(map_dict)
 
     async def get_all(self) -> list[MapRead]:
         maps = await self.__map_repo.find_all()
