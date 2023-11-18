@@ -4,9 +4,11 @@ import uuid
 
 from sqlalchemy import String, Boolean, UUID, ForeignKey, Enum
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.ext.associationproxy import AssociationProxy, association_proxy
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
+from game.levels.schemas import LevelRead
 
 if typing.TYPE_CHECKING:
     from game.modules.models import Module
@@ -24,12 +26,23 @@ class Level(BaseModel):
     __tablename__ = 'levels'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=False)
-    name: Mapped[str] = mapped_column(String(length=255), nullable=False)
+    module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=True)
+    title: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
     module: Mapped["Module"] = relationship(back_populates='levels')
-    # theory: Mapped[list["TheoryUnit"]] = relationship(secondary="level_theory_blocks", back_populates='level')
-    # tasks: Mapped[list["TaskUnit"]] = relationship(secondary="level_tasks", back_populates='level')
+
+    theory_units: Mapped[list["TheoryUnit"]] = relationship(
+        secondary="level_theory_blocks", back_populates='level', lazy='selectin')
+
+    task_units: Mapped[list["TaskUnit"]] = relationship(
+        secondary="level_tasks", back_populates='level', lazy='selectin')
+
+    def to_read_schema(self) -> LevelRead:
+        return LevelRead(id=self.id,
+                         module_id=self.module_id,
+                         title=self.title,
+                         theory_units_ids=[unit.to_read_schema() for unit in self.theory_units],
+                         task_units_ids=[unit.to_read_schema() for unit in self.task_units])
 
 
 class EmployeesLevel(BaseModel):

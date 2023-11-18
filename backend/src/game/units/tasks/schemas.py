@@ -1,13 +1,14 @@
+import typing
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from game.units.tasks.models import TaskTypes
 from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate
+from game.units.tasks import TaskTypes
 
 
 class __TaskUnitBase(BaseModel):
-    questions: list[QuestionRead]
+    # questions: list[QuestionRead]
     type: TaskTypes
     score_reward: int
     requires_review: bool
@@ -28,4 +29,3 @@ class TaskUnitUpdate(__TaskUnitBase):
     type: TaskTypes | None = None
     score_reward: int | None = None
     requires_review: bool | None = None
-
