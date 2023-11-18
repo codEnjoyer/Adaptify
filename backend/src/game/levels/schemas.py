@@ -5,14 +5,17 @@ from pydantic import BaseModel, ConfigDict
 
 class __LevelBase(BaseModel):
     module_id: UUID
-    name: str
+    title: str
+    theory_units_id: list[UUID] | None
+    task_units_id: list[UUID] | None
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class LevelRead(__LevelBase):
     id: UUID
-    is_accomplished: bool
+    theory_units_id: list[UUID]
+    task_units_id: list[UUID]
 
 
 class LevelCreate(__LevelBase):
@@ -20,5 +23,7 @@ class LevelCreate(__LevelBase):
 
 
 class LevelUpdate(__LevelBase):
-    module_id: UUID | None
-    name: str | None
+    module_id: UUID | None = None
+    title: str | None = None
+    theory_units_id: list[UUID] | None = None
+    task_units_id: list[UUID] | None = None

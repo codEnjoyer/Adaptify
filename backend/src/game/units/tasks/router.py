@@ -2,32 +2,32 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from game.units.tasks.schemas import TaskRead, TaskCreate, TaskUpdate
+from game.units.tasks.schemas import TaskUnitRead, TaskUnitCreate, TaskUnitUpdate
 
 router = APIRouter(prefix="/tasks", tags=["Task"])
 
 
 @router.get("/")
-async def root() -> list[TaskRead]:
+async def root() -> list[TaskUnitRead]:
     return []
 
 
 @router.get("/{id}")
-async def get_task(id: UUID) -> TaskRead:
-    return TaskRead()
+async def get_task(id: UUID) -> TaskUnitRead:
+    return TaskUnitRead()
 
 
 @router.post("/")
-async def post_task(task_create: TaskCreate) -> TaskRead:
-    return TaskRead()
+async def post_task(task_create: TaskUnitCreate) -> TaskUnitRead:
+    return TaskUnitRead()
 
 
 @router.delete("/{id}")
-async def delete_task(id: UUID) -> TaskRead:
-    return TaskRead()
+async def delete_task(id: UUID) -> TaskUnitRead:
+    return TaskUnitRead()
 
 
 @router.patch("/{id}")
 async def update_task(id: UUID,
-                      task_update: TaskUpdate) -> TaskRead:
-    return TaskRead()
+                      task_update: TaskUnitUpdate) -> TaskUnitRead:
+    return TaskUnitRead()
