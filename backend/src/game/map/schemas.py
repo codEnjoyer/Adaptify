@@ -1,3 +1,4 @@
+import uuid
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -13,8 +14,7 @@ class __MapBase(BaseModel):
 
 class MapRead(__MapBase):
     id: UUID
-    modules: list[ModuleRead]
-
+    modules_ids: list[UUID]
 
 
 class MapCreate(__MapBase):
@@ -22,4 +22,4 @@ class MapCreate(__MapBase):
 
 
 class MapUpdate(__MapBase):
-    title: str | None
+    title: str | None = None
