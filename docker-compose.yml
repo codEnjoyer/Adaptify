@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+  backend:
+    container_name: fastapi_app
+    build:
+      context: ./backend/
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    command: [ "sh", "/app/docker-launch.sh" ]
+    ports:
+      - "${BACK_APP_PORT}:${BACK_APP_PORT}"
+    restart: unless-stopped
+
+  frontend:
+    container_name: react_app
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${FRONT_APP_PORT}:${FRONT_APP_PORT}"
+    restart: unless-stopped
+
+  db:
+    container_name: db_app
+    image: postgres:15
+    env_file:
+      - .env
+    environment:
+      PG_DATA: "/var/lib/postgresql/data/pgdata"
+    # порт самой базы данных внутри этого контейнера
+    command: '-p ${POSTGRES_DB_PORT}'
+    # внешний порт контейнера:внутренний порт контейнера (второй должен совпадать с портом базы данных)
+    ports:
+      - "${POSTGRES_DB_PORT}:${POSTGRES_DB_PORT}"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    # внешний порт контейнера:внутренний порт контейнера (второй по-умолчанию)
+    ports:
+      - "${PG_ADMIN_PORT}:80"
+    depends_on:
+      db:
+        condition: service_started
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  db-data:
+  pgadmin-data:

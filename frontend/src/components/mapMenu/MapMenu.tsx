@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 import authStore from "../../store/authStore.ts";
 import {useNavigate} from "react-router-dom";
@@ -6,14 +6,19 @@ import Coins from "./UIMapMenu/Coins.tsx";
 import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile.tsx";
-import Geolocation from "./UIMapMenu/Level/Geolocation.tsx";
 import {GeolocationType} from "../../types/GeolocationType.ts";
+import StarUnit from "./UIMapMenu/Level/StarUnit.tsx";
 
 const MapMenu: React.FC = () => {
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (!authStore.isUserAuthorized)
+            navigate("/")
+    }, [navigate])
+
     const onHandleSignOut = () => {
-        authStore.signOutUser()
+        authStore.logOutUser().then()
         navigate('/')
     }
 
@@ -69,10 +74,10 @@ const MapMenu: React.FC = () => {
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {geolocations.map((geolocation) =>
-                        <Geolocation id={geolocation.id} level={geolocation.level} key={geolocation.id}/>)}
+                        <StarUnit id={geolocation.id} level={geolocation.level} key={geolocation.id}/>)}
                 </div>
             </div>
-            <CustomButton text="Выйти" handleOnClick={onHandleSignOut}/>
+            {/*<CustomButton text="Выйти" handleOnClick={onHandleSignOut}/>*/}
         </div>
     );
 };

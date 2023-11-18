@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "gsap": "^3.12.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
@@ -18,7 +19,8 @@
     "mobx-state-tree": "^5.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
+    "sass": "^1.69.5",
+    "serve": "^14.2.1",
     "sort-by": "^0.0.2"
   },
   "devDependencies": {

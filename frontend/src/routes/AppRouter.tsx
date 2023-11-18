@@ -23,6 +23,11 @@ const AppRouter: React.FC = observer(() => {
 
     const privateRoutes: RouteType[] = [
         {
+            id: 2,
+            element: <Authentication/>,
+            path: "/login",
+        },
+        {
             id: 3,
             element: <MapMenu/>,
             path: "/map"
