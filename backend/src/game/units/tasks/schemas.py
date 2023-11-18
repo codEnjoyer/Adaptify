@@ -2,23 +2,30 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
+from game.units.tasks.models import TaskTypes
+from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate
 
-class __TaskBase(BaseModel):
-    content: str
+
+class __TaskUnitBase(BaseModel):
+    questions: list[QuestionRead]
+    type: TaskTypes
     score_reward: int
+    requires_review: bool
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class TaskRead(__TaskBase):
+class TaskUnitRead(__TaskUnitBase):
     id: UUID
-    is_accomplished: bool
 
 
-class TaskCreate(__TaskBase):
-    pass
+class TaskUnitCreate(__TaskUnitBase):
+    questions: list[QuestionCreate]
 
 
-class TaskUpdate(__TaskBase):
-    content: str | None
-    score_reward: int | None
+class TaskUnitUpdate(__TaskUnitBase):
+    questions: list[QuestionUpdate] | None = None
+    type: TaskTypes | None = None
+    score_reward: int | None = None
+    requires_review: bool | None = None
+

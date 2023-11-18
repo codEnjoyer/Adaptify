@@ -4,15 +4,17 @@ from pydantic import BaseModel, ConfigDict
 
 
 class __ModuleBase(BaseModel):
-    previous_module_id: UUID
-    next_module_id: UUID
-    name: str
+    map_id: UUID
+    title: str
+    previous_module_id: UUID | None
+    next_module_id: UUID | None
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class ModuleRead(__ModuleBase):
     id: UUID
+    levels_ids: list[UUID]
 
 
 class ModuleCreate(__ModuleBase):
@@ -20,6 +22,6 @@ class ModuleCreate(__ModuleBase):
 
 
 class ModuleUpdate(__ModuleBase):
-    previous_module_id: UUID | None
-    next_module_id: UUID | None
-    name: str | None
+    title: str | None = None
+    previous_module_id: UUID | None = None
+    next_module_id: UUID | None = None

@@ -2,20 +2,20 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from game.units.theory.schemas import (TheoryRead, TheoryCreate, TheoryUpdate,
+from game.units.theory.schemas import (TheoryUnitRead, TheoryUnitCreate, TheoryUnitUpdate,
                                        TheoryVideoRead, TheoryVideoCreate, TheoryVideoUpdate)
 
 router = APIRouter(prefix="/theory", tags=["Theory"])
 
 
 @router.get("/")
-async def root() -> list[TheoryRead]:
+async def root() -> list[TheoryUnitRead]:
     return []
 
 
 @router.get("/{id}")
-async def get_theory_block(id: UUID) -> TheoryRead:
-    return TheoryRead()
+async def get_theory_block(id: UUID) -> TheoryUnitRead:
+    return TheoryUnitRead()
 
 
 @router.get("/videos/{id}")
@@ -24,8 +24,8 @@ async def get_theory_block_videos(id: UUID) -> list[TheoryVideoRead]:
 
 
 @router.post("/")
-async def post_theory_block(theory_create: TheoryCreate) -> TheoryRead:
-    return TheoryRead()
+async def post_theory_block(theory_create: TheoryUnitCreate) -> TheoryUnitRead:
+    return TheoryUnitRead()
 
 
 @router.post("/videos/")
@@ -34,8 +34,8 @@ async def post_theory_block_video(theory_video_create: TheoryVideoCreate) -> The
 
 
 @router.delete("/{id}")
-async def delete_theory_block(id: UUID) -> TheoryRead:
-    return TheoryRead()
+async def delete_theory_block(id: UUID) -> TheoryUnitRead:
+    return TheoryUnitRead()
 
 
 @router.delete("/videos/{id}")
@@ -45,8 +45,8 @@ async def delete_theory_block_video(id: UUID) -> TheoryVideoRead:
 
 @router.patch("/{id}")
 async def update_theory_block(id: UUID,
-                              theory_update: TheoryUpdate) -> TheoryRead:
-    return TheoryRead()
+                              theory_update: TheoryUnitUpdate) -> TheoryUnitRead:
+    return TheoryUnitRead()
 
 
 @router.patch("/videos/{id}")

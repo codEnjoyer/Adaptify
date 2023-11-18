@@ -3,8 +3,8 @@ from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 # from game.levels.router import router as levels_router
-# from game.modules.router import router as modules_router
-# from game.map.router import router as map_router
+from game.modules.router import router as modules_router
+from game.map.router import router as map_router
 # from game.units.tasks.router import router as tasks_router
 # from game.units.theory.router import router as theory_router
 #
@@ -13,7 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # from users.employees.router import router as employees_router
 
 from auth.router import router as auth_router
-from auth.base_config import current_active_user
+from auth.base_config import current_user
 
 from settings import Settings, FRONT_APP_PORT
 
@@ -44,7 +44,7 @@ async def root():
 
 
 @app.get("/protected-route")
-async def protected_route(user=Depends(current_active_user)):
+async def protected_route(user=Depends(current_user)):
     return "Hi there prot"
 
 
@@ -55,8 +55,8 @@ async def unprotected_route():
 
 include_routers(
     # levels_router,
-    # modules_router,
-    # map_router,
+    modules_router,
+    map_router,
     # tasks_router,
     # theory_router,
     # users_router,

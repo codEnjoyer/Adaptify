@@ -5,43 +5,43 @@ from pydantic_core import Url
 
 
 # region Theory
-class __TheoryBase(BaseModel):
-    theme: str
+class __TheoryUnitBase(BaseModel):
+    title: str
     content: str
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class TheoryRead(__TheoryBase):
+class TheoryUnitRead(__TheoryUnitBase):
     id: UUID
 
 
-class TheoryCreate(__TheoryBase):
+class TheoryUnitCreate(__TheoryUnitBase):
     pass
 
 
-class TheoryUpdate(__TheoryBase):
-    theme: str | None
-    content: str | None
+class TheoryUnitUpdate(__TheoryUnitBase):
+    title: str | None = None
+    content: str | None = None
 
 
 # endregion
 
-class __TheoryVideoBase(BaseModel):
-    theory_id: UUID
-    url: Url
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class TheoryVideoRead(__TheoryVideoBase):
-    id: UUID
-
-
-class TheoryVideoCreate(__TheoryVideoBase):
-    pass
-
-
-class TheoryVideoUpdate(__TheoryVideoBase):
-    theory_id: UUID | None
-    url: Url | None
+# class __TheoryVideoBase(BaseModel):
+#     theory_id: UUID
+#     url: Url
+#
+#     model_config = ConfigDict(from_attributes=True)
+#
+#
+# class TheoryVideoRead(__TheoryVideoBase):
+#     id: UUID
+#
+#
+# class TheoryVideoCreate(__TheoryVideoBase):
+#     pass
+#
+#
+# class TheoryVideoUpdate(__TheoryVideoBase):
+#     theory_id: UUID | None
+#     url: Url | None
