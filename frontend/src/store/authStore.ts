@@ -6,6 +6,7 @@ class AuthStore {
     isUserAuthorized: boolean = false
     userLogin: string = ""
     userPassword: string = ""
+    userEmail: string = ""
 
     constructor() {
         makeAutoObservable(this)
@@ -13,6 +14,11 @@ class AuthStore {
 
     signInUser() {
         this.isUserAuthorized = true
+    }
+
+    async logOutUser() {
+        this.signOutUser()
+        axios.post("http://localhost:8000/auth/logout").catch(reason => console.log(reason))
     }
 
     signOutUser() {
@@ -27,30 +33,41 @@ class AuthStore {
         this.userPassword = newPassword
     }
 
+    changeUserEmail(newEmail: string) {
+        this.userEmail = newEmail + "@example.com"
+    }
+
     async signIn() {
-        this.signInUser()
         axios.post("http://localhost:8000/auth/login", {
-            username: this.userLogin,
+            username: this.userEmail,
             password: this.userPassword,
+        }, {
+            headers: {
+                'access': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         })
             .then((resp) => {
-                console.log(resp.data)
+                console.log(resp.data.token)
                 this.signInUser()
             })
             .catch((reason) => {
                 alert(reason)
-                this.signOutUser()
             })
     }
 
-    signUp() {
+    async signUp() {
         axios.post("http://localhost:8000/auth/register", {
             username: this.userLogin,
-            email: this.userLogin + "@example.com",
+            email: this.userEmail,
             password: this.userPassword
+        }).then(r => {
+            console.log(r.data)
+            this.changeUserLogin("")
+            this.changeUserPassword("")
+        }).catch(() => {
+            alert("Неправильно введены данные")
         })
-            .then(r => console.log(r.data))
-            .catch(reason => console.log(reason))
     }
 }
 
