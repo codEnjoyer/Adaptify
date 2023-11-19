@@ -33,7 +33,7 @@ const MapMenu: React.FC = observer(() => {
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {mapMenuStore.currentModule?.levels_ids.map((level, index) =>
-                        <Module id={index} level={level} key={index}/>)}
+                        <Module id={index.toString()} level={level} key={index}/>)}
                 </div>
             </div>
         </div>

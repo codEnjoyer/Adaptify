@@ -3,7 +3,7 @@ import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 import ModalLevelBody from "./ModalLevelBody.tsx";
 
 interface IGeolocationProps {
-    id: number,
+    id: string,
     level: string
 }
 
@@ -16,8 +16,8 @@ const Module: React.FC<IGeolocationProps> = ({id, level}) => {
             {isOpenModalWindow
                 ? <ModalWindow
                     onClose={() => setOpenModalWindow(!isOpenModalWindow)}
-                    body={<ModalLevelBody levelName={level} title={level}
-                                          menu={level}/>}
+                    body={<ModalLevelBody name={level} body={level}
+                                          tasks={[""]} id={id}/>}
                 />
                 : ""}
 

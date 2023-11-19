@@ -40,7 +40,7 @@ class AuthStore {
     }
 
     async signIn() {
-        axios.post("http://localhost:8000/auth/login", {
+        await axios.post("http://localhost:8000/auth/login", {
             username: this.userEmail,
             password: this.userPassword,
         }, {

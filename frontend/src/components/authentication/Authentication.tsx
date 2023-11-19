@@ -15,6 +15,7 @@ const Authentication: React.FC = observer(() => {
         setIsPasswordShow(!isPasswordShows)
     }
 
+
     return (
         <div className="auth-page">
             <form className="auth__form">
@@ -42,8 +43,7 @@ const Authentication: React.FC = observer(() => {
                                 additionalClassName="is-remember-password__checkbox"
                                 handleOnChange={changeShowPassword}/>
                 <CustomButton additionalClassName="auth__btn" text="ВОЙТИ" handleOnClick={() => {
-                    authStore.signIn().then()
-                    navigateTo('/map')
+                    authStore.signIn().then(() => navigateTo('/map'))
                 }}/>
                 {/*<CustomButton additionalClassName="auth__btn" text="ЗАРЕГИСТРИРОВАТЬСЯ"*/}
                 {/*              handleOnClick={() => authStore.signUp()}/>*/}
