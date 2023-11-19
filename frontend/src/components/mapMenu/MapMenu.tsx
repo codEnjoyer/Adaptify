@@ -32,7 +32,6 @@ const MapMenu: React.FC = observer(() => {
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    {console.log(mapMenuStore.currentModule?.levels_ids)}
                     {mapMenuStore.currentModule?.levels_ids.map((level, index) =>
                         <Module id={index} level={level} key={index}/>)}
                 </div>

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 import ModalLevelBody from "./ModalLevelBody.tsx";
-import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IGeolocationProps {
     id: number,
