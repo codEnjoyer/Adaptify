@@ -20,7 +20,7 @@ class Level(BaseModel):
     __tablename__ = 'levels'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=True)
+    module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'))
     title: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
     module: Mapped["Module"] = relationship(back_populates='levels')
@@ -35,8 +35,8 @@ class Level(BaseModel):
         return LevelRead(id=self.id,
                          module_id=self.module_id,
                          title=self.title,
-                         theory_units_ids=[unit.to_read_schema() for unit in self.theory_units],
-                         task_units_ids=[unit.to_read_schema() for unit in self.task_units])
+                         theory_units=[unit.to_read_schema() for unit in self.theory_units],
+                         task_units=[unit.to_read_schema() for unit in self.task_units])
 
 
 class EmployeesLevel(BaseModel):
