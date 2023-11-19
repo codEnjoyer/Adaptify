@@ -28,11 +28,11 @@ class TheoryUnit(BaseModel):
                               content=self.content)
 
 
-class TheoryVideo(BaseModel):
-    __tablename__ = 'theory_videos'
-
-    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    theory_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('theory_blocks.id'), nullable=False)
-    url: Mapped[URL] = mapped_column(URLType, nullable=False)
-
-    theory: Mapped["TheoryUnit"] = relationship(back_populates="theory_video")
+# class TheoryVideo(BaseModel):
+#     __tablename__ = 'theory_videos'
+#
+#     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
+#     theory_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('theory_blocks.id'), nullable=False)
+#     url: Mapped[URL] = mapped_column(URLType, nullable=False)
+#
+#     theory: Mapped["TheoryUnit"] = relationship(back_populates="theory_video")

@@ -2,7 +2,7 @@ from fastapi import FastAPI, APIRouter, status, Depends
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-# from game.levels.router import router as levels_router
+from game.levels.router import router as levels_router
 from game.modules.router import router as modules_router
 from game.map.router import router as map_router
 # from game.units.tasks.router import router as tasks_router
@@ -54,7 +54,7 @@ async def unprotected_route():
 
 
 include_routers(
-    # levels_router,
+    levels_router,
     modules_router,
     map_router,
     # tasks_router,

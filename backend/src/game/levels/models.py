@@ -1,25 +1,19 @@
-import enum
 import typing
 import uuid
 
-from sqlalchemy import String, Boolean, UUID, ForeignKey, Enum
+from sqlalchemy import String, UUID, ForeignKey
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.ext.associationproxy import AssociationProxy, association_proxy
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
+from game.levels.enums import LevelStates
 from game.levels.schemas import LevelRead
+from game.units import TaskUnit, TheoryUnit
 
 if typing.TYPE_CHECKING:
     from game.modules.models import Module
     from game.units.tasks.models import TaskUnit
     from game.units.theory.models import TheoryUnit
-
-
-class LevelStates(enum.Enum):
-    NotViewed = enum.auto()
-    Viewed = enum.auto()
-    Completed = enum.auto()
 
 
 class Level(BaseModel):

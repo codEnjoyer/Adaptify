@@ -20,8 +20,9 @@ class LevelRead(__LevelBase):
 
 
 class LevelCreate(__LevelBase):
-    theory_units: list[TheoryUnitRead] | None
-    task_units: list[TaskUnitRead] | None
+    # theory_units: list[TheoryUnitRead] | None
+    # task_units: list[TaskUnitRead] | None
+    pass
 
 
 class LevelUpdate(__LevelBase):

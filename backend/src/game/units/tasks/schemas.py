@@ -1,10 +1,9 @@
-import typing
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
 from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate
-from game.units.tasks import TaskTypes
+from game.units.tasks.enums import TaskTypes
 
 
 class __TaskUnitBase(BaseModel):
