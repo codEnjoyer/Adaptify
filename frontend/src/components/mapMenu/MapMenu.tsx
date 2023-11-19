@@ -7,8 +7,9 @@ import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile.tsx";
 import Module from "./UIMapMenu/Level/Module.tsx";
 import mapMenuStore from "../../store/mapMenuStore.ts";
+import {observer} from "mobx-react-lite";
 
-const MapMenu: React.FC = () => {
+const MapMenu: React.FC = observer(() => {
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -17,8 +18,8 @@ const MapMenu: React.FC = () => {
 
         mapMenuStore.fetchAvailableMaps().then(() => {
             mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
-                mapMenuStore.setModulesMap(mapMenuStore?.mapMenu?.modules_ids)
-                console.log(mapMenuStore.modulesMap.join(" "))
+                mapMenuStore.setModulesMap(mapMenuStore.mapMenu!.modules_ids)
+                mapMenuStore.fetchModuleById(mapMenuStore?.modulesMap[0]).then()
             })
         })
     }, [navigate])
@@ -26,17 +27,18 @@ const MapMenu: React.FC = () => {
     return (
         <div>
             <Coins coins={100} additionalClassname="coins"/>
-            <ChooseModuleWindow/>
+            <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
             <UserProfile/>
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    {geolocations.map((geolocation) =>
-                        <Module id={geolocation.id} level={geolocation.level} key={geolocation.id}/>)}
+                    {console.log(mapMenuStore.currentModule?.levels_ids)}
+                    {mapMenuStore.currentModule?.levels_ids.map((level, index) =>
+                        <Module id={index} level={level} key={index}/>)}
                 </div>
             </div>
         </div>
     );
-};
+});
 
 export default MapMenu;

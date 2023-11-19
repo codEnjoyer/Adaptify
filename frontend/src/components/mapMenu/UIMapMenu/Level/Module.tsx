@@ -5,7 +5,7 @@ import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IGeolocationProps {
     id: number,
-    level: ILevelType
+    level: string
 }
 
 const Module: React.FC<IGeolocationProps> = ({id, level}) => {
