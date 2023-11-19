@@ -25,7 +25,7 @@ class TaskUnit(BaseModel):
     score_reward: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
 
     questions: Mapped[list["Question"]] = relationship(back_populates='task', lazy='selectin')
-    level: Mapped[list["Level"]] = relationship(secondary="level_tasks", back_populates='task_units', lazy='selectin')
+    level: Mapped[list["Level"]] = relationship(back_populates='task_units', lazy='selectin')
 
     def to_read_schema(self) -> TaskUnitRead:
         return TaskUnitRead(id=self.id,

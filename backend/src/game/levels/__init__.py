@@ -1,1 +1,1 @@
-from .models import Level, LevelTheory, LevelTask
+from .models import Level

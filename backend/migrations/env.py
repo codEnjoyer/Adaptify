@@ -32,7 +32,7 @@ if config.config_file_name is not None:
 
 from game.map import Map
 from game.modules import Module
-from game.levels import Level, LevelTheory, LevelTask
+from game.levels import Level
 from game.units.tasks import TaskUnit, EmployeesTask
 from game.units.theory import TheoryUnit  # , TheoryVideo
 from game.units.tasks.questions import Question
