@@ -5,7 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from auth.base_config import current_user, current_superuser
 from database import get_async_session
-from game.dependencies import map_service, module_service
+from game.dependencies import map_service, module_service, level_service
+from services.level_service import LevelService
 from services.map_service import MapService
 from services.module_service import ModuleService
 from users.models import User
@@ -15,6 +16,7 @@ CurrentSuperuser = Annotated[User, Depends(current_superuser)]
 
 MapServiceType = Annotated[MapService, Depends(map_service)]
 ModuleServiceType = Annotated[ModuleService, Depends(module_service)]
+LevelServiceType = Annotated[LevelService, Depends(level_service)]
 
 AsyncDBSession = Annotated[AsyncSession, Depends(get_async_session)]
 QueryDBLimit = Annotated[int, Query(ge=0, le=10 ** 3)]
