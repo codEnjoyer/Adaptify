@@ -25,7 +25,7 @@ class SQLAlchemyRepository(AbstractRepository):
 
     async def get_one(self, id: uuid.UUID) -> model:
         async with async_session_maker() as session:
-            stmt = select(self.model).where(self.model.id == id).order_by(self.model.title)
+            stmt = select(self.model).where(self.model.id == id)
             res = await session.execute(stmt)
             return res.scalar_one()
 

@@ -25,11 +25,9 @@ class Level(BaseModel):
 
     module: Mapped["Module"] = relationship(back_populates='levels')
 
-    theory_units: Mapped[list["TheoryUnit"]] = relationship(
-        secondary="level_theory_blocks", back_populates='level', lazy='selectin')
+    theory_units: Mapped[list["TheoryUnit"]] = relationship(back_populates='level', lazy='selectin')
 
-    task_units: Mapped[list["TaskUnit"]] = relationship(
-        secondary="level_tasks", back_populates='level', lazy='selectin')
+    task_units: Mapped[list["TaskUnit"]] = relationship(back_populates='level', lazy='selectin')
 
     def to_read_schema(self) -> LevelRead:
         return LevelRead(id=self.id,
@@ -46,17 +44,3 @@ class EmployeesLevel(BaseModel):
     employee_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('employees.id'), nullable=False, primary_key=True)
     state: Mapped[LevelStates] = mapped_column(
         postgresql.ENUM(LevelStates, name='level_states'), nullable=False, default=LevelStates.NotViewed)
-
-
-class LevelTask(BaseModel):
-    __tablename__ = "level_tasks"
-
-    level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id'), nullable=False, primary_key=True)
-    task_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tasks.id'), nullable=False, primary_key=True)
-
-
-class LevelTheory(BaseModel):
-    __tablename__ = "level_theory_blocks"
-
-    level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id'), nullable=False, primary_key=True)
-    theory_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('theory_blocks.id'), nullable=False, primary_key=True)

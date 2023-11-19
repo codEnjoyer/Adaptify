@@ -1,20 +1,17 @@
 import uuid
-import enum
 from typing import TYPE_CHECKING
 
-from sqlalchemy import UUID, Enum, String, ForeignKey
+from sqlalchemy import UUID, String, ForeignKey
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
+from game.units.tasks.questions.enums import QuestionTypes
+from game.units.tasks.questions.schemas import QuestionRead
 
 if TYPE_CHECKING:
-    from game.units.tasks.models import TaskUnit
-
-
-class QuestionTypes(enum.Enum):
-    SingleChoice = enum.auto()
-    MultipleChoice = enum.auto()
+    from game.units.tasks import TaskUnit
+    from game.units.tasks.questions.answers import AnswerOption
 
 
 class Question(BaseModel):
@@ -28,15 +25,10 @@ class Question(BaseModel):
     correct_answer_id: Mapped[uuid.UUID] = mapped_column(UUID, default=uuid.uuid4)
 
     task: Mapped["TaskUnit"] = relationship(back_populates='questions')
-    possible_answers: Mapped[list["AnswerOption"]] = relationship(back_populates='question')
-    correct_answers: Mapped[list["AnswerOption"]] = relationship(back_populates='question')
+    possible_answers: Mapped[list["AnswerOption"]] = relationship(back_populates='question', lazy='selectin')
 
-
-class AnswerOption(BaseModel):
-    __tablename__ = 'answers'
-
-    id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    question_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('questions.id'), default=uuid.uuid4)
-    content: Mapped[str] = mapped_column(String, nullable=False, default='Ответ?')
-
-    question: Mapped["Question"] = relationship(back_populates='possible_answers')
+    def to_read_schema(self) -> QuestionRead:
+        return QuestionRead(id=self.id,
+                            task_id=self.task_id,
+                            question=self.question,
+                            possible_answers=self.possible_answers)

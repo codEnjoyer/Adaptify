@@ -2,10 +2,10 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from game.units.tasks.questions.models import QuestionTypes
+from game.units.tasks.questions.answers.schemas import AnswerOptionRead, AnswerOptionCreate
+from game.units.tasks.questions.enums import QuestionTypes
 
 
-# region Question
 class __QuestionBase(BaseModel):
     task_id: UUID
     type: QuestionTypes
@@ -16,36 +16,15 @@ class __QuestionBase(BaseModel):
 
 class QuestionRead(__QuestionBase):
     id: UUID
-    possible_answers: list["AnswerRead"]
+    possible_answers: list[AnswerOptionRead]
 
 
 class QuestionCreate(__QuestionBase):
-    correct_answer: "AnswerCreate"
-    possible_answers: list["AnswerCreate"]
+    correct_answer: AnswerOptionCreate
+    possible_answers: list[AnswerOptionCreate]
 
 
 class QuestionUpdate(__QuestionBase):
     type: QuestionTypes | None = None
     question: str | None = None
-    possible_answers: list["AnswerUpdate"] | None = None
-
-
-# endregion Question
-
-# region Answer
-class __AnswerBase(BaseModel):
-    content: str
-
-
-class AnswerRead(__AnswerBase):
-    question_id: UUID
-
-
-class AnswerCreate(__AnswerBase):
-    pass
-
-
-class AnswerUpdate(__AnswerBase):
-    content: str | None = None
-    question_id: UUID | None = None
-# endregion Answer
+    possible_answers: list[AnswerOptionCreate] | None = None
