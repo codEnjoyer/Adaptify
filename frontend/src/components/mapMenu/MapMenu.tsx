@@ -34,13 +34,13 @@ const MapMenu: React.FC = observer(() => {
     return (
         <div>
             <Coins coins={100} additionalClassname="coins"/>
-            <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title.toUpperCase()}/>
+            <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
             <UserProfile/>
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {mapMenuStore.availableLevels.map((level, index) =>
-                        <Module id={(index+1).toString()} title={level.title} key={level.id}/>)
+                        <Module id={(index + 1).toString()} key={level.id} title={level.title}/>)
                     }
                 </div>
             </div>

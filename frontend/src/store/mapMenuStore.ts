@@ -100,7 +100,7 @@ class MapMenuStore {
     }
 
     async deleteModule(id: string) {
-        axios.delete("http://localhost:8000/modules" + id)
+        axios.delete("http://localhost:8000/modules/" + id)
     }
 
     updateModuleById(mapId: string, id: string, title?: string, previousModuleId?: string, nextModuleId?: string, levels?: string[]) {

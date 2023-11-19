@@ -2,16 +2,20 @@ import React, {useState} from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
-import {ILevelType} from "../../../../types/LevelType.ts";
 
-const ModalLevelBody: React.FC<ILevelType> = ({title}) => {
-    const tasks = [
-        {name: "theory", element: <Theory/>},
-        {name: "video", element: <Video/>},
-        {name: "test", element: <Test/>}
-    ]
+interface IModalLevelProps {
+    id: string,
+    title: string
+}
 
-    const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
+const ModalLevelBody: React.FC<IModalLevelProps> = ({title}) => {
+    // const tasks = [
+    //     {name: "theory", element: <Theory/>},
+    //     {name: "video", element: <Video/>},
+    //     {name: "test", element: <Test/>}
+    // ]
+    //
+    // const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
 
     return (
         <div>
