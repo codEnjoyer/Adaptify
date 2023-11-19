@@ -1,6 +1,5 @@
 import uuid
 
-from game.modules.schemas import ModuleRead, ModuleCreate, ModuleUpdate
 from game.units.tasks.schemas import TaskUnitCreate, TaskUnitRead, TaskUnitUpdate
 from repository.abstract import AbstractRepository
 
