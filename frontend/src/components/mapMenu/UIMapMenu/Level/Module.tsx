@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 import ModalLevelBody from "./ModalLevelBody.tsx";
-import {LevelType} from "../../../../types/LevelType.ts";
+import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IGeolocationProps {
     id: number,
-    level: LevelType
+    level: ILevelType
 }
 
-const StarUnit: React.FC<IGeolocationProps> = ({id, level}) => {
+const Module: React.FC<IGeolocationProps> = ({id, level}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
     return (
@@ -17,8 +17,8 @@ const StarUnit: React.FC<IGeolocationProps> = ({id, level}) => {
             {isOpenModalWindow
                 ? <ModalWindow
                     onClose={() => setOpenModalWindow(!isOpenModalWindow)}
-                    body={<ModalLevelBody levelName={level.levelName} title={level.title}
-                                          menu={level.menu}/>}
+                    body={<ModalLevelBody levelName={level} title={level}
+                                          menu={level}/>}
                 />
                 : ""}
 
@@ -45,4 +45,4 @@ const StarUnit: React.FC<IGeolocationProps> = ({id, level}) => {
 };
 
 
-export default StarUnit;
+export default Module;

@@ -1,8 +1,8 @@
-import {ILevelType} from "./LevelType.ts";
-
 export interface IModuleType {
-    mapId: string,
+    map_id: string,
     title: string,
-    moduleId: string,
-    modules_ids: ILevelType[]
+    previous_module_id: string,
+    next_module_id: string,
+    id: string,
+    levels_ids: string[]
 }

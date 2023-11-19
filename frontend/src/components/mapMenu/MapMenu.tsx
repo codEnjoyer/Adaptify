@@ -5,9 +5,8 @@ import Coins from "./UIMapMenu/Coins.tsx";
 import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile.tsx";
-import StarUnit from "./UIMapMenu/Level/StarUnit.tsx";
+import Module from "./UIMapMenu/Level/Module.tsx";
 import mapMenuStore from "../../store/mapMenuStore.ts";
-import {ILevelType} from "../../types/LevelType.ts";
 
 const MapMenu: React.FC = () => {
     const navigate = useNavigate()
@@ -24,54 +23,6 @@ const MapMenu: React.FC = () => {
         })
     }, [navigate])
 
-    // const onHandleSignOut = () => {
-    //     authStore.logOutUser().then()
-    //     navigate('/')
-    // }
-
-    const geolocations: ILevelType[] = [
-        {
-            id: "1",
-            levels: {
-                levelName: "Уровень 1",
-                title: "Собери помидорки",
-                menu: [{
-                    taskName: "test",
-                    body: "Какая-то информация которая очень хорошо тебе поведает тайну о помидорках и ещё какая-то информация которая очень хорошо тебе поведает тайну о помидорках ",
-                }]
-            }
-        },
-        {
-            id: "2",
-            level: {
-                levelName: "Уровень 2",
-                title: "Собери не помидорки",
-                menu: [{
-                    taskName: "theory",
-                    body: "Я уже не помидорка"
-                }]
-            }
-        },
-        {
-            id: "3",
-            level: {
-                levelName: "Уровень 3",
-                title: "Начни текст",
-                menu: [
-                    {
-                        taskName: "video",
-                        body: "Я помидорка"
-                    },
-                    {
-                        taskName: "test",
-                        body: "БУБУБУБУ"
-                    }
-                ]
-            }
-        },
-
-    ]
-
     return (
         <div>
             <Coins coins={100} additionalClassname="coins"/>
@@ -81,10 +32,9 @@ const MapMenu: React.FC = () => {
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {geolocations.map((geolocation) =>
-                        <StarUnit id={geolocation.id} level={geolocation.level} key={geolocation.id}/>)}
+                        <Module id={geolocation.id} level={geolocation.level} key={geolocation.id}/>)}
                 </div>
             </div>
-            {/*<CustomButton text="Выйти" handleOnClick={onHandleSignOut}/>*/}
         </div>
     );
 };

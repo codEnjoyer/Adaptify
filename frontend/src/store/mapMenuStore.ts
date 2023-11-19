@@ -1,10 +1,14 @@
 import {makeAutoObservable} from "mobx";
 import axios from "axios";
+import {IMapType} from "../types/MapType.ts";
 import {IModuleType} from "../types/ModuleType.ts";
 
 class MapMenuStore {
-    mapMenu: IModuleType[] = []
-    availableMaps: { id: string }[] = []
+    mapMenu: IMapType | null = null
+    availableMaps: IMapType[] = []
+
+    modulesMap: IModuleType | null = null
+    availableModules: IModuleType[] = []
 
     constructor() {
         makeAutoObservable(this)
@@ -18,9 +22,9 @@ class MapMenuStore {
         await axios.get("http://localhost:8000/maps/" + id).then((response) => this.mapMenu = response.data)
     }
 
-    // setModulesMap(newModulesMap: IModuleType[]) {
-    //     this.modulesMap = newModulesMap
-    // }
+    setModulesMap(newModulesMap: IModuleType) {
+        this.modulesMap = newModulesMap
+    }
 
     // updateMapById(id: string) {
     //     axios.patch(id, {

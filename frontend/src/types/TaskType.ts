@@ -1,4 +1,5 @@
 export interface ITaskType {
-    taskName: string,
+    id: string,
+    name: string,
     body: string
 }

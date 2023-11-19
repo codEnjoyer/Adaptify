@@ -5,4 +5,3 @@ export interface IRouteType {
     path: string,
     element: ReactNode
 }
-
