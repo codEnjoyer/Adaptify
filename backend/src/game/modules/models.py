@@ -7,8 +7,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
 from game.modules.schemas import ModuleRead
-from game.levels import Level
-from game.map import Map
+
+if typing.TYPE_CHECKING:
+    from game.levels import Level
+    from game.map import Map
 
 
 class Module(BaseModel):
@@ -21,11 +23,9 @@ class Module(BaseModel):
     next_module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=True)
 
     map: Mapped["Map"] = relationship(back_populates='modules', lazy='selectin')
+
     levels: Mapped[list["Level"]] = relationship(back_populates='module', lazy='selectin')
     levels_ids: AssociationProxy[list[uuid.UUID]] = association_proxy('levels', 'id')
-
-    # next_module: Mapped["Module"] = relationship(back_populates='previous_module')
-    # previous_module: Mapped["Module"] = relationship(back_populates='next_module')
 
     def to_read_schema(self) -> ModuleRead:
         return ModuleRead(id=self.id,
