@@ -30,13 +30,14 @@ if config.config_file_name is not None:
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-from game.map.models import Map
-from game.modules.models import Module
-from game.levels.models import Level, LevelTheory, LevelTask
-from game.units.tasks.models import TaskUnit, EmployeesTask
-from game.units.tasks.questions.models import Question, AnswerOption
+from game.map import Map
+from game.modules import Module
+from game.levels import Level, LevelTheory, LevelTask
+from game.units.tasks import TaskUnit, EmployeesTask
+from game.units.theory import TheoryUnit  # , TheoryVideo
+from game.units.tasks.questions import Question
+from game.units.tasks.questions.answers import AnswerOption
 from game.units.tasks.proofs.models import Proof, ProofVideos, ProofImages
-from game.units.theory.models import TheoryUnit  # , TheoryVideo
 
 from users.models import User
 from users.tutors.models import Tutor

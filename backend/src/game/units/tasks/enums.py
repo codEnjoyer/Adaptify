@@ -1,7 +1,7 @@
-from enum import Enum, auto
+from enum import Enum, auto, StrEnum
 
 
-class TaskTypes(Enum):
+class TaskTypes(StrEnum):
     Test = auto()
 
 
