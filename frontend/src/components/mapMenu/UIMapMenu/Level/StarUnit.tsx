@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
-import ModalLevelBody, {IModalLevelProps} from "./ModalLevelBody.tsx";
+import ModalLevelBody from "./ModalLevelBody.tsx";
+import {LevelType} from "../../../../types/LevelType.ts";
 
 interface IGeolocationProps {
     id: number,
-    level: IModalLevelProps
+    level: LevelType
 }
 
 const StarUnit: React.FC<IGeolocationProps> = ({id, level}) => {

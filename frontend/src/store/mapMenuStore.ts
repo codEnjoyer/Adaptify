@@ -1,14 +1,25 @@
 import {makeAutoObservable} from "mobx";
-import {GeolocationType} from "../types/GeolocationType.ts";
+import axios from "axios";
 
 class MapMenuStore {
+    mapMenu: object | null = null
+    titleMap: string = ""
+    idMap: string = ""
+    idsModules: string[] = []
 
-    coinsCount: number = 0
-    moduleId: string | null = null
-    geolocations: GeolocationType[] = []
+    availableMaps: string[] = []
+    currentMap: string = ""
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    async fetchAvailableMaps() {
+        await axios.get("http://localhost:8000/maps/").then((response) => this.availableMaps = response.data)
+    }
+
+    fetchMapById(id: string) {
+        axios.get("http://localhost:8000/maps/" + id).then((response) => this.mapMenu = response.data)
     }
 }
 

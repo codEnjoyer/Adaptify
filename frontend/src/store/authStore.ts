@@ -49,8 +49,7 @@ class AuthStore {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
-            .then((resp) => {
-                console.log(resp.data.token)
+            .then(() => {
                 this.signInUser()
             })
             .catch((reason) => {

@@ -8,6 +8,7 @@ const ChooseModuleWindow: React.FC<IPropTypes> = () => {
     return (
         <div className="choose-module-window">
             <div className="choose-module-window__wrapper">
+                <br/>
                 МОДУЛЬ 1
             </div>
         </div>
