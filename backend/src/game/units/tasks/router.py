@@ -3,31 +3,48 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from game.units.tasks.schemas import TaskUnitRead, TaskUnitCreate, TaskUnitUpdate
+from utils.types import TaskUnitServiceType
 
-router = APIRouter(prefix="/tasks", tags=["Task"])
-
-
-@router.get("/")
-async def root() -> list[TaskUnitRead]:
-    return []
+router = APIRouter(tags=["Task"])
 
 
-@router.get("/{id}")
-async def get_task(id: UUID) -> TaskUnitRead:
-    return TaskUnitRead()
+@router.get("/tasks/", tags=['Dev'])
+async def root(task_unit_service: TaskUnitServiceType) -> list[TaskUnitRead]:
+    return await task_unit_service.get_all()
 
 
-@router.post("/")
-async def post_task(task_create: TaskUnitCreate) -> TaskUnitRead:
-    return TaskUnitRead()
+@router.get("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/")
+async def get_task_in_level(map_id: UUID,
+                            module_id: UUID,
+                            level_id: UUID,
+                            task_id: UUID,
+                            task_unit_service: TaskUnitServiceType) -> TaskUnitRead:
+    return await task_unit_service.get_one(task_id)
 
 
-@router.delete("/{id}")
-async def delete_task(id: UUID) -> TaskUnitRead:
-    return TaskUnitRead()
+@router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/")
+async def post_task_to_level(map_id: UUID,
+                             module_id: UUID,
+                             level_id: UUID,
+                             task_create: TaskUnitCreate,
+                             task_unit_service: TaskUnitServiceType) -> TaskUnitRead:
+    return await task_unit_service.create_one(level_id, task_create)
 
 
-@router.patch("/{id}")
-async def update_task(id: UUID,
-                      task_update: TaskUnitUpdate) -> TaskUnitRead:
-    return TaskUnitRead()
+@router.delete("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/")
+async def delete_task_from_level(map_id: UUID,
+                                 module_id: UUID,
+                                 level_id: UUID,
+                                 task_id: UUID,
+                                 task_unit_service: TaskUnitServiceType) -> TaskUnitRead:
+    return await task_unit_service.delete_one(task_id)
+
+
+@router.patch("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/")
+async def update_task_in_level(map_id: UUID,
+                               module_id: UUID,
+                               level_id: UUID,
+                               task_id: UUID,
+                               task_update: TaskUnitUpdate,
+                               task_unit_service: TaskUnitServiceType) -> TaskUnitRead:
+    return await task_unit_service.update_one(task_id, task_update)
