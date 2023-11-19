@@ -1,6 +1,6 @@
 export interface ILevelType {
     id: string,
-    name: string,
-    body: string,
-    tasks: string[]
+    title: string,
+    body?: string,
+    tasks?: string[]
 }

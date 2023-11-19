@@ -18,8 +18,15 @@ const MapMenu: React.FC = observer(() => {
 
         mapMenuStore.fetchAvailableMaps().then(() => {
             mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
-                mapMenuStore.setModulesMap(mapMenuStore.mapMenu!.modules_ids)
-                mapMenuStore.fetchModuleById(mapMenuStore?.modulesMap[0]).then()
+                mapMenuStore.fetchModules().then(() => {
+                    mapMenuStore.fetchModuleById(mapMenuStore.availableModules[0].id).then(() => {
+                        mapMenuStore.fetchLevels().then(() => {
+                            console.log(mapMenuStore.availableLevels[0])
+                        })
+                    })
+                })
+                // mapMenuStore.setModulesMap(mapMenuStore.mapMenu!.modules_ids)
+                // mapMenuStore.fetchModuleById(mapMenuStore?.modulesMap[0]).then()
             })
         })
     }, [navigate])
@@ -27,13 +34,14 @@ const MapMenu: React.FC = observer(() => {
     return (
         <div>
             <Coins coins={100} additionalClassname="coins"/>
-            <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
+            <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title.toUpperCase()}/>
             <UserProfile/>
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    {mapMenuStore.currentModule?.levels_ids.map((level, index) =>
-                        <Module id={index.toString()} level={level} key={index}/>)}
+                    {mapMenuStore.availableLevels.map((level, index) =>
+                        <Module id={(index+1).toString()} title={level.title} key={level.id}/>)
+                    }
                 </div>
             </div>
         </div>
