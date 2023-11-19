@@ -9,7 +9,7 @@ router = APIRouter(tags=["Task"])
 
 
 @router.get("/tasks/", tags=['Dev'])
-async def root(task_unit_service: TaskUnitServiceType) -> TaskUnitRead:
+async def root(task_unit_service: TaskUnitServiceType) -> list[TaskUnitRead]:
     return await task_unit_service.get_all()
 
 
