@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
-import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 import authStore from "../../store/authStore.ts";
 import {useNavigate} from "react-router-dom";
 import Coins from "./UIMapMenu/Coins.tsx";
 import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile.tsx";
-import {GeolocationType} from "../../types/GeolocationType.ts";
 import StarUnit from "./UIMapMenu/Level/StarUnit.tsx";
+import mapMenuStore from "../../store/mapMenuStore.ts";
+import {ILevelType} from "../../types/LevelType.ts";
 
 const MapMenu: React.FC = () => {
     const navigate = useNavigate()
@@ -15,17 +15,24 @@ const MapMenu: React.FC = () => {
     useEffect(() => {
         if (!authStore.isUserAuthorized)
             navigate("/")
+
+        mapMenuStore.fetchAvailableMaps().then(() => {
+            mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
+                mapMenuStore.setModulesMap(mapMenuStore?.mapMenu?.modules_ids)
+                console.log(mapMenuStore.modulesMap.join(" "))
+            })
+        })
     }, [navigate])
 
-    const onHandleSignOut = () => {
-        authStore.logOutUser().then()
-        navigate('/')
-    }
+    // const onHandleSignOut = () => {
+    //     authStore.logOutUser().then()
+    //     navigate('/')
+    // }
 
-    const geolocations: GeolocationType[] = [
+    const geolocations: ILevelType[] = [
         {
-            id: 1,
-            level: {
+            id: "1",
+            levels: {
                 levelName: "Уровень 1",
                 title: "Собери помидорки",
                 menu: [{
@@ -35,7 +42,7 @@ const MapMenu: React.FC = () => {
             }
         },
         {
-            id: 2,
+            id: "2",
             level: {
                 levelName: "Уровень 2",
                 title: "Собери не помидорки",
@@ -46,7 +53,7 @@ const MapMenu: React.FC = () => {
             }
         },
         {
-            id: 3,
+            id: "3",
             level: {
                 levelName: "Уровень 3",
                 title: "Начни текст",

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navigate, Route, Routes, useLocation} from "react-router-dom";
-import {RouteType} from "../types/RouteType.ts";
+import {IRouteType} from "../types/RouteType.ts";
 import WelcomePage from "../components/welcomePage/WelcomePage.tsx";
 import Authentication from "../components/authentication/Authentication.tsx";
 import MapMenu from "../components/mapMenu/MapMenu.tsx";
@@ -8,7 +8,7 @@ import authStore from "../store/authStore.ts";
 import {observer} from "mobx-react-lite";
 
 const AppRouter: React.FC = observer(() => {
-    const publicRoutes: RouteType[] = [
+    const publicRoutes: IRouteType[] = [
         {
             id: 1,
             element: <WelcomePage/>,
@@ -21,7 +21,7 @@ const AppRouter: React.FC = observer(() => {
         }
     ]
 
-    const privateRoutes: RouteType[] = [
+    const privateRoutes: IRouteType[] = [
         {
             id: 2,
             element: <Authentication/>,

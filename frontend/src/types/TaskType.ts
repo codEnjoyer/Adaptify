@@ -1,4 +1,4 @@
-export type TaskType = {
+export interface ITaskType {
     taskName: string,
     body: string
 }

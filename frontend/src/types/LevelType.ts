@@ -1,7 +1,10 @@
-import {TaskType} from "./TaskType.ts";
+import {ITaskType} from "./TaskType.ts";
 
-export type LevelType = {
-    levelName: string,
-    title: string
-    menu: TaskType[]
+export interface ILevelType {
+    id: string,
+    levels: {
+        levelName: string,
+        title: string
+        menu: ITaskType[]
+    }[]
 }
