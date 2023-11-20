@@ -23,7 +23,7 @@ class TheoryUnit(BaseModel):
     # videos: Mapped[list["TheoryVideo"]] = relationship(back_populates="theory_block")
     level: Mapped[list["Level"]] = relationship(back_populates='theory_units')
 
-    def to_read_model(self) -> TheoryUnitRead:
+    def to_read_schema(self) -> TheoryUnitRead:
         return TheoryUnitRead(id=self.id,
                               title=self.title,
                               content=self.content)
