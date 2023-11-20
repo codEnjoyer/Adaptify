@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class TaskUnit(BaseModel):
-    __tablename__ = 'tasks'
+    __tablename__ = 'task_units'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     type: Mapped[TaskTypes] = mapped_column(postgresql.ENUM(TaskTypes, name='task_types'), nullable=False,
@@ -36,10 +36,10 @@ class TaskUnit(BaseModel):
                             questions=[model.to_read_schema() for model in self.questions])
 
 
-class EmployeesTask(BaseModel):
+class EmployeeTask(BaseModel):
     __tablename__ = 'task_employees'
 
-    task_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tasks.id'), primary_key=True)
+    task_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('task_units.id'), primary_key=True)
     employee_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('employees.id'), primary_key=True)
     state: Mapped[TaskStates] = mapped_column(postgresql.ENUM(TaskStates, name='task_states'), nullable=False,
                                               default=TaskStates.NotViewed)
