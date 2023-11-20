@@ -20,7 +20,7 @@ class QuestionRepository(SQLAlchemyRepository):
             possible_answers = [AnswerOption(**answer_option_dict, question_id=question_to_add.id) for
                                 answer_option_dict in possible_answers_list]
             for answer_option in possible_answers:
-                question_to_add.possible_answers.append(answer_option)
+                question_to_add.answer_options.append(answer_option)
 
             session.add(question_to_add)
             await session.commit()

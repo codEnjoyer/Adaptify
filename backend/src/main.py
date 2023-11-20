@@ -9,9 +9,9 @@ from game.units.tasks.router import router as tasks_router
 from game.units.tasks.questions.router import router as questions_router
 from game.units.theory.router import router as theory_router
 
-# from users.router import router as users_router
-# from users.tutors.router import router as tutors_router
-# from users.employees.router import router as employees_router
+from users.router import router as users_router
+from users.tutors.router import router as tutors_router
+from users.employees.router import router as employees_router
 
 from auth.router import router as auth_router
 from auth.base_config import current_user
@@ -61,8 +61,8 @@ include_routers(
     tasks_router,
     questions_router,
     theory_router,
-    # users_router,
-    # tutors_router,
-    # employees_router,
+    users_router,
+    tutors_router,
+    employees_router,
     auth_router
 )

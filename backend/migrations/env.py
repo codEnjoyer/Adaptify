@@ -33,15 +33,15 @@ if config.config_file_name is not None:
 from game.map import Map
 from game.modules import Module
 from game.levels import Level
-from game.units.tasks import TaskUnit, EmployeesTask
+from game.units.tasks import TaskUnit, EmployeeTask
 from game.units.theory import TheoryUnit  # , TheoryVideo
 from game.units.tasks.questions import Question
 from game.units.tasks.questions.answers import AnswerOption
 from game.units.tasks.proofs.models import Proof, ProofVideos, ProofImages
 
-from users.models import User
-from users.tutors.models import Tutor
-from users.employees.models import Employee
+from users import User
+from users.tutors import Tutor
+from users.employees import Employee
 
 from database import BaseModel
 
