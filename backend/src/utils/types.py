@@ -15,7 +15,8 @@ from services.question_service import QuestionService
 from services.task_unit_service import TaskUnitService
 from services.theory_unit_service import TheoryUnitService
 from services.tutor_service import TutorService
-from users.dependencies import employee_service, tutor_service
+from services.user_service import UserService
+from users.dependencies import employee_service, tutor_service, user_service
 from users.models import User
 
 CurrentUser = Annotated[User, Depends(current_user)]
@@ -28,6 +29,7 @@ TaskUnitServiceType = Annotated[TaskUnitService, Depends(task_unit_service)]
 TheoryUnitServiceType = Annotated[TheoryUnitService, Depends(theory_unit_service)]
 QuestionServiceType = Annotated[QuestionService, Depends(question_service)]
 
+UserServiceType = Annotated[UserService, Depends(user_service)]
 EmployeeServiceType = Annotated[EmployeeService, Depends(employee_service)]
 TutorServiceType = Annotated[TutorService, Depends(tutor_service)]
 
