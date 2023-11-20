@@ -3,20 +3,21 @@ import "./customInput.scss"
 
 interface IPropTypes {
     placeholder?: string,
-    value: string,
+    value?: string,
     handleOnChange?: (e: string) => void,
     type: string,
     autoFocus?: boolean,
     disabled?: boolean,
     width?: string,
-    height?: string
+    height?: string,
+    defaultValue?: string
 }
 
 const CustomInput: React.FC<IPropTypes> =
     ({
          placeholder, value, handleOnChange,
          type, autoFocus, disabled,
-         width, height
+         width, height, defaultValue
      }) => {
         return (
             <div className="custom-input" style={{width: width, height: height}}>
@@ -30,6 +31,7 @@ const CustomInput: React.FC<IPropTypes> =
                        autoFocus={autoFocus !== undefined ? autoFocus : false}
                        disabled={disabled !== undefined ? disabled : false}
                        style={{height: height}}
+                       defaultValue={defaultValue}
                 />
             </div>
         );
