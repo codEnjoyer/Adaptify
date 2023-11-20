@@ -20,7 +20,7 @@ class QuestionRead(__QuestionBase):
 
 
 class QuestionCreate(__QuestionBase):
-    correct_answer: AnswerOptionCreate
+    type: QuestionTypes = QuestionTypes.SingleChoice
     possible_answers: list[AnswerOptionCreate]
 
 
