@@ -6,8 +6,9 @@ from game.levels.router import router as levels_router
 from game.modules.router import router as modules_router
 from game.map.router import router as map_router
 from game.units.tasks.router import router as tasks_router
+from game.units.tasks.questions.router import router as questions_router
 from game.units.theory.router import router as theory_router
-#
+
 # from users.router import router as users_router
 # from users.tutors.router import router as tutors_router
 # from users.employees.router import router as employees_router
@@ -58,6 +59,7 @@ include_routers(
     modules_router,
     map_router,
     tasks_router,
+    questions_router,
     theory_router,
     # users_router,
     # tutors_router,

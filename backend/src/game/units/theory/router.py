@@ -13,13 +13,13 @@ async def root(theory_unit_service: TheoryUnitServiceType) -> list[TheoryUnitRea
     return await theory_unit_service.get_all()
 
 
-@router.get("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/{theory_id}/")
-async def get_level_theory_unit(map_id: UUID,
-                                module_id: UUID,
-                                level_id: UUID,
-                                theory_id: UUID,
-                                theory_unit_service: TheoryUnitServiceType) -> TheoryUnitRead:
-    return await theory_unit_service.get_one(theory_id)
+# @router.get("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/{theory_id}/")
+# async def get_level_theory_unit(map_id: UUID,
+#                                 module_id: UUID,
+#                                 level_id: UUID,
+#                                 theory_id: UUID,
+#                                 theory_unit_service: TheoryUnitServiceType) -> TheoryUnitRead:
+#     return await theory_unit_service.get_one(theory_id)
 
 
 @router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/")

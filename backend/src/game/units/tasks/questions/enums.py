@@ -1,6 +1,6 @@
-from enum import Enum, auto
+from enum import auto, StrEnum
 
 
-class QuestionTypes(Enum):
+class QuestionTypes(StrEnum):
     SingleChoice = auto()
     MultipleChoice = auto()
