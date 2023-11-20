@@ -95,7 +95,7 @@ class MapMenuStore {
 
     async fetchLevelById(id: string) {
         await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + id).then((response) => {
-            console.log(response.data)
+            this.currentLevelId = response.data
         })
     }
 
@@ -115,10 +115,41 @@ class MapMenuStore {
     }
 
     createTheoryUnit() {
-        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + "8aa85f64-5717-4562-b3fc-2c963f66afa6" + "/theory", {
+        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + this.currentLevelId + "/theory", {
             title: "Заголовок 1",
             content: "Контент"
         })
+    }
+
+    createTaskUnit() {
+        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + this.currentLevelId + "/tasks", {
+            type: "test",
+            score_reward: 100,
+            requires_review: false
+        })
+    }
+
+    addQuestionToTaskUnit() {
+        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId
+            + "/levels/" + this.currentLevelId + "/tasks/" + "b12de86e-fcd9-4761-89f0-b80d9583822d",
+            {
+                type: "singlechoice",
+                question: "Кто такой вопрос?",
+                possible_answers: [
+                    {
+                        answer: "Я",
+                        is_correct: false
+                    },
+                    {
+                        answer: "Не я",
+                        is_correct: true
+                    },
+                    {
+                        answer: "Не ты",
+                        is_correct: false
+                    }
+                ]
+            })
     }
 }
 

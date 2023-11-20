@@ -33,13 +33,14 @@ const MapMenu: React.FC = observer(() => {
             <Coins coins={100} additionalClassname="coins"/>
             <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
             <UserProfile/>
+            <button onClick={() => mapMenuStore.addQuestionToTaskUnit()}>asd</button>
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {mapMenuStore.availableLevels.map((level, index) => {
-                        return <Module id={(index + 1).toString()} key={level.id} title={level.title} theoryUnits={level.theory_units}/>
-                    })
-                    }
+                        return <Module id={(index + 1).toString()} key={level.id} title={level.title}
+                                       theoryUnits={level.theory_units}/>
+                    })}
                 </div>
             </div>
         </div>
