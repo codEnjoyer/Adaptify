@@ -113,6 +113,13 @@ class MapMenuStore {
             levels_ids: levels
         })
     }
+
+    createTheoryUnit() {
+        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + "8aa85f64-5717-4562-b3fc-2c963f66afa6" + "/theory", {
+            title: "Заголовок 1",
+            content: "Контент"
+        })
+    }
 }
 
 export default new MapMenuStore()

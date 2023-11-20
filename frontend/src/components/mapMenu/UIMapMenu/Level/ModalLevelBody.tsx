@@ -2,20 +2,33 @@ import React, {useState} from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
+import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 
 interface IModalLevelProps {
-    id: string,
-    title: string
+    title: string,
+    theoryUnits?: ITheoryUnitType[]
 }
 
-const ModalLevelBody: React.FC<IModalLevelProps> = ({title}) => {
-    // const tasks = [
-    //     {name: "theory", element: <Theory/>},
-    //     {name: "video", element: <Video/>},
-    //     {name: "test", element: <Test/>}
-    // ]
-    //
-    // const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
+const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits}) => {
+    const tasks = [
+        {name: "theory", element: <Theory/>},
+        {name: "video", element: <Video/>},
+        {name: "test", element: <Test/>}
+    ]
+
+    console.log(theoryUnits)
+
+    const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
+
+    const renderMenuTheoryBlocks = (countTheoryBlocks: number) => {
+        const theoryBlocks: JSX.Element[] = []
+        for (let i = 0; i < countTheoryBlocks; i++) {
+            theoryBlocks.push(<div key={i} className="menu-item" onClick={() => {
+                setCurrentTaskIndex(i)
+            }}>{tasks[0].element}</div>)
+        }
+        return theoryBlocks
+    }
 
     return (
         <div>
@@ -31,31 +44,17 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title}) => {
                 </div>
             </div>
 
-            {/*<div className="menu">*/}
-            {/*    {tasks.map((item, index) =>*/}
-            {/*        tasks.map((task) => {*/}
-            {/*            return task === item*/}
-            {/*                ? <div key={index} className="menu-item" onClick={() => {*/}
-            {/*                    setCurrentTaskIndex(index)*/}
-            {/*                }}>{task}</div>*/}
-            {/*                : ""*/}
-            {/*        }))}*/}
+            {theoryUnits && theoryUnits.length !== 0
+                ? <div className="menu">{renderMenuTheoryBlocks(theoryUnits!.length)}</div>
+                : ""}
 
-            {/*    /!*{tasks.map((item, index) =>*!/*/}
-            {/*    /!*    tasks.map((task) => {*!/*/}
-            {/*    /!*        return task.name === item.taskName*!/*/}
-            {/*    /!*            ? <div key={index} className="menu-item" onClick={() => {*!/*/}
-            {/*    /!*                setCurrentTaskIndex(index)*!/*/}
-            {/*    /!*            }}>{task.element}</div>*!/*/}
-            {/*    /!*            : ""*!/*/}
-            {/*    /!*    }))}*!/*/}
-
-            {/*</div>*/}
-            <div className="text-info">
-                <div className="level-title">{title.toUpperCase()}</div>
-                {/*<div className="level-body">{menu[currentTaskIndex].body}</div>*/}
-                {/*<div className="level-body">{tasks[currentTaskIndex]}</div>*/}
-            </div>
+            {theoryUnits![currentTaskIndex] !== undefined &&
+                (<div className="text-info">
+                        <div className="level-title">{theoryUnits![currentTaskIndex].title}</div>
+                        <div className="level-body">{theoryUnits![currentTaskIndex].content}</div>
+                    </div>
+                )
+            }
         </div>
     );
 };

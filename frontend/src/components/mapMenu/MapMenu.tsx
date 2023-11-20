@@ -21,7 +21,6 @@ const MapMenu: React.FC = observer(() => {
                 mapMenuStore.fetchModules().then(() => {
                     mapMenuStore.fetchModuleById(mapMenuStore.availableModules[0].id).then(() => {
                         mapMenuStore.fetchLevels().then(() => {
-                            console.log(mapMenuStore.availableLevels)
                         })
                     })
                 })
@@ -37,8 +36,9 @@ const MapMenu: React.FC = observer(() => {
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    {mapMenuStore.availableLevels.map((level, index) =>
-                        <Module id={(index + 1).toString()} key={level.id} title={level.title}/>)
+                    {mapMenuStore.availableLevels.map((level, index) => {
+                        return <Module id={(index + 1).toString()} key={level.id} title={level.title} theoryUnits={level.theory_units}/>
+                    })
                     }
                 </div>
             </div>

@@ -4,10 +4,11 @@ import ModalLevelBody from "./ModalLevelBody.tsx";
 
 interface IModuleProps {
     id: string,
-    title: string
+    title: string,
+    theoryUnits?: string[]
 }
 
-const Module: React.FC<IModuleProps> = ({id, title}) => {
+const Module: React.FC<IModuleProps> = ({id, title, theoryUnits}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
     return (
@@ -16,14 +17,13 @@ const Module: React.FC<IModuleProps> = ({id, title}) => {
             {isOpenModalWindow
                 ? <ModalWindow
                     onClose={() => setOpenModalWindow(!isOpenModalWindow)}
-                    body={<ModalLevelBody id={id} title={title}/>}
+                    body={<ModalLevelBody key={id} title={title} theoryUnits={theoryUnits}/>}
                 />
                 : ""}
 
             <div>
                 <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g style={{mixBlendMode: "color-dodge"}}>
-                        <rect width="150" height="150" fill="black"/>
                         <circle cx="75" cy="75" r="75" fill="url(#paint0_radial_108_17393)"/>
                     </g>
                     <defs>
