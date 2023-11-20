@@ -8,25 +8,31 @@ interface IPropTypes {
     type: string,
     autoFocus?: boolean,
     disabled?: boolean,
-    width?: string
+    width?: string,
+    height?: string
 }
 
-const CustomInput: React.FC<IPropTypes> = ({placeholder, value, handleOnChange, type, autoFocus, disabled, width}) => {
-    console.log(width)
-    return (
-        <div className="custom-input" style={{width: width}}>
-            <input type={type} className="login__input"
-                   placeholder={placeholder !== undefined ? placeholder : ""}
-                   value={value}
-                   onChange={(e) => {
-                       if (handleOnChange)
-                           handleOnChange(e.target.value)
-                   }}
-                   autoFocus={autoFocus !== undefined ? autoFocus : false}
-                   disabled={disabled !== undefined ? disabled : false}
-            />
-        </div>
-    );
-};
+const CustomInput: React.FC<IPropTypes> =
+    ({
+         placeholder, value, handleOnChange,
+         type, autoFocus, disabled,
+         width, height
+     }) => {
+        return (
+            <div className="custom-input" style={{width: width, height: height}}>
+                <input type={type} className="login__input"
+                       placeholder={placeholder !== undefined ? placeholder : ""}
+                       value={value}
+                       onChange={(e) => {
+                           if (handleOnChange)
+                               handleOnChange(e.target.value)
+                       }}
+                       autoFocus={autoFocus !== undefined ? autoFocus : false}
+                       disabled={disabled !== undefined ? disabled : false}
+                       style={{height: height}}
+                />
+            </div>
+        );
+    };
 
 export default CustomInput;
