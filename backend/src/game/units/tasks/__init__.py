@@ -1,1 +1,1 @@
-from .models import TaskUnit, EmployeesTask
+from .models import TaskUnit, EmployeeTask
