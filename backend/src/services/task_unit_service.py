@@ -7,8 +7,8 @@ from repository.abstract import AbstractRepository
 class TaskUnitService:
     __task_unit_repo: AbstractRepository
 
-    def __init__(self, map_repo: type[AbstractRepository]):
-        self.__task_unit_repo = map_repo()
+    def __init__(self, repository: type[AbstractRepository]):
+        self.__task_unit_repo = repository()
 
     async def create_one(self, level_id: uuid.UUID, schema_create: TaskUnitCreate) -> TaskUnitRead:
         schema_dict = schema_create.model_dump()
