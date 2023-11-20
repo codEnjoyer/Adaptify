@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import Coins from "./UIMapMenu/Coins.tsx";
 import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
-import UserProfile from "./UIMapMenu/UserProfile.tsx";
+import UserProfile from "./UIMapMenu/UserProfile/UserProfile.tsx";
 import Module from "./UIMapMenu/Level/Module.tsx";
 import mapMenuStore from "../../store/mapMenuStore.ts";
 import {observer} from "mobx-react-lite";
