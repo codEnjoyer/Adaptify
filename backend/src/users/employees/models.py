@@ -8,6 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import BaseModel
 from game.units.tasks import TaskUnit
 from game.levels import Level
+from users.employees.schemas import EmployeeRead
 
 if typing.TYPE_CHECKING:
     from users import User
@@ -26,5 +27,15 @@ class Employee(BaseModel):
 
     user: Mapped["User"] = relationship()
     tutor: Mapped["Tutor"] = relationship(back_populates='employee')
+
     # tasks: Mapped[list["TaskUnit"]] = relationship(secondary="task_employees", back_populates='employees')
     # levels: Mapped[list["Level"]] = relationship(secondary="level_employees", back_populates='employees')
+
+    def to_read_schema(self) -> EmployeeRead:
+        return EmployeeRead(id=self.id,
+                            user_id=self.user_id,
+                            tutor_id=self.tutor_id,
+                            name=self.name,
+                            last_name=self.last_name,
+                            hired_at=self.hired_at,
+                            )

@@ -34,5 +34,3 @@ def theory_unit_service() -> TheoryUnitService:
 
 def question_service() -> QuestionService:
     return QuestionService(QuestionRepository)
-# def users_service():
-#     return UsersService(UsersRepository)

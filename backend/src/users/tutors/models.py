@@ -5,6 +5,8 @@ from sqlalchemy import UUID, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
+from users.tutors.schemas import TutorRead
+
 if typing.TYPE_CHECKING:
     from users import User
     from users.employees import Employee
@@ -20,3 +22,8 @@ class Tutor(BaseModel):
 
     user: Mapped["User"] = relationship()
     employees: Mapped[list["Employee"]] = relationship(back_populates='tutor')
+
+    def to_read_schema(self) -> TutorRead:
+        return TutorRead(id=self.id,
+                         name=self.name,
+                         last_name=self.last_name)
