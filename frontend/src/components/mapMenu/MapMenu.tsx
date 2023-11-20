@@ -21,12 +21,10 @@ const MapMenu: React.FC = observer(() => {
                 mapMenuStore.fetchModules().then(() => {
                     mapMenuStore.fetchModuleById(mapMenuStore.availableModules[0].id).then(() => {
                         mapMenuStore.fetchLevels().then(() => {
-                            console.log(mapMenuStore.availableLevels[0])
+                            console.log(mapMenuStore.availableLevels)
                         })
                     })
                 })
-                // mapMenuStore.setModulesMap(mapMenuStore.mapMenu!.modules_ids)
-                // mapMenuStore.fetchModuleById(mapMenuStore?.modulesMap[0]).then()
             })
         })
     }, [navigate])

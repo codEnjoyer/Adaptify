@@ -66,7 +66,8 @@ class MapMenuStore {
     }
 
     async fetchModules() {
-        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/").then((response) => this.setAvailableModules(response.data))
+        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/")
+            .then((response) => this.setAvailableModules(response.data))
     }
 
     async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string, moduleId: string, levels_ids: string[]) {
@@ -88,9 +89,8 @@ class MapMenuStore {
     }
 
     async fetchLevels() {
-        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/").then((response) => {
-            this.setAvailableLevels(response.data)
-        })
+        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/")
+            .then((response) => this.setAvailableLevels(response.data))
     }
 
     async fetchLevelById(id: string) {
