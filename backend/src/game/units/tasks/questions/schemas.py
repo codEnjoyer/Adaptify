@@ -7,7 +7,6 @@ from game.units.tasks.questions.enums import QuestionTypes
 
 
 class __QuestionBase(BaseModel):
-    task_id: UUID
     type: QuestionTypes
     question: str
 
@@ -15,6 +14,7 @@ class __QuestionBase(BaseModel):
 
 
 class QuestionRead(__QuestionBase):
+    task_id: UUID
     id: UUID
     possible_answers: list[AnswerOptionRead]
 
