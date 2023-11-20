@@ -27,8 +27,8 @@ class MapMenuStore {
         await axios.get("http://localhost:8000/maps/").then((response) => this.availableMaps = response.data)
     }
 
-    createMap(id: string) {
-        axios.post("http://localhost:8000/maps/" + id)
+    createMap(mapName: string) {
+        axios.post("http://localhost:8000/maps/", {title: mapName})
     }
 
     async fetchMapById(id: string) {
@@ -79,14 +79,12 @@ class MapMenuStore {
             .then((response) => this.setAvailableModules(response.data))
     }
 
-    async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string, moduleId: string, levels_ids: string[]) {
-        axios.post("http://localhost:8000/modules/", {
+    async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string) {
+        axios.post("http://localhost:8000/maps/" + mapId + "/modules/", {
             map_id: mapId,
             title: title,
             previous_module_id: previousModuleId,
             next_module_id: nextModuleId,
-            id: moduleId,
-            levels_ids: levels_ids
         })
     }
 

@@ -70,7 +70,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
 
             {taskUnits![currentTaskIndex] !== undefined &&
                 (<div className="text-info">
-                        <div className="level-title">{taskUnits![currentTaskIndex].questions[0].question}</div>
+                        <div className="level-title">{taskUnits![currentTaskIndex].questions[0]?.question}</div>
                         {/*<div className="level-body">{taskUnits![currentTaskIndex].questions[0].possibleAnswers.map((answer) => answer.answer)}</div>*/}
                     </div>
                 )

@@ -21,6 +21,7 @@ const MapMenu: React.FC = observer(() => {
                 mapMenuStore.fetchModules().then(() => {
                     mapMenuStore.fetchModuleById(mapMenuStore.availableModules[0].id).then(() => {
                         mapMenuStore.fetchLevels().then(() => {
+                            console.log(mapMenuStore.availableLevels)
                         })
                     })
                 })
@@ -33,7 +34,6 @@ const MapMenu: React.FC = observer(() => {
             <Coins coins={100} additionalClassname="coins"/>
             <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
             <UserProfile/>
-            <button onClick={() => mapMenuStore.addQuestionToTaskUnit()}>asd</button>
             <br/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">

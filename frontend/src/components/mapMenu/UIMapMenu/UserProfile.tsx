@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
+import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 
 interface IPropTypes {
 
 }
 
 const UserProfile: React.FC<IPropTypes> = () => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+
     return (
+        <div>
         <div className="user-profile">
             <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="35" cy="35" r="35" fill="#00D29D"/>
@@ -20,6 +24,8 @@ const UserProfile: React.FC<IPropTypes> = () => {
                         fill="#F5F5F5"/>
                 </g>
             </svg>
+        </div>
+            {isModalOpen && <ModalWindow onClose={() => setIsModalOpen(!isModalOpen)} b/>}
         </div>
     );
 };

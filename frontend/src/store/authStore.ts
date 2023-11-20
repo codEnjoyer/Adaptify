@@ -5,8 +5,8 @@ import axios from "axios";
 class AuthStore {
     isUserAuthorized: boolean = false
     userRole: string | null = null
-
     userLogin: string = ""
+
     userPassword: string = ""
     userEmail: string = ""
 
@@ -47,7 +47,7 @@ class AuthStore {
             headers: {
                 'access': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
-            }
+            }, withCredentials: true
         })
             .then(() => {
                 this.signInUser()
