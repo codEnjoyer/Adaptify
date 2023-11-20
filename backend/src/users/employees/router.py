@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from users.employees.schemas import EmployeeRead, EmployeeUpdate
+from users.employees.schemas import EmployeeRead, EmployeeUpdate, EmployeeCreate
 from utils.types import EmployeeServiceType
 
 router = APIRouter(tags=["Employee", "User"])
@@ -11,6 +11,13 @@ router = APIRouter(tags=["Employee", "User"])
 @router.get("/employees/", tags=["Dev"])
 async def root(employee_service: EmployeeServiceType) -> list[EmployeeRead]:
     return await employee_service.get_all()
+
+
+@router.post("/employees/")
+async def post_employee(id: UUID,
+                        employee_create: EmployeeCreate,
+                        employee_service: EmployeeServiceType) -> EmployeeRead:
+    return await employee_service.create_one(id, employee_create)
 
 
 @router.get("/employees/{id}/")
