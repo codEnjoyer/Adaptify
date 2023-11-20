@@ -11,7 +11,7 @@ class QuestionService:
         self.__question_repo = map_repo()
 
     async def create_one(self, task_id: uuid.UUID, schema_create: QuestionCreate) -> QuestionRead:
-        schema_dict = schema_create.model_dump()
+        schema_dict = schema_create.model_dump(include={'type', 'possible_answers', 'question'})
         schema_dict['task_id'] = task_id
         return await self.__question_repo.add_one(schema_dict)
 

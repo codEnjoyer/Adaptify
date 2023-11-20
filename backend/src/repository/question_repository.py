@@ -14,13 +14,14 @@ class QuestionRepository(SQLAlchemyRepository):
 
     async def add_one(self, model: dict[str, typing.Any]) -> Question:
         async with async_session_maker() as session:
-            question_to_add = Question(type=model['type'],
-                                       question=model['question'],
-                                       task_id=model['task_id'])
-            possible_answers = [AnswerOption(**answer_option_schema, question_id=question_to_add.id) for
-                                answer_option_schema in model['possible_answers']]
-            for ap in possible_answers:
-                question_to_add.possible_answers.append(ap)
+            possible_answers_list = model.pop('possible_answers')
+            question_to_add = Question(**model)
+
+            possible_answers = [AnswerOption(**answer_option_dict, question_id=question_to_add.id) for
+                                answer_option_dict in possible_answers_list]
+            for answer_option in possible_answers:
+                question_to_add.possible_answers.append(answer_option)
+
             session.add(question_to_add)
             await session.commit()
             await session.refresh(question_to_add)
