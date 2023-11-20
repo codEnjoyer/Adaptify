@@ -11,6 +11,7 @@
   height: 70px;
   background: none;
   border: none;
+  text-align: center;
 }
 .custom-input > input:focus {
   border: none;

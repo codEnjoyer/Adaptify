@@ -2,23 +2,28 @@ import React from 'react';
 import "./customInput.scss"
 
 interface IPropTypes {
-    placeholder: string,
+    placeholder?: string,
     value: string,
-    handleOnChange: (e: string) => void,
+    handleOnChange?: (e: string) => void,
     type: string,
-    autoFocus?: boolean
+    autoFocus?: boolean,
+    disabled?: boolean,
+    width?: string
 }
 
-const CustomInput: React.FC<IPropTypes> = ({placeholder, value, handleOnChange, type, autoFocus}) => {
+const CustomInput: React.FC<IPropTypes> = ({placeholder, value, handleOnChange, type, autoFocus, disabled, width}) => {
+    console.log(width)
     return (
-        <div className="custom-input">
+        <div className="custom-input" style={{width: width}}>
             <input type={type} className="login__input"
-                   placeholder={placeholder}
+                   placeholder={placeholder !== undefined ? placeholder : ""}
                    value={value}
                    onChange={(e) => {
-                       handleOnChange(e.target.value)
+                       if (handleOnChange)
+                           handleOnChange(e.target.value)
                    }}
                    autoFocus={autoFocus !== undefined ? autoFocus : false}
+                   disabled={disabled !== undefined ? disabled : false}
             />
         </div>
     );
