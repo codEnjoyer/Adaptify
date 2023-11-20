@@ -22,13 +22,13 @@ class Question(BaseModel):
     type: Mapped[QuestionTypes] = mapped_column(
         postgresql.ENUM(QuestionTypes, name='question_types'), nullable=False, default=QuestionTypes.SingleChoice)
     question: Mapped[str] = mapped_column(String, nullable=False, default="Вопрос!")
-    correct_answer_id: Mapped[uuid.UUID] = mapped_column(UUID, default=uuid.uuid4)
 
     task: Mapped["TaskUnit"] = relationship(back_populates='questions')
     possible_answers: Mapped[list["AnswerOption"]] = relationship(back_populates='question', lazy='selectin')
 
     def to_read_schema(self) -> QuestionRead:
         return QuestionRead(id=self.id,
+                            type=self.type,
                             task_id=self.task_id,
                             question=self.question,
-                            possible_answers=self.possible_answers)
+                            possible_answers=[model.to_read_schema() for model in self.possible_answers])
