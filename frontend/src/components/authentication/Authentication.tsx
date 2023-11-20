@@ -39,8 +39,6 @@ const Authentication: React.FC = observer(() => {
                 <CustomButton additionalClassName="auth__btn" text="ВОЙТИ" handleOnClick={() => {
                     authStore.signIn().then(() => navigateTo('/map'))
                 }}/>
-                {/*<CustomButton additionalClassName="auth__btn" text="ЗАРЕГИСТРИРОВАТЬСЯ"*/}
-                {/*              handleOnClick={() => authStore.signUp()}/>*/}
             </form>
             <CustomButton additionalClassName="back-to-welcome-page__btn" text="Вернуться обратно"
                           handleOnClick={() => navigateTo('/')}></CustomButton>

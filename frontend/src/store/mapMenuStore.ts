@@ -29,6 +29,7 @@ class MapMenuStore {
 
     createMap(mapName: string) {
         axios.post("http://localhost:8000/maps/", {title: mapName})
+
     }
 
     async fetchMapById(id: string) {

@@ -22,11 +22,11 @@ const MapMenu: React.FC = observer(() => {
                     mapMenuStore.fetchModuleById(mapMenuStore.availableModules[0].id).then(() => {
                         mapMenuStore.fetchLevels().then(() => {
                             console.log(mapMenuStore.availableLevels)
-                        })
+                        }).catch(() => alert("Нет доступных уровней для данного модуля"))
                     })
-                })
+                }).catch(() => alert("Нет доступных модулей для данной карты"))
             })
-        })
+        }).catch(() => alert("Нет доступных карт для данного пользователя"))
     }, [navigate])
 
     return (
