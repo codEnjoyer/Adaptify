@@ -1,23 +1,27 @@
 import React, {useState} from 'react';
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 import ModalLevelBody from "./ModalLevelBody.tsx";
+import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
+import {ITaskType} from "../../../../types/TaskType.ts";
 
 interface IModuleProps {
     id: string,
     title: string,
-    theoryUnits?: string[]
+    theoryUnits?: ITheoryUnitType[],
+    taskUnits?: ITaskType[]
 }
 
-const Module: React.FC<IModuleProps> = ({id, title, theoryUnits}) => {
+const Module: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
+
     return (
         <div onClick={() => setOpenModalWindow(!isOpenModalWindow)} className={classNameGeolocation}>
 
             {isOpenModalWindow
                 ? <ModalWindow
                     onClose={() => setOpenModalWindow(!isOpenModalWindow)}
-                    body={<ModalLevelBody key={id} title={title} theoryUnits={theoryUnits}/>}
+                    body={<ModalLevelBody key={id} title={title} theoryUnits={theoryUnits} taskUnits={taskUnits}/>}
                 />
                 : ""}
 

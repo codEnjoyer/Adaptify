@@ -3,20 +3,20 @@ import "./modalLevelBody.scss"
 import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
 import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
+import {ITaskType} from "../../../../types/TaskType.ts";
 
 interface IModalLevelProps {
     title: string,
-    theoryUnits?: ITheoryUnitType[]
+    theoryUnits?: ITheoryUnitType[],
+    taskUnits?: ITaskType[]
 }
 
-const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits}) => {
+const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUnits}) => {
     const tasks = [
         {name: "theory", element: <Theory/>},
         {name: "video", element: <Video/>},
         {name: "test", element: <Test/>}
     ]
-
-    console.log(theoryUnits)
 
     const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
 
@@ -28,6 +28,17 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits}) => {
             }}>{tasks[0].element}</div>)
         }
         return theoryBlocks
+    }
+
+    const renderMenuTaskBlocks = (countTheoryBlocks: number, countTaskBlocks: number) => {
+        const taskBlocks: JSX.Element[] = []
+
+        for (let i = countTheoryBlocks; i < countTaskBlocks + countTheoryBlocks; i++) {
+            taskBlocks.push(<div key={i} className="menu-item" onClick={() => {
+                setCurrentTaskIndex(i)
+            }}>{tasks[2].element}</div>)
+        }
+        return taskBlocks
     }
 
     return (
@@ -45,13 +56,22 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits}) => {
             </div>
 
             {theoryUnits && theoryUnits.length !== 0
-                ? <div className="menu">{renderMenuTheoryBlocks(theoryUnits!.length)}</div>
+                ? <div
+                    className="menu">{renderMenuTheoryBlocks(theoryUnits!.length)}{renderMenuTaskBlocks(theoryUnits!.length, taskUnits!.length)}</div>
                 : ""}
 
             {theoryUnits![currentTaskIndex] !== undefined &&
                 (<div className="text-info">
                         <div className="level-title">{theoryUnits![currentTaskIndex].title}</div>
                         <div className="level-body">{theoryUnits![currentTaskIndex].content}</div>
+                    </div>
+                )
+            }
+
+            {taskUnits![currentTaskIndex] !== undefined &&
+                (<div className="text-info">
+                        <div className="level-title">{taskUnits![currentTaskIndex].questions[0].question}</div>
+                        {/*<div className="level-body">{taskUnits![currentTaskIndex].questions[0].possibleAnswers.map((answer) => answer.answer)}</div>*/}
                     </div>
                 )
             }

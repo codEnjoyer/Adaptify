@@ -2,7 +2,8 @@ import {makeAutoObservable} from "mobx";
 import axios from "axios";
 import {IMapType} from "../types/MapType.ts";
 import {IModuleType} from "../types/ModuleType.ts";
-import {ILevelType} from "../types/LevelType.ts";
+import {ILevelType} from "../types/LevelType/LevelType.ts";
+import {IFetchLevelType} from "../types/LevelType/FetchLevelType.ts";
 
 class MapMenuStore {
     mapMenu: IMapType | null = null
@@ -57,8 +58,16 @@ class MapMenuStore {
         this.availableModules = modules
     }
 
-    setAvailableLevels(levels: ILevelType[]) {
-        this.availableLevels = levels
+    setAvailableLevels(levels: IFetchLevelType[]) {
+        this.availableLevels = levels.map((level) => {
+            return {
+                id: level.id,
+                title: level.title,
+                body: level.body,
+                theoryUnits: level.theory_units,
+                taskUnits: level.task_units
+            }
+        })
     }
 
     setCurrentModule(newModule: IModuleType) {
