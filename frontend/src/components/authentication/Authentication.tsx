@@ -22,15 +22,15 @@ const Authentication: React.FC = observer(() => {
             <form className="auth__form">
                 <h2 className="auth-form-title">ВХОД</h2>
                 <fieldset className="auth-fields">
-                    <CustomInput type="email" value="" handleOnChange={(e) => {
-                        authStore.changeUserLogin(e.target.value)
-                        authStore.changeUserEmail(e.target.value)
-                    }} autoFocus={true} placeholder="Логин"/>
+                    <CustomInput type="email" value={authStore.userLogin} handleOnChange={(e) => {
+                        authStore.changeUserLogin(e)
+                        authStore.changeUserEmail(e)
+                    }}
+                                 autoFocus={true} placeholder="Логин"/>
                     <div className="auth-data__field">
-                        <input type={isPasswordShows ? "text" : "password"} className="password__input"
-                               value={authStore.userPassword}
-                               onChange={(e) => authStore.changeUserPassword(e.target.value)}
-                               placeholder="Пароль"/>
+                        <CustomInput type={isPasswordShows ? "text" : "password"} placeholder="Пароль"
+                                     value={authStore.userPassword}
+                                     handleOnChange={(e) => authStore.changeUserPassword(e)}/>
                     </div>
                 </fieldset>
                 <CustomCheckbox text="Показать пароль" id="is-remember"
