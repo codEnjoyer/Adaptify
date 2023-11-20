@@ -16,15 +16,15 @@ class __QuestionBase(BaseModel):
 class QuestionRead(__QuestionBase):
     task_id: UUID
     id: UUID
-    possible_answers: list[AnswerOptionRead]
+    answer_options: list[AnswerOptionRead]
 
 
 class QuestionCreate(__QuestionBase):
     type: QuestionTypes = QuestionTypes.SingleChoice
-    possible_answers: list[AnswerOptionCreate]
+    answer_options: list[AnswerOptionCreate]
 
 
 class QuestionUpdate(__QuestionBase):
     type: QuestionTypes | None = None
     question: str | None = None
-    possible_answers: list[AnswerOptionCreate] | None = None
+    answer_options: list[AnswerOptionCreate] | None = None

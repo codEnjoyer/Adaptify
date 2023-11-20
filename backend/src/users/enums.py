@@ -1,7 +1,7 @@
-from enum import Enum, auto
+from enum import StrEnum, auto
 
 
-class UserRoles(Enum):
+class UserRoles(StrEnum):
     Employee = auto()
     Tutor = auto()
     HR = auto()

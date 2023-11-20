@@ -2,32 +2,31 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from users.schemas import UserRead, UserCreate, UserUpdate
+from users.schemas import UserRead, UserUpdate
+from utils.types import UserServiceType
 
-router = APIRouter(prefix="/users", tags=["User"])
-
-
-@router.get("/")
-async def root() -> list[UserRead]:
-    return []
+router = APIRouter(tags=["User"])
 
 
-@router.get("/{id}")
-async def get_user(id: UUID) -> UserRead:
-    return UserRead()
+@router.get("/users/", tags=["Dev"])
+async def root(user_service: UserServiceType) -> list[UserRead]:
+    return await user_service.get_all()
 
 
-@router.post("/")
-async def post_user(user_create: UserCreate) -> UserRead:
-    return UserRead()
+@router.get("/users/{id}/")
+async def get_user(id: UUID,
+                   user_service: UserServiceType) -> UserRead:
+    return await user_service.get_one(id)
 
 
-@router.delete("/{id}")
-async def delete_user(id: UUID) -> UserRead:
-    return UserRead()
+@router.delete("/users/{id}/")
+async def delete_user(id: UUID,
+                      user_service: UserServiceType) -> UserRead:
+    return await user_service.delete_one(id)
 
 
-@router.patch("/{id}")
+@router.patch("/users/{id}/")
 async def update_user(id: UUID,
-                      user_update: UserUpdate) -> UserRead:
-    return UserRead()
+                      user_update: UserUpdate,
+                      user_service: UserServiceType) -> UserRead:
+    return await user_service.update_one(id, user_update)

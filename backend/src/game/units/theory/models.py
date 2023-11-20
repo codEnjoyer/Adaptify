@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class TheoryUnit(BaseModel):
-    __tablename__ = 'theory_blocks'
+    __tablename__ = 'theory_units'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     title: Mapped[str] = mapped_column(String, nullable=False)
