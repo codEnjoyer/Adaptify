@@ -7,8 +7,8 @@ from repository.abstract import AbstractRepository
 class LevelService:
     __level_repo: AbstractRepository
 
-    def __init__(self, level_repo: type[AbstractRepository]):
-        self.__level_repo = level_repo()
+    def __init__(self, repository: type[AbstractRepository]):
+        self.__level_repo = repository()
 
     async def create_one(self, level_create: LevelCreate) -> LevelRead:
         level_dict = level_create.model_dump()
