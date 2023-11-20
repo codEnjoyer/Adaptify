@@ -20,10 +20,11 @@ class Tutor(BaseModel):
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
-    user: Mapped["User"] = relationship()
-    employees: Mapped[list["Employee"]] = relationship(back_populates='tutor')
+    user: Mapped["User"] = relationship(lazy='selectin')
+    employees: Mapped[list["Employee"]] = relationship(back_populates='tutor', lazy='selectin')
 
     def to_read_schema(self) -> TutorRead:
         return TutorRead(id=self.id,
                          name=self.name,
+                         user=self.user,
                          last_name=self.last_name)

@@ -25,15 +25,15 @@ class Employee(BaseModel):
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date())
 
-    user: Mapped["User"] = relationship()
-    tutor: Mapped["Tutor"] = relationship(back_populates='employee')
+    user: Mapped["User"] = relationship(lazy='selectin')
+    tutor: Mapped["Tutor"] = relationship(back_populates='employees', lazy='selectin')
 
     # tasks: Mapped[list["TaskUnit"]] = relationship(secondary="task_employees", back_populates='employees')
     # levels: Mapped[list["Level"]] = relationship(secondary="level_employees", back_populates='employees')
 
     def to_read_schema(self) -> EmployeeRead:
         return EmployeeRead(id=self.id,
-                            user_id=self.user_id,
+                            user=self.user,
                             tutor_id=self.tutor_id,
                             name=self.name,
                             last_name=self.last_name,

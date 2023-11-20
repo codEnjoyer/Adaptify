@@ -25,7 +25,7 @@ async def delete_user(id: UUID,
     return await user_service.delete_one(id)
 
 
-@router.patch("/{id}/")
+@router.patch("/users/{id}/")
 async def update_user(id: UUID,
                       user_update: UserUpdate,
                       user_service: UserServiceType) -> UserRead:

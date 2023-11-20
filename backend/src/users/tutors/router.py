@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from users.tutors.schemas import TutorRead, TutorCreate, TutorUpdate
 from utils.types import TutorServiceType
 
-router = APIRouter(tags=["Tutor", "User"])
+router = APIRouter(tags=["Tutor"])
 
 
 @router.get("/tutors/", tags=["Dev"])
@@ -20,10 +20,9 @@ async def get_tutor(id: UUID,
 
 
 @router.post("/tutors/")
-async def post_tutor(id: UUID,
-                     tutor_create: TutorCreate,
+async def post_tutor(tutor_create: TutorCreate,
                      tutor_service: TutorServiceType) -> TutorRead:
-    return await tutor_service.create_one(id, tutor_create)
+    return await tutor_service.create_one(tutor_create)
 
 
 @router.delete("/tutors/{id}/")

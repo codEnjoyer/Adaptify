@@ -3,9 +3,10 @@ from uuid import UUID
 
 from pydantic import BaseModel, EmailStr, ConfigDict
 
+from users.schemas import UserRead
+
 
 class __EmployeeBase(BaseModel):
-    user_id: UUID
     tutor_id: UUID
     name: str
     last_name: str
@@ -16,10 +17,11 @@ class __EmployeeBase(BaseModel):
 
 class EmployeeRead(__EmployeeBase):
     id: UUID
+    user: UserRead
 
 
 class EmployeeCreate(__EmployeeBase):
-    pass
+    user_id: UUID
 
 
 class EmployeeUpdate(__EmployeeBase):
