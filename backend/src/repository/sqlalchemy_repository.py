@@ -10,7 +10,7 @@ from repository.abstract import AbstractRepository
 class SQLAlchemyRepository(AbstractRepository):
     model = None
 
-    async def add_one(self, model: dict[str, typing.Any]) -> uuid.UUID:
+    async def add_one(self, model: dict[str, typing.Any]) -> model:
         async with async_session_maker() as session:
             stmt = insert(self.model).values(**model).returning(self.model)
             res = await session.execute(stmt)

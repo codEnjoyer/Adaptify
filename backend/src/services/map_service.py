@@ -7,16 +7,16 @@ from repository.abstract import AbstractRepository
 class MapService:
     __map_repo: AbstractRepository
 
-    def __init__(self, map_repo: type[AbstractRepository]):
-        self.__map_repo = map_repo()
+    def __init__(self, repository: type[AbstractRepository]):
+        self.__map_repo = repository()
 
-    async def create_one(self, map_create: MapCreate) -> MapRead:
-        map_dict = map_create.model_dump()
-        return await self.__map_repo.add_one(map_dict)
+    async def create_one(self, schema_create: MapCreate) -> MapRead:
+        schema_dict = schema_create.model_dump()
+        return await self.__map_repo.add_one(schema_dict)
 
     async def get_all(self) -> list[MapRead]:
-        maps = await self.__map_repo.find_all()
-        return [map_model.to_read_schema() for map_model in maps]
+        models = await self.__map_repo.find_all()
+        return [model.to_read_schema() for model in models]
 
     async def get_one(self, id: uuid.UUID) -> MapRead:
         res = await self.__map_repo.get_one(id)
@@ -26,7 +26,7 @@ class MapService:
         res = await self.__map_repo.delete_one(id)
         return res.to_read_schema()
 
-    async def update_one(self, id: uuid.UUID, map_update: MapUpdate) -> MapRead:
-        map_dict = map_update.model_dump()
-        res = await self.__map_repo.update_one(id, map_dict)
+    async def update_one(self, id: uuid.UUID, schema_update: MapUpdate) -> MapRead:
+        schema_dict = schema_update.model_dump()
+        res = await self.__map_repo.update_one(id, schema_dict)
         return res.to_read_schema()

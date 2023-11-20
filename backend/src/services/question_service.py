@@ -7,8 +7,8 @@ from repository.abstract import AbstractRepository
 class QuestionService:
     __question_repo: AbstractRepository
 
-    def __init__(self, map_repo: type[AbstractRepository]):
-        self.__question_repo = map_repo()
+    def __init__(self, repository: type[AbstractRepository]):
+        self.__question_repo = repository()
 
     async def create_one(self, task_id: uuid.UUID, schema_create: QuestionCreate) -> QuestionRead:
         schema_dict = schema_create.model_dump(include={'type', 'possible_answers', 'question'})
