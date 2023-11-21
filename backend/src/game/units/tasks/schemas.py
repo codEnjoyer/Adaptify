@@ -2,7 +2,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate
+from game.units.tasks.questions.schemas import QuestionRead
 from game.units.tasks.enums import TaskTypes
 
 

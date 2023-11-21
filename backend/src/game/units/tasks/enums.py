@@ -1,11 +1,11 @@
-from enum import Enum, auto, StrEnum
+from enum import StrEnum, auto
 
 
 class TaskTypes(StrEnum):
     Test = auto()
 
 
-class TaskStates(Enum):
+class TaskStates(StrEnum):
     NotViewed = auto()
     Viewed = auto()
     Submitted = auto()

@@ -2,8 +2,9 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate
-from utils.types import QuestionServiceType
+from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate, EmployeeQuestionPost, \
+    EmployeeQuestionRead
+from utils.types import QuestionServiceType, TaskUnitServiceType
 
 router = APIRouter(tags=["Questions"])
 
@@ -21,6 +22,16 @@ async def post_question_to_task_unit(map_id: UUID,
                                      question_create: QuestionCreate,
                                      question_service: QuestionServiceType) -> QuestionRead:
     return await question_service.create_one(task_id, question_create)
+
+
+@router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/check/")
+async def autocheck_task_unit(map_id: UUID,
+                              module_id: UUID,
+                              level_id: UUID,
+                              task_id: UUID,
+                              employee_answers: list[EmployeeQuestionPost],
+                              task_service: TaskUnitServiceType) -> list[EmployeeQuestionRead]:
+    return []
 
 
 @router.delete("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/questions/{question_id}/")

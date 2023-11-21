@@ -2,7 +2,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from game.units.tasks.questions.answers.schemas import AnswerOptionRead, AnswerOptionCreate
+from game.units.tasks.questions.answers.schemas import AnswerOptionRead, AnswerOptionCreate, EmployeeAnswerPost, \
+    EmployeeAnswerRead
 from game.units.tasks.questions.enums import QuestionTypes
 
 
@@ -28,3 +29,11 @@ class QuestionUpdate(__QuestionBase):
     type: QuestionTypes | None = None
     question: str | None = None
     answer_options: list[AnswerOptionCreate] | None = None
+
+
+class EmployeeQuestionPost(__QuestionBase):
+    answers: list[EmployeeAnswerPost]
+
+
+class EmployeeQuestionRead(__QuestionBase):
+    results: list[EmployeeAnswerRead]
