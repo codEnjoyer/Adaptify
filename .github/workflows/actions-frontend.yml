@@ -1,21 +1,21 @@
-name: Actions Frontend
-on: [ push ]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 18.x ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Проект работает на Ноде версии ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: ./frontend
-      - name: Установка модулей
-        run: npm install
-      - name: Сборка проекта
-        run: npm run build
-      - name: Запуск веб-приложения
-        run: npm run dev
+#name: Actions Frontend
+#on: [ push ]
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        node-version: [ 18.x ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Проект работает на Ноде версии ${{ matrix.node-version }}
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: ${{ matrix.node-version }}
+#      - uses: ./frontend
+#      - name: Установка модулей
+#        run: npm install
+#      - name: Сборка проекта
+#        run: npm run build
+#      - name: Запуск веб-приложения
+#        run: npm run dev

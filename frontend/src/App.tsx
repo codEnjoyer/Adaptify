@@ -1,12 +1,13 @@
 import './App.css'
+import React from "react";
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "./routes/AppRouter.tsx";
 
-function App() {
+const App: React.FC = () => {
     return (
-        <div>
-            <h1>
-                Adaptify
-            </h1>
-        </div>
+        <BrowserRouter>
+            <AppRouter/>
+        </BrowserRouter>
     )
 }
 

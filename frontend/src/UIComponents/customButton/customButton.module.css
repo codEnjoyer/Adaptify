@@ -1,0 +1,22 @@
+.custom__btn {
+  width: 170px;
+  height: 48px;
+  color: #F9F9F9;
+  font-size: 16px;
+  background-color: #00D29D;
+  border: none;
+  border-radius: 20px;
+  transition: linear 0.1s;
+  font-family: Montserrat, sans-serif;
+}
+.custom__btn:hover {
+  background-color: #D3A6DF;
+}
+.custom__btn:active {
+  background-color: #763186;
+}
+.custom__btn:disabled {
+  background-color: #763186;
+}
+
+/*# sourceMappingURL=customButton.module.css.map */
