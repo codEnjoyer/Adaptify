@@ -1,0 +1,28 @@
+.custom-input {
+  margin-top: 15px;
+  background: #C5FFED;
+  border-radius: 30px;
+}
+.custom-input > input {
+  font-size: 16px;
+  color: #2B2A29;
+  left: 10%;
+  width: 80%;
+  height: 70px;
+  background: none;
+  border: none;
+  text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1rem; /* 100% */
+  justify-content: center;
+  align-items: center;
+}
+.custom-input > input:focus {
+  border: none;
+  outline: none;
+}
+
+/*# sourceMappingURL=customInput.css.map */
