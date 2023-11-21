@@ -65,7 +65,7 @@ const MapMenu: React.FC = observer(() => {
                     </div>
                 ) : (
                     <div className="employee-interface">
-                        <Coins coins={100} additionalClassname="coins"/>
+                        {/*<Coins coins={100} additionalClassname="coins"/>*/}
                         <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
                         <UserProfile user={user} formattedDate={formattedDate}/>
                         <br/>

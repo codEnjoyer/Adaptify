@@ -80,20 +80,18 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
                         <form className="level-body">
                             {taskUnits![currentTaskIndex].questions.map((question) => {
                                 return (
-                                    <div>
-                                        <div
-                                            className="level-title">{question.question}</div>
+                                    <div className="question">
+                                        <div className="question-title">{question.question}</div>
 
                                         {question.answer_options.map((answer) => {
                                                 return (
-                                                    <div>
+                                                    <div className="question-answer-option">
                                                         <input id={answer.answer} type="radio" value="question"/>
                                                         <label htmlFor={answer.answer}>{answer.answer}</label>
                                                     </div>
                                                 )
                                             }
                                         )}
-                                        <br/>
                                     </div>
                                 )
                             })}

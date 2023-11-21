@@ -65,4 +65,17 @@
   margin-top: 5px;
 }
 
+.question {
+  margin-bottom: 40px;
+}
+
+.question-title {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.question-answer-option {
+  margin-bottom: 5px;
+}
+
 /*# sourceMappingURL=modalLevelBody.css.map */

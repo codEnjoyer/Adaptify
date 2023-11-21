@@ -12,6 +12,11 @@
   background: none;
   border: none;
   text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1rem; /* 100% */
   justify-content: center;
   align-items: center;
 }
