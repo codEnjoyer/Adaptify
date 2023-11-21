@@ -1,15 +1,11 @@
 import asyncio
 from typing import AsyncGenerator
 
-from sqlalchemy import MetaData
-from sqlalchemy.orm import declarative_base, DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from settings import Settings
 
-
-# metadata = MetaData()
-# BaseModel = declarative_base(metadata=metadata)
 
 class BaseModel(DeclarativeBase):
     repr_cols_num = 3

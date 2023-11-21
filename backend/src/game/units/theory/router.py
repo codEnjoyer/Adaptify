@@ -2,54 +2,49 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from game.units.theory.schemas import (TheoryRead, TheoryCreate, TheoryUpdate,
-                                       TheoryVideoRead, TheoryVideoCreate, TheoryVideoUpdate)
+from game.units.theory.schemas import TheoryUnitRead, TheoryUnitCreate, TheoryUnitUpdate
+from utils.types import TheoryUnitServiceType
 
-router = APIRouter(prefix="/theory", tags=["Theory"])
-
-
-@router.get("/")
-async def root() -> list[TheoryRead]:
-    return []
+router = APIRouter(tags=["Theory"])
 
 
-@router.get("/{id}")
-async def get_theory_block(id: UUID) -> TheoryRead:
-    return TheoryRead()
+@router.get('/theory/', tags=['Dev'])
+async def root(theory_unit_service: TheoryUnitServiceType) -> list[TheoryUnitRead]:
+    return await theory_unit_service.get_all()
 
 
-@router.get("/videos/{id}")
-async def get_theory_block_videos(id: UUID) -> list[TheoryVideoRead]:
-    return []
+# @router.get("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/{theory_id}/")
+# async def get_level_theory_unit(map_id: UUID,
+#                                 module_id: UUID,
+#                                 level_id: UUID,
+#                                 theory_id: UUID,
+#                                 theory_unit_service: TheoryUnitServiceType) -> TheoryUnitRead:
+#     return await theory_unit_service.get_one(theory_id)
 
 
-@router.post("/")
-async def post_theory_block(theory_create: TheoryCreate) -> TheoryRead:
-    return TheoryRead()
+@router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/")
+async def post_theory_unit_to_level(map_id: UUID,
+                                    module_id: UUID,
+                                    level_id: UUID,
+                                    theory_create: TheoryUnitCreate,
+                                    theory_unit_service: TheoryUnitServiceType) -> TheoryUnitRead:
+    return await theory_unit_service.create_one(level_id, theory_create)
 
 
-@router.post("/videos/")
-async def post_theory_block_video(theory_video_create: TheoryVideoCreate) -> TheoryVideoRead:
-    return TheoryVideoRead()
+@router.delete("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/{theory_id}/")
+async def delete_theory_unit_from_level(map_id: UUID,
+                                        module_id: UUID,
+                                        level_id: UUID,
+                                        theory_id: UUID,
+                                        theory_unit_service: TheoryUnitServiceType) -> TheoryUnitRead:
+    return await theory_unit_service.delete_one(theory_id)
 
 
-@router.delete("/{id}")
-async def delete_theory_block(id: UUID) -> TheoryRead:
-    return TheoryRead()
-
-
-@router.delete("/videos/{id}")
-async def delete_theory_block_video(id: UUID) -> TheoryVideoRead:
-    return TheoryVideoRead()
-
-
-@router.patch("/{id}")
-async def update_theory_block(id: UUID,
-                              theory_update: TheoryUpdate) -> TheoryRead:
-    return TheoryRead()
-
-
-@router.patch("/videos/{id}")
-async def update_theory_block_video(id: UUID,
-                                    theory_video_update: TheoryVideoUpdate) -> TheoryVideoRead:
-    return TheoryVideoRead()
+@router.patch("/maps/{map_id}/modules/{module_id}/levels/{level_id}/theory/{theory_id}/")
+async def update_theory_unit_in_level(map_id: UUID,
+                                      module_id: UUID,
+                                      level_id: UUID,
+                                      theory_id: UUID,
+                                      theory_update: TheoryUnitUpdate,
+                                      theory_unit_service: TheoryUnitServiceType) -> TheoryUnitRead:
+    return await theory_unit_service.update_one(theory_id, theory_update)

@@ -1,16 +1,30 @@
-import uuid
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from game.units.tasks.questions.models import QuestionTypes
+from game.units.tasks.questions.answers.schemas import AnswerOptionRead, AnswerOptionCreate
+from game.units.tasks.questions.enums import QuestionTypes
 
 
 class __QuestionBase(BaseModel):
     type: QuestionTypes
     question: str
-    possible_answers: list[str]
 
     model_config = ConfigDict(from_attributes=True)
 
-# TODO QuestionRead, QuestionCreate, QuestionUpdate
+
+class QuestionRead(__QuestionBase):
+    task_id: UUID
+    id: UUID
+    answer_options: list[AnswerOptionRead]
+
+
+class QuestionCreate(__QuestionBase):
+    type: QuestionTypes = QuestionTypes.SingleChoice
+    answer_options: list[AnswerOptionCreate]
+
+
+class QuestionUpdate(__QuestionBase):
+    type: QuestionTypes | None = None
+    question: str | None = None
+    answer_options: list[AnswerOptionCreate] | None = None

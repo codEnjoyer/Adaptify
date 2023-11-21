@@ -1,17 +1,21 @@
 import uuid
-from datetime import datetime
-from typing import Annotated
+import datetime
 
 from fastapi_users.schemas import BaseUserCreate, BaseUserUpdate, BaseUser
-from pydantic import Field
+from pydantic import EmailStr
+
+from users.enums import UserRoles
 
 
 class __CustomUser:
-    username: Annotated[str, Field(min_length=3, max_length=50)]
+    username: str
 
 
 class UserRead(BaseUser[uuid.UUID], __CustomUser):
-    registered_at: Annotated[datetime, Field(default_factory=datetime.now)]
+    id: uuid.UUID
+    email: EmailStr
+    role: UserRoles
+    registered_at: datetime.datetime
 
 
 class UserCreate(BaseUserCreate, __CustomUser):
@@ -19,4 +23,5 @@ class UserCreate(BaseUserCreate, __CustomUser):
 
 
 class UserUpdate(BaseUserUpdate, __CustomUser):
-    username: Annotated[str | None, Field(min_length=3, max_length=50, default=None)]
+    username: str | None = None
+    role: UserRoles | None = None
