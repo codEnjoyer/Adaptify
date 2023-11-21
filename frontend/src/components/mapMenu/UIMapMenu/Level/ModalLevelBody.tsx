@@ -4,6 +4,7 @@ import ArrowLeft from "../UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../UIChooseModule/ArrowRight.tsx";
 import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 import {ITaskType} from "../../../../types/TaskType.ts";
+import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx";
 
 interface IModalLevelProps {
     title: string,
@@ -69,10 +70,36 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
                 )
             }
 
+            {taskUnits && taskUnits.length !== 0
+                ? <div
+                    className="menu">{renderMenuTaskBlocks(taskUnits!.length, taskUnits!.length)}</div>
+                : ""}
+
             {taskUnits![currentTaskIndex] !== undefined &&
                 (<div className="text-info">
-                        <div className="level-title">{taskUnits![currentTaskIndex].questions[0]?.question}</div>
-                        {/*<div className="level-body">{taskUnits![currentTaskIndex].questions[0].possibleAnswers.map((answer) => answer.answer)}</div>*/}
+                        <form className="level-body">
+                            {taskUnits![currentTaskIndex].questions.map((question) => {
+                                return (
+                                    <div>
+                                        <div
+                                            className="level-title">{question.question}</div>
+
+                                        {question.answer_options.map((answer) => {
+                                                return (
+                                                    <div>
+                                                        <input id={answer.answer} type="radio" value="question"/>
+                                                        <label htmlFor={answer.answer}>{answer.answer}</label>
+                                                    </div>
+                                                )
+                                            }
+                                        )}
+                                        <br/>
+                                    </div>
+                                )
+                            })}
+                            <CustomButton handleOnClick={(e) => e.preventDefault()}
+                                          text="Отправить ответ"/>
+                        </form>
                     </div>
                 )
             }
