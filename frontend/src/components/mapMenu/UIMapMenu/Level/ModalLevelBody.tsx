@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../../../../UIComponents/UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../../../../UIComponents/UIChooseModule/ArrowRight.tsx";
@@ -8,6 +8,7 @@ import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx
 import Theory from "./TaskTypes/Theory.tsx";
 import Video from "./TaskTypes/Video.tsx";
 import Test from "./TaskTypes/Test.tsx";
+import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 
 interface IModalLevelProps {
     title: string,
@@ -24,17 +25,6 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
 
     const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
 
-    const renderMenuTheoryBlocks = (countTheoryBlocks: number) => {
-        const theoryBlocks: JSX.Element[] = []
-
-        for (let i = 0; i < countTheoryBlocks; i++) {
-            theoryBlocks.push(<div key={i} className="menu-item" onClick={() => {
-                setCurrentTaskIndex(i)
-            }}>{tasks[0].element}</div>)
-        }
-        return theoryBlocks
-    }
-
     const renderMenuTaskBlocks = (countTheoryBlocks: number, countTaskBlocks: number) => {
         const taskBlocks: JSX.Element[] = []
 
@@ -46,9 +36,9 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
         return taskBlocks
     }
 
-    return (
-        <div>
-            <div className="header-modal">
+    const renderBodyHeader = () => {
+        return (
+            <div>
                 <div className="left-arrow">
                     <ArrowLeft/>
                 </div>
@@ -58,12 +48,14 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
                 <div className="right-arrow">
                     <ArrowRight/>
                 </div>
-            </div>
+            </div>)
+    }
 
-            {theoryUnits && theoryUnits.length !== 0
-                ? <div
-                    className="menu">{renderMenuTheoryBlocks(theoryUnits!.length)}{renderMenuTaskBlocks(theoryUnits!.length, taskUnits!.length)}</div>
-                : ""}
+    const bodyHeader = renderBodyHeader()
+
+    return (
+        <div>
+            <HeaderModal body={bodyHeader}/>
 
             {theoryUnits![currentTaskIndex] !== undefined &&
                 (<div className="text-info">
