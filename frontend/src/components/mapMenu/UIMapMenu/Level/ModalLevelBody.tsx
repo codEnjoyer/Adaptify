@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../../../../UIComponents/UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../../../../UIComponents/UIChooseModule/ArrowRight.tsx";
@@ -8,6 +8,7 @@ import MenuItem from "./MenuItem.tsx";
 import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 import {ITaskType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
+import levelStore from "../../../../store/levelStore.ts";
 
 interface IModalLevelProps {
     title: string,
@@ -16,8 +17,6 @@ interface IModalLevelProps {
 }
 
 const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], taskUnits = []}) => {
-    const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
-
     const bodyHeader = renderBodyHeader()
     const menuItems: IMenuItemType[] = [
         {
@@ -52,7 +51,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
         for (let i = 0; i < menuItems.length; i++) {
             for (let j = 0; j < menuItems[i].length; j++) {
                 index++
-                taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>,)
+                taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>)
             }
         }
         return taskBlocks
@@ -68,20 +67,20 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
                 : ""
             }
 
-            {theoryUnits![currentTaskIndex] !== undefined &&
+            {theoryUnits![levelStore.chosenTaskIndex] !== undefined &&
                 (
                     <div className="task-info">
-                        <div className="level-title">{theoryUnits![currentTaskIndex].title}</div>
-                        <div className="level-body">{theoryUnits![currentTaskIndex].content}</div>
+                        <div className="level-title">{theoryUnits![levelStore.chosenTaskIndex].title}</div>
+                        <div className="level-body">{theoryUnits![levelStore.chosenTaskIndex].content}</div>
                     </div>
                 )
             }
 
 
-            {taskUnits![currentTaskIndex] !== undefined &&
+            {taskUnits![levelStore.chosenTaskIndex] !== undefined &&
                 (<div className="task-info">
                         <form className="level-body">
-                            {taskUnits![currentTaskIndex].questions.map((question) => {
+                            {taskUnits![levelStore.chosenTaskIndex].questions.map((question) => {
                                 return (
                                     <div className="question">
                                         <div className="question-title">{question.question}</div>

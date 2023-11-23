@@ -11,17 +11,15 @@ interface IMenuItemProps {
 }
 
 const MenuItem: React.FC<IMenuItemProps> = observer(({index, indexType}) => {
-    const tasks = ["theory", "test", "video"]
-
-    function renderRequiredElement(taskName: string, index: number) {
-        switch (taskName) {
-            case ("theory"):
+    function renderRequiredElement(indexType: number, index: number) {
+        switch (indexType) {
+            case (0):
                 return <Theory index={index} indexChoosedItem={levelStore.chosenTaskIndex}
                                changeIndexChoosedItem={() => levelStore.setChosenTaskIndex(levelStore.chosenTaskIndex)}/>
-            case ("test"):
+            case (1):
                 return <Test index={index} indexChoosedItem={levelStore.chosenTaskIndex}
                              changeIndexChoosedItem={() => levelStore.setChosenTaskIndex(levelStore.chosenTaskIndex)}/>
-            case ("Video"):
+            case (2):
                 return <Video index={index}/>
         }
     }
@@ -30,7 +28,7 @@ const MenuItem: React.FC<IMenuItemProps> = observer(({index, indexType}) => {
         <div key={index} className="menu-item" onClick={() => {
             levelStore.setChosenTaskIndex(index)
         }}>
-            {renderRequiredElement(tasks[indexType], indexType)}
+            {renderRequiredElement(indexType, index)}
         </div>
     );
 });
