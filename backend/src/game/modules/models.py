@@ -13,7 +13,7 @@ if typing.TYPE_CHECKING:
     from game.map import Map
 
 
-class Module(BaseModel):
+class Level(BaseModel):
     __tablename__ = 'modules'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)

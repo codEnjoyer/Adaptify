@@ -11,7 +11,7 @@ interface IModuleProps {
     taskUnits?: ITaskType[]
 }
 
-const Module: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
+const Level: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
 
@@ -47,4 +47,4 @@ const Module: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => 
 };
 
 
-export default Module;
+export default Level;

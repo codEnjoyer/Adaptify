@@ -45,27 +45,6 @@ body {
   box-sizing: border-box;
 }
 
-.auth-data__field {
-  margin-top: 15px;
-  background: $inputBGColor;
-  border-radius: 30px;
-
-  > input {
-    font-size: 16px;
-    color: $inputTextColor;
-    left: 10%;
-    width: 80%;
-    height: 70px;
-    background: none;
-    border: none;
-
-    &:focus {
-      border: none;
-      outline: none;
-    }
-  }
-}
-
 .pass {
   margin-bottom: 100px;
 }

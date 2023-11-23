@@ -5,7 +5,7 @@ import Coins from "./UIMapMenu/Coins.tsx";
 import './../../styles/mapMenu.scss'
 import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
 import UserProfile from "./UIMapMenu/UserProfile/UserProfile.tsx";
-import Module from "./UIMapMenu/Level/Module.tsx";
+import Level from "./UIMapMenu/Level/Level.tsx";
 import mapMenuStore from "../../store/mapMenuStore.ts";
 import {observer} from "mobx-react-lite";
 import {IUserType} from "../../types/UserType.ts";
@@ -65,15 +65,14 @@ const MapMenu: React.FC = observer(() => {
                     </div>
                 ) : (
                     <div className="employee-interface">
-                        {/*<Coins coins={100} additionalClassname="coins"/>*/}
+                        <Coins coins={100} additionalClassname="coins"/>
                         <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
                         <UserProfile user={user} formattedDate={formattedDate}/>
-                        <br/>
                         <div className="geolocations">
                             <div className="geolocations__wrapper">
                                 {mapMenuStore.availableLevels.map((level, index) => {
-                                    return <Module id={(index + 1).toString()} key={level.id} title={level.title}
-                                                   theoryUnits={level.theoryUnits} taskUnits={level.taskUnits}/>
+                                    return <Level id={(index + 1).toString()} key={level.id} title={level.title}
+                                                  theoryUnits={level.theoryUnits} taskUnits={level.taskUnits}/>
                                 })}
                             </div>
                         </div>
