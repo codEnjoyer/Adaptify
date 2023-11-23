@@ -18,7 +18,19 @@ interface IModalLevelProps {
 const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], taskUnits = []}) => {
     const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
 
-    const renderBodyHeader = () => {
+    const bodyHeader = renderBodyHeader()
+    const menuItems: IMenuItemType[] = [
+        {
+            length: theoryUnits.length,
+            type: "theory"
+        },
+        {
+            length: taskUnits.length,
+            type: "tests"
+        }
+    ]
+
+    function renderBodyHeader() {
         return (
             <div className="header-modal">
                 <div className="left-arrow">
@@ -33,24 +45,18 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
             </div>)
     }
 
-    const renderMenuUnitsBlocks = (menuItems: IMenuItemType[]) => {
+    function renderMenuUnitsBlocks(menuItems: IMenuItemType[]) {
         const taskBlocks: JSX.Element[] = []
-        let index = 1;
+        let index = 0
 
         for (let i = 0; i < menuItems.length; i++) {
             for (let j = 0; j < menuItems[i].length; j++) {
-                taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>)
                 index++
+                taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>,)
             }
         }
         return taskBlocks
     }
-
-    const bodyHeader = renderBodyHeader()
-    const menuItems: IMenuItemType[] = [{length: theoryUnits.length, type: "theory"}, {
-        length: taskUnits.length,
-        type: "tests"
-    }]
 
     return (
         <div>
@@ -58,7 +64,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
 
             {menuItems
                 ? <div
-                    className="menu">{renderMenuUnitsBlocks(menuItems, 0)}</div>
+                    className="menu">{renderMenuUnitsBlocks(menuItems)}</div>
                 : ""
             }
 

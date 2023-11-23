@@ -1,14 +1,15 @@
 import React from 'react';
 
 interface ITestProps {
-    isChoosed?: boolean,
-    changeIsChoosed?: () => void
+    index: number,
+    indexChoosedItem: number
+    changeIndexChoosedItem: () => void
 }
 
-const Test: React.FC<ITestProps> = ({isChoosed, changeIsChoosed}) => {
+const Test: React.FC<ITestProps> = ({index, indexChoosedItem, changeIndexChoosedItem}) => {
     return (
-        <div className="test" onClick={changeIsChoosed}>
-            {isChoosed ? (
+        <div className="test" onClick={changeIndexChoosedItem}>
+            {index === indexChoosedItem ? (
                     <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="20" cy="20" r="20" fill="#973FAB"/>
                         <mask id="mask0_108_18405" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="6" y="7"

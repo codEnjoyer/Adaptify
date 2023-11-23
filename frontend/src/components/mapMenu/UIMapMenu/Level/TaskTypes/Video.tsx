@@ -1,14 +1,14 @@
 import React from 'react';
+import levelStore from "../../../../../store/levelStore.ts";
 
 interface IVideoProps {
-    isChoosed?: boolean,
-    changeIsChoosed?: () => void
+    index: number
 }
 
-const Video: React.FC<IVideoProps> = ({isChoosed, changeIsChoosed}) => {
+const Video: React.FC<IVideoProps> = ({index}) => {
     return (
-        <div className="video" onClick={changeIsChoosed}>
-            {isChoosed ? (
+        <div className="video" onClick={() => levelStore.setChosenTaskIndex(index)}>
+            {index === levelStore.chosenTaskIndex ? (
                     <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="20" cy="20" r="20" fill="#973FAB"/>
                         <mask id="mask0_108_18406" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="7" y="6"

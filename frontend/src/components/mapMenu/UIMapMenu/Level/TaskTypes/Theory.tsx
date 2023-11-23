@@ -1,16 +1,18 @@
 import React from "react";
 
 interface ITheoryProps {
-    isChoosed?: boolean,
-    changeIsChoosed?: () => void
+    index: number,
+    indexChoosedItem: number,
+    changeIndexChoosedItem: () => void
 }
 
-const Theory: React.FC<ITheoryProps> = ({isChoosed, changeIsChoosed}) => {
+const Theory: React.FC<ITheoryProps> = ({index, indexChoosedItem, changeIndexChoosedItem}) => {
 
     return (
-        <div className="theory" onClick={changeIsChoosed}>
-            {!isChoosed ?
-                (<svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div className="theory" onClick={changeIndexChoosedItem}>
+            {index === indexChoosedItem ?
+                (
+                    <svg width="60" height="60" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="20" cy="20" r="20" fill="#973FAB"/>
                         <mask id="mask0_142_18876" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="6" y="6"
                               width="28"
