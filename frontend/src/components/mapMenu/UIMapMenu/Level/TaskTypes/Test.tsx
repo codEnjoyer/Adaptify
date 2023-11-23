@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface ITestProps {
-    isChoosed: boolean,
-    changeIsChoosed: () => void
+    isChoosed?: boolean,
+    changeIsChoosed?: () => void
 }
 
 const Test: React.FC<ITestProps> = ({isChoosed, changeIsChoosed}) => {

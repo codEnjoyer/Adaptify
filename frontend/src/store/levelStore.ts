@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 
-class LevelStore {
+class levelStore {
     chosenTaskIndex: number = 1
 
     constructor() {
@@ -11,3 +11,5 @@ class LevelStore {
         this.chosenTaskIndex = index
     }
 }
+
+export default new levelStore()

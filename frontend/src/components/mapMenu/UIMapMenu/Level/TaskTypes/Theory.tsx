@@ -1,8 +1,8 @@
 import React from "react";
 
 interface ITheoryProps {
-    isChoosed: boolean,
-    changeIsChoosed: () => void
+    isChoosed?: boolean,
+    changeIsChoosed?: () => void
 }
 
 const Theory: React.FC<ITheoryProps> = ({isChoosed, changeIsChoosed}) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface IVideoProps {
-    isChoosed: boolean,
-    changeIsChoosed: () => void
+    isChoosed?: boolean,
+    changeIsChoosed?: () => void
 }
 
 const Video: React.FC<IVideoProps> = ({isChoosed, changeIsChoosed}) => {

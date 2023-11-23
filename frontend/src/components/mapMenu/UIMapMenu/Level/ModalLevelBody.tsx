@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "./modalLevelBody.scss"
 import ArrowLeft from "../../../../UIComponents/UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../../../../UIComponents/UIChooseModule/ArrowRight.tsx";
+import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx";
+import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
+import MenuItem from "./MenuItem.tsx";
 import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 import {ITaskType} from "../../../../types/TaskType.ts";
-import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx";
-import Theory from "./TaskTypes/Theory.tsx";
-import Video from "./TaskTypes/Video.tsx";
-import Test from "./TaskTypes/Test.tsx";
-import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
+import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 
 interface IModalLevelProps {
     title: string,
@@ -16,29 +15,12 @@ interface IModalLevelProps {
     taskUnits?: ITaskType[]
 }
 
-const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUnits}) => {
-    const tasks = [
-        {name: "theory", element: <Theory/>},
-        {name: "video", element: <Video/>},
-        {name: "test", element: <Test/>}
-    ]
-
+const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], taskUnits = []}) => {
     const [currentTaskIndex, setCurrentTaskIndex] = useState(0)
-
-    const renderMenuTaskBlocks = (countTheoryBlocks: number, countTaskBlocks: number) => {
-        const taskBlocks: JSX.Element[] = []
-
-        for (let i = countTheoryBlocks; i < countTaskBlocks + countTheoryBlocks; i++) {
-            taskBlocks.push(<div key={i} className="menu-item" onClick={() => {
-                setCurrentTaskIndex(i)
-            }}>{tasks[2].element}</div>)
-        }
-        return taskBlocks
-    }
 
     const renderBodyHeader = () => {
         return (
-            <div>
+            <div className="header-modal">
                 <div className="left-arrow">
                     <ArrowLeft/>
                 </div>
@@ -51,27 +33,47 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits, taskUni
             </div>)
     }
 
+    const renderMenuUnitsBlocks = (menuItems: IMenuItemType[]) => {
+        const taskBlocks: JSX.Element[] = []
+        let index = 1;
+
+        for (let i = 0; i < menuItems.length; i++) {
+            for (let j = 0; j < menuItems[i].length; j++) {
+                taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>)
+                index++
+            }
+        }
+        return taskBlocks
+    }
+
     const bodyHeader = renderBodyHeader()
+    const menuItems: IMenuItemType[] = [{length: theoryUnits.length, type: "theory"}, {
+        length: taskUnits.length,
+        type: "tests"
+    }]
 
     return (
         <div>
             <HeaderModal body={bodyHeader}/>
 
+            {menuItems
+                ? <div
+                    className="menu">{renderMenuUnitsBlocks(menuItems, 0)}</div>
+                : ""
+            }
+
             {theoryUnits![currentTaskIndex] !== undefined &&
-                (<div className="text-info">
+                (
+                    <div className="task-info">
                         <div className="level-title">{theoryUnits![currentTaskIndex].title}</div>
                         <div className="level-body">{theoryUnits![currentTaskIndex].content}</div>
                     </div>
                 )
             }
 
-            {taskUnits && taskUnits.length !== 0
-                ? <div
-                    className="menu">{renderMenuTaskBlocks(taskUnits!.length, taskUnits!.length)}</div>
-                : ""}
 
             {taskUnits![currentTaskIndex] !== undefined &&
-                (<div className="text-info">
+                (<div className="task-info">
                         <form className="level-body">
                             {taskUnits![currentTaskIndex].questions.map((question) => {
                                 return (
