@@ -9,6 +9,7 @@ import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 import {ITaskType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 import levelStore from "../../../../store/levelStore.ts";
+import {observer} from "mobx-react-lite";
 
 interface IModalLevelProps {
     title: string,
@@ -16,16 +17,18 @@ interface IModalLevelProps {
     taskUnits?: ITaskType[]
 }
 
-const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], taskUnits = []}) => {
+const ModalLevelBody: React.FC<IModalLevelProps> = observer(({title, theoryUnits = [], taskUnits = []}) => {
     const bodyHeader = renderBodyHeader()
     const menuItems: IMenuItemType[] = [
         {
+            type: "theory",
             length: theoryUnits.length,
-            type: "theory"
+            item: theoryUnits
         },
         {
             length: taskUnits.length,
-            type: "tests"
+            type: "tests",
+            item: taskUnits
         }
     ]
 
@@ -41,7 +44,8 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
                 <div className="right-arrow">
                     <ArrowRight/>
                 </div>
-            </div>)
+            </div>
+        )
     }
 
     function renderMenuUnitsBlocks(menuItems: IMenuItemType[]) {
@@ -57,30 +61,20 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
         return taskBlocks
     }
 
-    return (
-        <div>
-            <HeaderModal body={bodyHeader}/>
-
-            {menuItems
-                ? <div
-                    className="menu">{renderMenuUnitsBlocks(menuItems)}</div>
-                : ""
-            }
-
-            {theoryUnits![levelStore.chosenTaskIndex] !== undefined &&
-                (
+    function renderChosenTask(unit: ITheoryUnitType & ITaskType, type: string) {
+        switch (type) {
+            case ("theory"):
+                return (
                     <div className="task-info">
-                        <div className="level-title">{theoryUnits![levelStore.chosenTaskIndex].title}</div>
-                        <div className="level-body">{theoryUnits![levelStore.chosenTaskIndex].content}</div>
+                        <div className="level-title">{unit.title}</div>
+                        <div className="level-body">{unit.content}</div>
                     </div>
                 )
-            }
-
-
-            {taskUnits![levelStore.chosenTaskIndex] !== undefined &&
-                (<div className="task-info">
+            case ("test"):
+                return (
+                    <div className="task-info">
                         <form className="level-body">
-                            {taskUnits![levelStore.chosenTaskIndex].questions.map((question) => {
+                            {unit.questions.map((question) => {
                                 return (
                                     <div className="question">
                                         <div className="question-title">{question.question}</div>
@@ -102,9 +96,33 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({title, theoryUnits = [], ta
                         </form>
                     </div>
                 )
+            default:
+                return (<div>Блок пуст</div>)
+        }
+    }
+
+    function renderTasks(menuItems: IMenuItemType[], theoryUnits: ITheoryUnitType[], taskUnits: ITaskType[]) {
+        console.log(levelStore.chosenTaskIndex)
+        if (levelStore.chosenTaskIndex <= menuItems[0].length)
+            return renderChosenTask(theoryUnits[levelStore.chosenTaskIndex - 1], "theory")
+        if (levelStore.chosenTaskIndex <= menuItems[0].length + menuItems[1].length)
+            return renderChosenTask(taskUnits[levelStore.chosenTaskIndex - menuItems[0].length - 1], "test")
+
+    }
+
+    return (
+        <div>
+            <HeaderModal body={bodyHeader}/>
+
+            {menuItems
+                ? <div
+                    className="menu">{renderMenuUnitsBlocks(menuItems)}</div>
+                : ""
             }
+
+            {renderTasks(menuItems, theoryUnits, taskUnits)}
         </div>
     );
-};
+});
 
 export default ModalLevelBody;
