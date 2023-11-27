@@ -4,6 +4,7 @@ import {IMapType} from "../types/MapType.ts";
 import {IModuleType} from "../types/ModuleType.ts";
 import {ILevelType} from "../types/LevelType/LevelType.ts";
 import {IFetchLevelType} from "../types/LevelType/FetchLevelType.ts";
+import {IUserType} from "../types/UserType.ts";
 
 class MapMenuStore {
     mapMenu: IMapType | null = null
@@ -29,7 +30,6 @@ class MapMenuStore {
 
     createMap(mapName: string) {
         axios.post("http://localhost:8000/maps/", {title: mapName})
-
     }
 
     async fetchMapById(id: string) {
