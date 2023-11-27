@@ -12,8 +12,6 @@ class SuperUserStore {
     setAllUsers(fetchedUsers: IUserType[]) {
         this.allUsers = fetchedUsers
     }
-
-
 }
 
 export default new SuperUserStore()

@@ -6,6 +6,7 @@ import {IFetchLevelType} from "../types/LevelType/FetchLevelType.ts";
 import moduleMenuStore from "./moduleMenuStore.ts";
 
 class MapMenuStore {
+    // Доступное всем пользователям
     mapMenu: IMapType | null = null
     availableMaps: IMapType[] = []
 
@@ -14,16 +15,15 @@ class MapMenuStore {
 
     availableLevels: ILevelType[] = []
 
+    // Для суперпользователя
+    newNameMap: string = ""
+
     constructor() {
         makeAutoObservable(this)
     }
 
     async fetchAvailableMaps() {
         await axios.get("http://localhost:8000/maps/").then((response) => this.availableMaps = response.data)
-    }
-
-    createMap(mapName: string) {
-        axios.post("http://localhost:8000/maps/", {title: mapName})
     }
 
     async fetchMapById(id: string) {
@@ -107,6 +107,15 @@ class MapMenuStore {
     //             ]
     //         })
     // }
+
+    // Для суперпользователя
+
+    createMap(mapName: string) {
+        axios.post("http://localhost:8000/maps/", {title: mapName}).then(() => console.log(1))
+    }
+    changeNewNameMap(newName: string) {
+        this.newNameMap = newName
+    }
 }
 
 export default new MapMenuStore()
