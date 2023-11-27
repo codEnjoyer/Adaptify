@@ -31,7 +31,7 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 
 from game.map import Map
-from game.modules import Module
+from game.modules import Level
 from game.levels import Level
 from game.units.tasks import TaskUnit, EmployeeTask
 from game.units.theory import TheoryUnit  # , TheoryVideo

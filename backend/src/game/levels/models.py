@@ -11,7 +11,7 @@ from game.levels.schemas import LevelRead
 from game.units import TaskUnit, TheoryUnit
 
 if typing.TYPE_CHECKING:
-    from game.modules.models import Module
+    from game.modules.models import Level
     from game.units.tasks.models import TaskUnit
     from game.units.theory.models import TheoryUnit
 
@@ -23,7 +23,7 @@ class Level(BaseModel):
     module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'))
     title: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
-    module: Mapped["Module"] = relationship(back_populates='levels')
+    module: Mapped["Level"] = relationship(back_populates='levels')
 
     theory_units: Mapped[list["TheoryUnit"]] = relationship(back_populates='level', lazy='selectin')
 

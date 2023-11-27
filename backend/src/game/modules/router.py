@@ -6,7 +6,7 @@ from sqlalchemy.exc import NoResultFound
 from game.modules.schemas import ModuleRead, ModuleCreate, ModuleUpdate
 from utils.types import ModuleServiceType
 
-router = APIRouter(tags=["Module"])
+router = APIRouter(tags=["Level"])
 
 
 @router.get("/modules/", tags=["Dev"])

@@ -1,23 +1,22 @@
 import {makeAutoObservable} from "mobx";
 import axios from "axios";
 import {IMapType} from "../types/MapType.ts";
-import {IModuleType} from "../types/ModuleType.ts";
 import {ILevelType} from "../types/LevelType/LevelType.ts";
 import {IFetchLevelType} from "../types/LevelType/FetchLevelType.ts";
+import moduleMenuStore from "./moduleMenuStore.ts";
 
 class MapMenuStore {
+    // Доступное всем пользователям
     mapMenu: IMapType | null = null
     availableMaps: IMapType[] = []
 
     currentMapId: string | null = null
-    currentModuleId: string | null = null
     currentLevelId: string | null = null
 
-    modulesMap: string[] = []
-    availableModules: IModuleType[] = []
-    currentModule: IModuleType | null = null
-
     availableLevels: ILevelType[] = []
+
+    // Для суперпользователя
+    newNameMap: string = ""
 
     constructor() {
         makeAutoObservable(this)
@@ -25,11 +24,6 @@ class MapMenuStore {
 
     async fetchAvailableMaps() {
         await axios.get("http://localhost:8000/maps/").then((response) => this.availableMaps = response.data)
-    }
-
-    createMap(mapName: string) {
-        axios.post("http://localhost:8000/maps/", {title: mapName})
-
     }
 
     async fetchMapById(id: string) {
@@ -51,13 +45,6 @@ class MapMenuStore {
         })
     }
 
-    setModulesMap(newModulesMap: string[]) {
-        this.modulesMap = newModulesMap
-    }
-
-    setAvailableModules(modules: IModuleType[]) {
-        this.availableModules = modules
-    }
 
     setAvailableLevels(levels: IFetchLevelType[]) {
         this.availableLevels = levels.map((level) => {
@@ -71,93 +58,63 @@ class MapMenuStore {
         })
     }
 
-    setCurrentModule(newModule: IModuleType) {
-        this.currentModule = newModule
-    }
-
-    async fetchModules() {
-        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/")
-            .then((response) => this.setAvailableModules(response.data))
-    }
-
-    async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string) {
-        axios.post("http://localhost:8000/maps/" + mapId + "/modules/", {
-            map_id: mapId,
-            title: title,
-            previous_module_id: previousModuleId,
-            next_module_id: nextModuleId,
-        })
-    }
-
-    async fetchModuleById(id: string) {
-        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + id).then((response) => {
-            this.setCurrentModule(response.data)
-            this.currentModuleId = response.data.id
-        })
-    }
 
     async fetchLevels() {
-        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/")
+        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + moduleMenuStore.currentModuleId + "/levels/")
             .then((response) => this.setAvailableLevels(response.data))
     }
 
-    async fetchLevelById(id: string) {
-        await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + id).then((response) => {
-            this.currentLevelId = response.data
-        })
-    }
+    // async fetchLevelById(id: string) {
+    //     await axios.get("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + id).then((response) => {
+    //         this.currentLevelId = response.data
+    //     })
+    // }
 
-    async deleteModule(id: string) {
-        axios.delete("http://localhost:8000/modules/" + id)
-    }
+    // createTheoryUnit() {
+    //     axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + this.currentLevelId + "/theory", {
+    //         title: "Заголовок 1",
+    //         content: "Контент"
+    //     })
+    // }
 
-    updateModuleById(mapId: string, id: string, title?: string, previousModuleId?: string, nextModuleId?: string, levels?: string[]) {
-        axios.patch("http://localhost:8000/modules/" + id, {
-            id: id,
-            map_id: mapId,
-            title: title,
-            previous_module_id: previousModuleId,
-            next_module_id: nextModuleId,
-            levels_ids: levels
-        })
-    }
+    // createTaskUnit() {
+    //     axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + this.currentLevelId + "/tasks", {
+    //         type: "test",
+    //         score_reward: 100,
+    //         requires_review: false
+    //     })
+    // }
 
-    createTheoryUnit() {
-        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + this.currentLevelId + "/theory", {
-            title: "Заголовок 1",
-            content: "Контент"
-        })
-    }
+    // addQuestionToTaskUnit() {
+    //     axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId
+    //         + "/levels/" + this.currentLevelId + "/tasks/" + "b12de86e-fcd9-4761-89f0-b80d9583822d",
+    //         {
+    //             type: "singlechoice",
+    //             question: "Кто такой вопрос?",
+    //             possible_answers: [
+    //                 {
+    //                     answer: "Я",
+    //                     is_correct: false
+    //                 },
+    //                 {
+    //                     answer: "Не я",
+    //                     is_correct: true
+    //                 },
+    //                 {
+    //                     answer: "Не ты",
+    //                     is_correct: false
+    //                 }
+    //             ]
+    //         })
+    // }
 
-    createTaskUnit() {
-        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId + "/levels/" + this.currentLevelId + "/tasks", {
-            type: "test",
-            score_reward: 100,
-            requires_review: false
-        })
-    }
+    // Для суперпользователя
 
-    addQuestionToTaskUnit() {
-        axios.post("http://localhost:8000/maps/" + this.currentMapId + "/modules/" + this.currentModuleId
-            + "/levels/" + this.currentLevelId + "/tasks/" + "b12de86e-fcd9-4761-89f0-b80d9583822d",
-            {
-                type: "singlechoice",
-                question: "Кто такой вопрос?",
-                possible_answers: [
-                    {
-                        answer: "Я",
-                        is_correct: false
-                    },
-                    {
-                        answer: "Не я",
-                        is_correct: true
-                    },
-                    {
-                        answer: "Не ты",
-                        is_correct: false
-                    }
-                ]
-            })
+    createMap(mapName: string) {
+        axios.post("http://localhost:8000/maps/", {title: mapName}).then(() => console.log(1))
+    }
+    changeNewNameMap(newName: string) {
+        this.newNameMap = newName
     }
 }
 

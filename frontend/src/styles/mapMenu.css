@@ -51,16 +51,6 @@
   letter-spacing: 0.1125rem;
 }
 
-.left-arrow {
-  position: absolute;
-  left: 5%;
-}
-
-.right-arrow {
-  position: absolute;
-  right: 5%;
-}
-
 .user-profile {
   position: absolute;
   right: 3rem;
