@@ -3,12 +3,17 @@ import {IUserType} from "../types/UserType.ts";
 
 
 class SuperUserStore {
+    allUsers: IUserType[] = []
+
     constructor() {
         makeAutoObservable(this)
     }
 
-    allUsers: IUserType = []
-    
+    setAllUsers(fetchedUsers: IUserType[]) {
+        this.allUsers = fetchedUsers
+    }
+
+
 }
 
 export default new SuperUserStore()

@@ -6,6 +6,7 @@ import UserProfile from "./UIMapMenu/UserProfile/UserProfile.tsx";
 import Level from "./UIMapMenu/Level/Level.tsx";
 import {IUserType} from "../../types/UserType.ts";
 import {observer} from "mobx-react-lite";
+import moduleMenuStore from "../../store/moduleMenuStore.ts";
 
 interface IEmployeeMap {
     user?: IUserType,
@@ -16,7 +17,7 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => 
     return (
         <div className="employee-interface">
             <Coins coins={100} additionalClassname="coins"/>
-            <ChooseModuleWindow moduleName={mapMenuStore.currentModule?.title}/>
+            <ChooseModuleWindow moduleName={moduleMenuStore.currentModule?.title}/>
             <UserProfile user={user} formattedDate={formattedDate}/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">

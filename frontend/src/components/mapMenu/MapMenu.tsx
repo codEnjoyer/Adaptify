@@ -8,6 +8,8 @@ import {IUserType} from "../../types/UserType.ts";
 import axios from "axios";
 import EmployeeMap from "./EmployeeMap.tsx";
 import SuperUserMap from "./SuperUserMap.tsx";
+import superUserStore from "../../store/superUserStore.ts";
+import moduleMenuStore from "../../store/moduleMenuStore.ts";
 
 const MapMenu: React.FC = observer(() => {
     const navigate = useNavigate()
@@ -24,7 +26,7 @@ const MapMenu: React.FC = observer(() => {
                 }
             })
 
-            mapMenuStore.setAllUsers(response.data)
+            superUserStore.setAllUsers(response.data)
 
 
             if (user) {
@@ -40,8 +42,8 @@ const MapMenu: React.FC = observer(() => {
 
         mapMenuStore.fetchAvailableMaps().then(() => {
             mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
-                mapMenuStore.fetchModules().then(() => {
-                    mapMenuStore.fetchModuleById(mapMenuStore.availableModules[0].id).then(() => {
+                moduleMenuStore.fetchModules().then(() => {
+                    moduleMenuStore.fetchModuleById(moduleMenuStore.availableModules[0].id).then(() => {
                         mapMenuStore.fetchLevels().then(() => {
 
                         }).catch(() => alert("Нет доступных уровней для данного модуля"))
@@ -53,8 +55,8 @@ const MapMenu: React.FC = observer(() => {
 
     return (
         <div>
-            {!user?.is_superuser
-                ? <SuperUserMap allUsers={mapMenuStore.allUsers}/>
+            {user?.is_superuser
+                ? <SuperUserMap allUsers={superUserStore.allUsers}/>
                 : <EmployeeMap user={user} formattedDate={formattedDate}/>
             }
         </div>
