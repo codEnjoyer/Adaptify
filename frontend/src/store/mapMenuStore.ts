@@ -9,8 +9,9 @@ class MapMenuStore {
     // Доступное всем пользователям
     mapMenu: IMapType | null = null
     availableMaps: IMapType[] = []
-
     currentMapId: string | null = null
+    currentMapIndex: number = 0
+
     currentLevelId: string | null = null
 
     availableLevels: ILevelType[] = []
@@ -113,6 +114,11 @@ class MapMenuStore {
 
     changeNewMapName(newName: string) {
         this.newNameMap = newName
+    }
+
+    changeCurrentMapIndex(newIndex: number) {
+        this.currentMapIndex = newIndex
+        this.fetchMapById(this.availableMaps[this.currentMapIndex].id).then(() => moduleMenuStore.fetchModules())
     }
 
     selectMap(newMap: IMapType) {

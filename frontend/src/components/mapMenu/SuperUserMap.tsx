@@ -4,6 +4,8 @@ import mapMenuStore from "../../store/mapMenuStore.ts";
 import CustomInput from "../../UIComponents/customInput/CustomInput.tsx";
 import {observer} from "mobx-react-lite";
 import superUserStore from "../../store/superUserStore.ts";
+import moduleMenuStore from "../../store/moduleMenuStore.ts";
+import {IMapType} from "../../types/MapType.ts";
 
 interface ISuperUserMap {
 
@@ -12,8 +14,17 @@ interface ISuperUserMap {
 const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
 
     useEffect(() => {
-
+        mapMenuStore.fetchAvailableMaps()
+            .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[mapMenuStore.currentMapIndex].id)
+                .then(() => moduleMenuStore.fetchModules()))
     }, []);
+
+    function handleOnClickOptionMap(map: IMapType, indexMap: number) {
+        mapMenuStore.selectMap(map)
+        mapMenuStore.changeCurrentMapIndex(indexMap)
+    }
+
+
     return (
         <div>
             <select>
@@ -26,14 +37,18 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                           handleOnClick={() => mapMenuStore.createMap(mapMenuStore.newNameMap)}/>
 
             <select>
-                {mapMenuStore.availableMaps?.map((map) =>
+                {mapMenuStore.availableMaps?.map((map, index) =>
                     <option key={map.id} value={map.title}
-                            onClick={() => mapMenuStore.selectMap(map)}>{map.title}</option>)}
+                            onClick={() => handleOnClickOptionMap(map, index)}>{map.title}</option>)}
             </select>
 
             <CustomButton text="Удалить выбранную карту"
                           handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}/>
 
+            <select>
+                {moduleMenuStore.availableModules.map((module) =>
+                    <option key={module.id} value={module.title}>{module.title}</option>)}
+            </select>
         </div>
     );
 });
