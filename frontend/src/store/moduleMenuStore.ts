@@ -8,6 +8,7 @@ class ModuleMenuStore {
     modulesMap: string[] = []
     availableModules: IModuleType[] = []
     currentModule: IModuleType | null = null
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -28,7 +29,7 @@ class ModuleMenuStore {
         await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/")
             .then((response) => {
                 this.setAvailableModules([])
-                this.setAvailableModules(response.data)
+                this.setAvailableModules(response.data.filter((module: IModuleType) => module.map_id === mapMenuStore.currentMapId))
             })
     }
 
