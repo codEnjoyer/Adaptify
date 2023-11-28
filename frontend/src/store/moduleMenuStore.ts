@@ -8,6 +8,7 @@ class ModuleMenuStore {
     modulesMap: string[] = []
     availableModules: IModuleType[] = []
     currentModule: IModuleType | null = null
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -26,7 +27,10 @@ class ModuleMenuStore {
 
     async fetchModules() {
         await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/")
-            .then((response) => this.setAvailableModules(response.data))
+            .then((response) => {
+                this.setAvailableModules([])
+                this.setAvailableModules(response.data.filter((module: IModuleType) => module.map_id === mapMenuStore.currentMapId))
+            })
     }
 
     async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string) {

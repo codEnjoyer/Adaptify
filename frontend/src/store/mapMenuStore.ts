@@ -9,8 +9,9 @@ class MapMenuStore {
     // Доступное всем пользователям
     mapMenu: IMapType | null = null
     availableMaps: IMapType[] = []
-
     currentMapId: string | null = null
+    currentMapIndex: number = 0
+
     currentLevelId: string | null = null
 
     availableLevels: ILevelType[] = []
@@ -31,10 +32,6 @@ class MapMenuStore {
             this.mapMenu = response?.data
             this.currentMapId = response?.data.id
         })
-    }
-
-    deleteMap(id: string) {
-        axios.delete("http://localhost:8000" + id)
     }
 
     updateMapById(id: string, title: string, modulesIds?: string[]) {
@@ -111,10 +108,28 @@ class MapMenuStore {
     // Для суперпользователя
 
     createMap(mapName: string) {
-        axios.post("http://localhost:8000/maps/", {title: mapName}).then(() => console.log(1))
+        axios.post("http://localhost:8000/maps/", {title: mapName}).then()
+        this.newNameMap = ""
     }
-    changeNewNameMap(newName: string) {
+
+    changeNewMapName(newName: string) {
         this.newNameMap = newName
+    }
+
+    changeCurrentMapIndex(newIndex: number) {
+        this.currentMapIndex = newIndex
+        this.fetchMapById(this.availableMaps[this.currentMapIndex].id).then(() => moduleMenuStore.fetchModules())
+    }
+
+    async selectMap(newMap: IMapType) {
+        this.mapMenu = newMap
+        this.currentMapId = newMap.id
+    }
+
+    deleteMap(mapId?: string) {
+        axios.delete("http://localhost:8000/maps/" + mapId)
+            .then()
+            .catch(() => alert("Выбрана несуществующая карта"))
     }
 }
 
