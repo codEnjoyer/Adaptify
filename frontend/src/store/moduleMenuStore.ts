@@ -26,7 +26,10 @@ class ModuleMenuStore {
 
     async fetchModules() {
         await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/")
-            .then((response) => this.setAvailableModules(response.data))
+            .then((response) => {
+                this.setAvailableModules([])
+                this.setAvailableModules(response.data)
+            })
     }
 
     async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string) {

@@ -121,8 +121,9 @@ class MapMenuStore {
         this.fetchMapById(this.availableMaps[this.currentMapIndex].id).then(() => moduleMenuStore.fetchModules())
     }
 
-    selectMap(newMap: IMapType) {
+    async selectMap(newMap: IMapType) {
         this.mapMenu = newMap
+        this.currentMapId = newMap.id
     }
 
     deleteMap(mapId?: string) {
