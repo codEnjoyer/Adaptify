@@ -9,9 +9,14 @@ class AuthStore {
 
     userPassword: string = ""
     userEmail: string = ""
+    isPasswordShows: boolean = false
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    changeIsPasswordShows() {
+        this.isPasswordShows = !this.isPasswordShows
     }
 
     signInUser() {
@@ -49,13 +54,8 @@ class AuthStore {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }, withCredentials: true
         })
-            .then((response) => {
-                console.log(response)
-                this.signInUser()
-            })
-            .catch((reason) => {
-                alert(reason)
-            })
+            .then(() => this.signInUser())
+            .catch((reason) => alert(reason))
     }
 
     async signUp() {
@@ -67,9 +67,7 @@ class AuthStore {
             console.log(r.data)
             this.changeUserLogin("")
             this.changeUserPassword("")
-        }).catch(() => {
-            alert("Неправильно введены данные")
-        })
+        }).catch(() => alert("Неправильно введены данные"))
     }
 }
 

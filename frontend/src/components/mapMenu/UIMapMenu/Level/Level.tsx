@@ -3,6 +3,7 @@ import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 import ModalLevelBody from "./ModalLevelBody.tsx";
 import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 import {ITaskType} from "../../../../types/TaskType.ts";
+import levelStore from "../../../../store/levelStore.ts";
 
 interface IModuleProps {
     id: string,
@@ -11,7 +12,7 @@ interface IModuleProps {
     taskUnits?: ITaskType[]
 }
 
-const Module: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
+const Level: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
 
@@ -20,7 +21,10 @@ const Module: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => 
 
             {isOpenModalWindow
                 ? <ModalWindow
-                    onClose={() => setOpenModalWindow(!isOpenModalWindow)}
+                    onClose={() => {
+                        setOpenModalWindow(!isOpenModalWindow)
+                        levelStore.closeLevel()
+                    }}
                     body={<ModalLevelBody key={id} title={title} theoryUnits={theoryUnits} taskUnits={taskUnits}/>}
                 />
                 : ""}
@@ -47,4 +51,4 @@ const Module: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => 
 };
 
 
-export default Module;
+export default Level;

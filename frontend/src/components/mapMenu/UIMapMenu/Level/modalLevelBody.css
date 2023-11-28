@@ -4,7 +4,7 @@
   border-radius: 15px;
   background: linear-gradient(to right, #7f1e8b, #8452ce);
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -19,7 +19,7 @@
   border-radius: 30px;
 }
 
-.text-info {
+.task-info {
   position: absolute;
   left: 12%;
   width: 76%;
