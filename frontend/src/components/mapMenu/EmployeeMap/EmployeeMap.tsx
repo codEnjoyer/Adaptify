@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
-import Coins from "./UIMapMenu/Coins.tsx";
-import ChooseModuleWindow from "./UIMapMenu/ChooseModuleWindow.tsx";
-import mapMenuStore from "../../store/mapMenuStore.ts";
-import UserProfile from "./UIMapMenu/UserProfile/UserProfile.tsx";
-import Level from "./UIMapMenu/Level/Level.tsx";
-import {IUserType} from "../../types/UserType.ts";
+import Coins from "../UIMapMenu/Coins.tsx";
+import ChooseModuleWindow from "../UIMapMenu/ChooseModuleWindow.tsx";
+import mapMenuStore from "../../../store/mapMenuStore.ts";
+import UserProfile from "../UIMapMenu/UserProfile/UserProfile.tsx";
+import Level from "../UIMapMenu/Level/Level.tsx";
+import {IUserType} from "../../../types/UserType.ts";
 import {observer} from "mobx-react-lite";
-import moduleMenuStore from "../../store/moduleMenuStore.ts";
+import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 
 interface IEmployeeMap {
     user?: IUserType,

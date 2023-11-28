@@ -5,8 +5,8 @@ import './../../styles/mapMenu.scss'
 import {observer} from "mobx-react-lite";
 import {IUserType} from "../../types/UserType.ts";
 import axios from "axios";
-import EmployeeMap from "./EmployeeMap.tsx";
-import SuperUserMap from "./SuperUserMap.tsx";
+import EmployeeMap from "./EmployeeMap/EmployeeMap.tsx";
+import SuperUserMap from "./SuperUserMap/SuperUserMap.tsx";
 import superUserStore from "../../store/superUserStore.ts";
 
 const MapMenu: React.FC = observer(() => {

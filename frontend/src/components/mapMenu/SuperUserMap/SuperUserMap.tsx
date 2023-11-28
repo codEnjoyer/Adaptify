@@ -1,17 +1,18 @@
-import React, {useEffect} from 'react';
-import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
-import mapMenuStore from "../../store/mapMenuStore.ts";
-import CustomInput from "../../UIComponents/customInput/CustomInput.tsx";
+import React, {useEffect, useState} from 'react';
+import CustomButton from "../../../UIComponents/customButton/CustomButton.tsx";
+import mapMenuStore from "../../../store/mapMenuStore.ts";
+import CustomInput from "../../../UIComponents/customInput/CustomInput.tsx";
 import {observer} from "mobx-react-lite";
-import superUserStore from "../../store/superUserStore.ts";
-import moduleMenuStore from "../../store/moduleMenuStore.ts";
-import {IMapType} from "../../types/MapType.ts";
+import superUserStore from "../../../store/superUserStore.ts";
+import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+import {IMapType} from "../../../types/MapType.ts";
 
 interface ISuperUserMap {
 
 }
 
 const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
+    const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
 
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps()
