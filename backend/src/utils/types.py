@@ -1,21 +1,19 @@
 from typing import Annotated
 
-from fastapi import Depends, Query
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import Depends
 
 from auth.base_config import current_user, current_superuser
-from database import get_async_session
 from game.dependencies import map_service, module_service, level_service, task_unit_service, theory_unit_service, \
     question_service
-from services.employee_service import EmployeeService
-from services.level_service import LevelService
-from services.map_service import MapService
-from services.module_service import ModuleService
-from services.question_service import QuestionService
-from services.task_unit_service import TaskUnitService
-from services.theory_unit_service import TheoryUnitService
-from services.tutor_service import TutorService
-from services.user_service import UserService
+from services.users.employee_service import EmployeeService
+from services.game.level_service import LevelService
+from services.game.map_service import MapService
+from services.game.module_service import ModuleService
+from services.game.units.question_service import QuestionService
+from services.game.units.task_unit_service import TaskUnitService
+from services.game.units.theory_unit_service import TheoryUnitService
+from services.users.tutor_service import TutorService
+from services.users.user_service import UserService
 from users.dependencies import employee_service, tutor_service, user_service
 from users.models import User
 
