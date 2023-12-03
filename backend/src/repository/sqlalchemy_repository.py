@@ -1,7 +1,10 @@
 import typing
 import uuid
 
-from sqlalchemy import insert, select, delete, update
+from sqlalchemy import insert, select, delete, update, ColumnElement, LambdaElement
+from sqlalchemy.sql._typing import _HasClauseElement
+from sqlalchemy.sql.elements import SQLCoreOperations
+from sqlalchemy.sql.roles import ExpressionElementRole
 
 from database import async_session_maker
 from repository.abstract import AbstractRepository
@@ -12,7 +15,9 @@ class SQLAlchemyRepository(AbstractRepository):
 
     async def add_one(self, model: dict[str, typing.Any]) -> model:
         async with async_session_maker() as session:
-            stmt = insert(self.model).values(**model).returning(self.model)
+            stmt = insert(self.model) \
+                .values(**model) \
+                .returning(self.model)
             res = await session.execute(stmt)
             await session.commit()
             return res.scalar_one()
@@ -20,6 +25,12 @@ class SQLAlchemyRepository(AbstractRepository):
     async def find_all(self) -> list[model]:
         async with async_session_maker() as session:
             stmt = select(self.model)
+            res = await session.execute(stmt)
+            return res.scalars()
+
+    async def find_all_with_condition(self, *whereclause: ColumnElement[bool]) -> list[model]:
+        async with async_session_maker() as session:
+            stmt = select(self.model).where(*whereclause)
             res = await session.execute(stmt)
             return res.scalars()
 
@@ -31,7 +42,9 @@ class SQLAlchemyRepository(AbstractRepository):
 
     async def delete_one(self, id: uuid.UUID) -> model:
         async with async_session_maker() as session:
-            stmt = delete(self.model).where(self.model.id == id).returning(self.model)
+            stmt = delete(self.model) \
+                .where(self.model.id == id) \
+                .returning(self.model)
             res = await session.execute(stmt)
             await session.commit()
             return res.scalar_one()
@@ -39,7 +52,10 @@ class SQLAlchemyRepository(AbstractRepository):
     async def update_one(self, id: uuid.UUID, model: dict[str, typing.Any]) -> model:
         model = {key: value for key, value in model.items() if value}
         async with async_session_maker() as session:
-            stmt = update(self.model).where(self.model.id == id).values(**model).returning(self.model)
+            stmt = update(self.model) \
+                .where(self.model.id == id) \
+                .values(**model) \
+                .returning(self.model)
             res = await session.execute(stmt)
             await session.commit()
             return res.scalar_one()
