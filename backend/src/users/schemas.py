@@ -8,7 +8,7 @@ from users.enums import UserRoles
 
 
 class __CustomUser:
-    username: str
+    pass
 
 
 class UserRead(BaseUser[uuid.UUID], __CustomUser):
