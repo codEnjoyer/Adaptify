@@ -1,5 +1,6 @@
 import uuid
 
+from game.modules import Module
 from game.modules.schemas import ModuleRead, ModuleCreate, ModuleUpdate
 from repository.abstract import AbstractRepository
 
@@ -30,3 +31,7 @@ class ModuleService:
         schema_dict = schema_update.model_dump()
         res = await self.__module_repo.update_one(id, schema_dict)
         return res.to_read_schema()
+
+    async def get_all_linked_to_map(self, map_id: uuid.UUID) -> list[ModuleRead]:
+        res = await self.__module_repo.find_all_with_condition(Module.map_id == map_id)
+        return [model.to_read_schema() for model in res]
