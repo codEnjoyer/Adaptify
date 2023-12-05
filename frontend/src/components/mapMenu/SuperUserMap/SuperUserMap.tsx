@@ -33,8 +33,13 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
 
     return (
         <div>
-            {isUsersListModalOpen ? <ModalWindow onClose={handleOnClickChangeIsModalOpen} body={<UsersListModalBody users={superUserStore.allUsers}/>}
-                                                 windowContentStyles=""/> : ""}
+            {isUsersListModalOpen
+                ? <ModalWindow
+                    onClose={handleOnClickChangeIsModalOpen}
+                    body={<UsersListModalBody users={superUserStore.allUsers}/>}
+                    windowContentStyles=""
+                />
+                : ""}
             <CustomButton handleOnClick={handleOnClickChangeIsModalOpen} text="Открыть список сотрудников"/>
             <select>
                 {superUserStore.allUsers.map((user) =>

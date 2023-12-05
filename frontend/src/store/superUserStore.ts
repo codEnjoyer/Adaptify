@@ -4,6 +4,7 @@ import {IUserType} from "../types/UserType.ts";
 
 class SuperUserStore {
     allUsers: IUserType[] = []
+    currentUser: IUserType | null = null
 
     constructor() {
         makeAutoObservable(this)
@@ -11,6 +12,10 @@ class SuperUserStore {
 
     setAllUsers(fetchedUsers: IUserType[]) {
         this.allUsers = fetchedUsers
+    }
+
+    selectUser(newUser: IUserType | null) {
+        this.currentUser = newUser
     }
 }
 
