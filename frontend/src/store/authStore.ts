@@ -55,7 +55,7 @@ class AuthStore {
             }, withCredentials: true
         })
             .then(() => this.signInUser())
-            .catch((reason) => alert(reason))
+            .catch(reason => console.log(reason))
     }
 
     async signUp() {

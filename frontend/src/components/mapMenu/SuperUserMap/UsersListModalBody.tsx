@@ -14,7 +14,8 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({users}) => {
                         <div className="users-list-user-name">
                             {user.username}
                         </div>
-                        <img src="https://i.ibb.co/GQzwW82/Qf-EKp-Mlf-Xfw.jpg" alt="Employee Photo" className="user-photo"/>
+                        <img src="https://i.ibb.co/GQzwW82/Qf-EKp-Mlf-Xfw.jpg" alt="Employee Photo"
+                             className="user-photo"/>
                     </div>
                 ))}
             </div>
