@@ -15,8 +15,8 @@ class __QuestionBase(BaseModel):
 
 
 class QuestionRead(__QuestionBase):
-    task_id: UUID
     id: UUID
+    task_id: UUID
     answer_options: list[AnswerOptionRead]
 
 
@@ -32,6 +32,7 @@ class QuestionUpdate(__QuestionBase):
 
 
 class EmployeeQuestionPost(__QuestionBase):
+    id: UUID
     answers: list[EmployeeAnswerPost]
 
 

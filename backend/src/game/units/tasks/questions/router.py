@@ -2,9 +2,11 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
+from game.units.tasks.questions.answers.schemas import EmployeeAnswerRead
+from game.units.tasks.questions.enums import QuestionTypes
 from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate, EmployeeQuestionPost, \
     EmployeeQuestionRead
-from utils.types import QuestionServiceType, TaskUnitServiceType
+from utils.types import QuestionServiceType, TaskUnitServiceType, AnswerOptionServiceType
 
 router = APIRouter(tags=["Questions"])
 
@@ -29,9 +31,34 @@ async def autocheck_task_unit(map_id: UUID,
                               module_id: UUID,
                               level_id: UUID,
                               task_id: UUID,
-                              employee_answers: list[EmployeeQuestionPost],
-                              task_service: TaskUnitServiceType) -> list[EmployeeQuestionRead]:
-    return []
+                              employee_questions_answers: list[EmployeeQuestionPost],
+                              answer_option_service: AnswerOptionServiceType) -> list[EmployeeQuestionRead]:
+    result = []
+    for question_answer in employee_questions_answers:
+        user_answers_on_question = question_answer.answers
+        correct_answers_ids_on_question = await answer_option_service.get_all_correct(question_answer.id)
+        correct_answers_ids_on_question = set(correct_answers_ids_on_question)
+        question_read_answers = []
+        for answer in user_answers_on_question:
+            answer_was_selected_correct = (
+                    # Был выбран правильный ответ: (1 и 1) != (0 и 0) => 1
+                    # Был выбран неправильный ответ: (1 и 0) != (0 и 1) => 0
+                    # Правильный ответ не был выбран: (0 и 1) != (1 и 0) => 0
+                    # Неправильный ответ не был выбран: (0 и 0) != (1 и 1) => 1
+                    (answer.is_selected and answer.id in correct_answers_ids_on_question) !=
+                    (not answer.is_selected and answer.id not in correct_answers_ids_on_question)
+            )
+            correct_answer_selected = answer.is_selected and answer.id in correct_answers_ids_on_question
+            incorrect_answer_not_selected = not answer.is_selected and answer.id not in correct_answers_ids_on_question
+            answer_was_selected_correct = not (correct_answer_selected ^ incorrect_answer_not_selected)
+            answer_read = EmployeeAnswerRead(answer=answer.answer, was_selected_correct=answer_was_selected_correct)
+            # TODO: невыбранные неправильные ответы помечаются false
+            question_read_answers.append(answer_read)
+        question_read = EmployeeQuestionRead(type=question_answer.type,
+                                             question=question_answer.question,
+                                             results=question_read_answers)
+        result.append(question_read)
+    return result
 
 
 @router.delete("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/questions/{question_id}/")

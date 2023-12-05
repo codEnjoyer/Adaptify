@@ -1,10 +1,12 @@
 from uuid import UUID
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class __AnswerBase(BaseModel):
     answer: str
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class AnswerOptionRead(__AnswerBase):
@@ -22,6 +24,7 @@ class AnswerOptionUpdate(__AnswerBase):
 
 
 class EmployeeAnswerPost(__AnswerBase):
+    id: UUID
     is_selected: bool
 
 

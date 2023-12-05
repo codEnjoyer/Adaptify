@@ -4,7 +4,8 @@ from fastapi import Depends
 
 from auth.base_config import current_user, current_superuser
 from game.dependencies import map_service, module_service, level_service, task_unit_service, theory_unit_service, \
-    question_service
+    question_service, answer_option_service
+from services.game.units.answer_option_service import AnswerOptionService
 from services.users.employee_service import EmployeeService
 from services.game.level_service import LevelService
 from services.game.map_service import MapService
@@ -26,11 +27,11 @@ LevelServiceType = Annotated[LevelService, Depends(level_service)]
 TaskUnitServiceType = Annotated[TaskUnitService, Depends(task_unit_service)]
 TheoryUnitServiceType = Annotated[TheoryUnitService, Depends(theory_unit_service)]
 QuestionServiceType = Annotated[QuestionService, Depends(question_service)]
+AnswerOptionServiceType = Annotated[AnswerOptionService, Depends(answer_option_service)]
 
 UserServiceType = Annotated[UserService, Depends(user_service)]
 EmployeeServiceType = Annotated[EmployeeService, Depends(employee_service)]
 TutorServiceType = Annotated[TutorService, Depends(tutor_service)]
 
-# AsyncDBSession = Annotated[AsyncSession, Depends(get_async_session)]
 # QueryDBLimit = Annotated[int, Query(ge=0, le=10 ** 3)]
 # QueryDBOffset = Annotated[int, Query(ge=0, le=10 ** 6)]
