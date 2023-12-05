@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import CustomInput from "../../../../UIComponents/customInput/CustomInput.tsx";
 import {IUserType} from "../../../../types/UserType.ts";
 import Achievement from "./Achievement.tsx";
+import {IAchievementType} from "../../../../types/AchievementType.ts";
 
 
 interface IUserProfileModalProps {
@@ -12,6 +13,12 @@ interface IUserProfileModalProps {
 
 
 const UserProfileModalBody: React.FC<IUserProfileModalProps> = ({user, formattedDate}) => {
+    const achievements: IAchievementType[] = [
+        {id: "1", title: "Начало работы", description: "Описание 1"},
+        {id: "2", title: "Середина работы ", description: "Описание 2"},
+        {id: "3", title: "Конец работы ", description: "Описание 3"}
+    ]
+
     useEffect(() => {
         console.log(user)
     }, [user])
@@ -29,15 +36,20 @@ const UserProfileModalBody: React.FC<IUserProfileModalProps> = ({user, formatted
                              height="55px" placeholder="ФИО"/>
                 <CustomInput type="email" width="350px" placeholder="email" disabled={true} value={user?.email}
                              height="55px"/>
-                <CustomInput type="text" width="350px" placeholder="Дата трудоустройства" disabled={true} defaultValue={formattedDate}
+                <CustomInput type="text" width="350px" placeholder="Дата трудоустройства" disabled={true}
+                             defaultValue={formattedDate}
                              height="55px"/>
             </div>
             <div className="achievements">
-                <p>ДОСТИЖЕНИЯ</p>
-                <ul>
-                    <Achievement name="Достижение 1"/>
-                    <Achievement name="Достижение 2"/>
-                    <Achievement name="Достижение 3"/>
+                <p className="achievements-title">ДОСТИЖЕНИЯ</p>
+                <ul className="achievements-list">
+                    {achievements.map((achievement) =>
+                        <Achievement
+                            name={achievement.title}
+                            key={achievement.id}
+                            description={achievement.description}
+                        />
+                    )}
                 </ul>
             </div>
         </div>

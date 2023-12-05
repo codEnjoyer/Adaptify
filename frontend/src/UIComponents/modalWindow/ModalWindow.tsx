@@ -13,7 +13,6 @@ const ModalWindow: React.FC<ModalWindowProps> =
     ({body, onClose, windowContentStyles}: PropsWithChildren<ModalWindowProps>) => {
         const element = useRef(null);
 
-
         useEffect(() => {
             const onKeypress = (e: KeyboardEvent) => e?.key === "Esc" || e.key === "Escape" ? onClose() : null;
             gsap.fromTo(element.current, {opacity: 0}, {opacity: 1, duration: 0.2})

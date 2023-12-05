@@ -123,4 +123,28 @@
   border-radius: 10px;
 }
 
+.achievements-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.achievements-title {
+  text-align: left;
+  margin-left: 10px;
+}
+
+.achievements-list-item {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  background: #D8FFF3;
+  width: 150px;
+  height: 120px;
+  border-radius: 20px;
+}
+
+.achievement-image {
+  margin-top: 10px;
+}
+
 /*# sourceMappingURL=mapMenu.css.map */
