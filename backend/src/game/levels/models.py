@@ -20,14 +20,16 @@ class Level(BaseModel):
     __tablename__ = 'levels'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'))
+    module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id', ondelete="CASCADE"))
     title: Mapped[str] = mapped_column(String(length=255), nullable=False)
 
     module: Mapped["Module"] = relationship(back_populates='levels')
 
-    theory_units: Mapped[list["TheoryUnit"]] = relationship(back_populates='level', lazy='selectin')
+    theory_units: Mapped[list["TheoryUnit"]] = relationship(
+        back_populates='level', lazy='selectin', cascade='all, delete-orphan')
 
-    task_units: Mapped[list["TaskUnit"]] = relationship(back_populates='level', lazy='selectin')
+    task_units: Mapped[list["TaskUnit"]] = relationship(
+        back_populates='level', lazy='selectin', cascade='all, delete-orphan')
 
     def to_read_schema(self) -> LevelRead:
         return LevelRead(id=self.id,

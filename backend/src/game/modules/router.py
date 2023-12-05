@@ -1,7 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException, status
-from sqlalchemy.exc import NoResultFound
+from fastapi import APIRouter
 
 from game.modules.schemas import ModuleRead, ModuleCreate, ModuleUpdate
 from utils.types import ModuleServiceType

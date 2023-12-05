@@ -20,11 +20,12 @@ class TaskUnit(BaseModel):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     type: Mapped[TaskTypes] = mapped_column(postgresql.ENUM(TaskTypes, name='task_types'), nullable=False,
                                             default=TaskTypes.Test)
-    level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id'), default=uuid.uuid4)
+    level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id', ondelete="CASCADE"), default=uuid.uuid4)
     requires_review: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     score_reward: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
 
-    questions: Mapped[list["Question"]] = relationship(back_populates='task', lazy='selectin')
+    questions: Mapped[list["Question"]] = relationship(
+        back_populates='task', lazy='selectin', cascade='all, delete-orphan')
     level: Mapped[list["Level"]] = relationship(back_populates='task_units', lazy='selectin')
 
     def to_read_schema(self) -> TaskUnitRead:
