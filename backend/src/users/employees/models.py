@@ -23,7 +23,8 @@ class Employee(BaseModel):
     tutor_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('tutors.id'), nullable=False)
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
-    hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date())
+    patronymic: Mapped[str] = mapped_column(String(length=255))
+    hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date(), nullable=False)
 
     user: Mapped["User"] = relationship(back_populates='employee', lazy='selectin')
     tutor: Mapped["Tutor"] = relationship(back_populates='employees', lazy='selectin')
