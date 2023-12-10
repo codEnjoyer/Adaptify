@@ -1,6 +1,4 @@
-import React, {FormEvent, useCallback, useState} from 'react';
-
-import authStore from "../../store/authStore.ts";
+import React, {useCallback, useState} from 'react';
 
 import CustomInput from "../../UIComponents/customInput/CustomInput.tsx";
 import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
@@ -14,9 +12,9 @@ const AuthForm: React.FC = () => {
 
     const [isPasswordShows, setIsPasswordShows] = useState(false)
 
-    const handleOnChangeIsPasswordShows = useCallback((event: FormEvent<HTMLInputElement>) => {
-        setIsPasswordShows(!event.currentTarget.checked)
-    }, [])
+    const handleOnChangeIsPasswordShows = useCallback(() => {
+        setIsPasswordShows(!isPasswordShows)
+    }, [isPasswordShows])
 
     return (
         <form className="auth__form" onSubmit={handleSubmit((data) => {
@@ -45,6 +43,7 @@ const AuthForm: React.FC = () => {
                 id="is-remember"
                 additionalClassName="is-remember-password__checkbox"
                 handleOnChange={handleOnChangeIsPasswordShows}
+                isChecked={isPasswordShows}
             />
             <input type="submit" className="auth__btn" value="ВОЙТИ"/>
         </form>

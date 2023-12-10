@@ -1,34 +1,33 @@
-import React, {ChangeEvent, FormEvent, useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import "./customCheckbox.scss"
 
 interface ICustomCheckboxProps {
     text: string,
     id: string,
     additionalClassName?: string,
-    handleOnChange?: (e: ChangeEvent<HTMLInputElement>) => void
+    handleOnChange: (e: boolean) => void,
+    isChecked: boolean,
 }
 
 interface ICheckboxContainerProps {
     classContainer: string
 }
 
-const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({text, id, additionalClassName, handleOnChange}) => {
-    const [isChecked, changeIsChecked] = useState(false);
-    const onChangeHandler = useCallback((e: FormEvent<HTMLInputElement>) => {
-        changeIsChecked(!isChecked)
-        if (handleOnChange) handleOnChange(e.currentTarget.checked)
-    }, [handleOnChange, isChecked])
+const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({text, id, additionalClassName, handleOnChange, isChecked}) => {
 
+    const onChangeHandler = useCallback(() => {
+        handleOnChange(!isChecked)
+    }, [handleOnChange, isChecked])
 
     return (
         <div
             className={additionalClassName ? additionalClassName + " " + "custom-checkbox" : "custom-checkbox"}
             onClick={onChangeHandler}>
             {isChecked ? <CheckboxActive classContainer="svg-container"/> : <Checkbox classContainer="svg-container"/>}
-            <input type="checkbox" id={id}
-                   className="input__checkbox"
-                   checked={isChecked}
-                   onChange={() => ""}
+            <input
+                type="checkbox" id={id}
+                className="input__checkbox"
+                checked={isChecked}
             />
             <label className="checkbox-text" htmlFor={id}>{text}</label>
         </div>
