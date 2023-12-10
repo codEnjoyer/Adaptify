@@ -13,26 +13,35 @@ interface ICheckboxContainerProps {
     classContainer: string
 }
 
-const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({text, id, additionalClassName, handleOnChange, isChecked}) => {
+const CustomCheckbox: React.FC<ICustomCheckboxProps> =
+    ({
+         text,
+         id,
+         additionalClassName,
+         handleOnChange,
+         isChecked
+     }) => {
 
-    const onChangeHandler = useCallback(() => {
-        handleOnChange(!isChecked)
-    }, [handleOnChange, isChecked])
+        const onChangeHandler = useCallback(() => {
+            handleOnChange(!isChecked)
+        }, [handleOnChange, isChecked])
 
-    return (
-        <div
-            className={additionalClassName ? additionalClassName + " " + "custom-checkbox" : "custom-checkbox"}
-            onClick={onChangeHandler}>
-            {isChecked ? <CheckboxActive classContainer="svg-container"/> : <Checkbox classContainer="svg-container"/>}
-            <input
-                type="checkbox" id={id}
-                className="input__checkbox"
-                checked={isChecked}
-            />
-            <label className="checkbox-text" htmlFor={id}>{text}</label>
-        </div>
-    );
-};
+        return (
+            <div
+                className={additionalClassName ? additionalClassName + " " + "custom-checkbox" : "custom-checkbox"}
+                onClick={onChangeHandler}>
+                {isChecked ? <CheckboxActive classContainer="svg-container"/> :
+                    <Checkbox classContainer="svg-container"/>}
+                <input
+                    type="checkbox" id={id}
+                    className="input__checkbox"
+                    checked={isChecked}
+                    onChange={onChangeHandler}
+                />
+                <label className="checkbox-text" htmlFor={id}>{text}</label>
+            </div>
+        );
+    };
 
 const Checkbox: React.FC<ICheckboxContainerProps> = ({classContainer}) => {
     return (

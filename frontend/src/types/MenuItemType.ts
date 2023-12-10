@@ -1,5 +1,4 @@
-import {ITheoryUnitType} from "./TheoryUnitType.ts";
-import {ITaskType} from "./TaskType.ts";
+import {ITaskType, ITheoryUnitType} from "./TaskType.ts";
 
 export interface IMenuItemType {
     length: number,

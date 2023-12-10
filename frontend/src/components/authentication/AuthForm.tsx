@@ -6,10 +6,14 @@ import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx
 import {useNavigate} from "react-router-dom"
 import {useForm} from "react-hook-form";
 
+import rulesValidation from "../../utils/auth.ts";
+
 const AuthForm: React.FC = () => {
     const navigateTo = useNavigate()
     const {register, handleSubmit} = useForm()
 
+    const [login, setLogin] = useState("")
+    const [password, setPassword] = useState("")
     const [isPasswordShows, setIsPasswordShows] = useState(false)
 
     const handleOnChangeIsPasswordShows = useCallback(() => {
@@ -25,17 +29,23 @@ const AuthForm: React.FC = () => {
                 <CustomInput
                     type="email"
                     register={register}
-                    name={"userLogin"}
+                    name={rulesValidation.login.fieldName}
+                    validateRules={rulesValidation.login.rules}
                     autoFocus={true}
                     placeholder="Логин"
                     required={true}
+                    value={login}
+                    changeValue={setLogin}
                 />
                 <CustomInput
                     type={isPasswordShows ? "text" : "password"}
                     register={register}
-                    name={"userPassword"}
+                    name={rulesValidation.password.fieldName}
+                    validateRules={rulesValidation.password.rules}
                     placeholder="Пароль"
                     required={true}
+                    value={password}
+                    changeValue={setPassword}
                 />
             </fieldset>
             <CustomCheckbox
