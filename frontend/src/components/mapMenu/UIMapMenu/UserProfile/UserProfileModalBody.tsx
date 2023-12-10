@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import CustomInput from "../../../../UIComponents/customInput/CustomInput.tsx";
 import {IUserType} from "../../../../types/UserType.ts";
 
 import {IAchievementType} from "../../../../types/AchievementType.ts";
@@ -30,9 +29,7 @@ const UserProfileModalBody: React.FC<IUserProfileModalProps> = ({user, formatted
             <div className="header-modal-user-profile">
                 <h3 className="user-profile-title">ПРОФИЛЬ СОТРУДНИКА</h3>
             </div>
-
             <UserInfo user={user} formattedDate={formattedDate}/>
-
             <Achievements achievements={achievements}/>
         </div>
     );

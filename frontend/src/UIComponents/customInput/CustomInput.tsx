@@ -1,37 +1,46 @@
 import React from 'react';
 import "./customInput.scss"
+import {FieldValues, UseFormRegister} from "react-hook-form";
 
 interface IPropTypes {
     placeholder?: string,
-    value?: string,
-    handleOnChange?: (e: string) => void,
     type: string,
+    name: string,
+    className?: string,
     autoFocus?: boolean,
     disabled?: boolean,
     width?: string,
     height?: string,
-    defaultValue?: string
+    defaultValue?: string,
+    register: UseFormRegister<FieldValues>,
+    required: boolean
 }
 
 const CustomInput: React.FC<IPropTypes> =
     ({
-         placeholder, value, handleOnChange,
-         type, autoFocus, disabled,
-         width, height, defaultValue
+         placeholder,
+         type,
+         name,
+         className,
+         autoFocus,
+         disabled,
+         width,
+         height,
+         defaultValue,
+         register,
+         required
      }) => {
         return (
             <div className="custom-input" style={{width: width, height: height}}>
-                <input type={type} className="login__input"
-                       placeholder={placeholder !== undefined ? placeholder : ""}
-                       value={value}
-                       onChange={(e) => {
-                           if (handleOnChange)
-                               handleOnChange(e.target.value)
-                       }}
-                       autoFocus={autoFocus !== undefined ? autoFocus : false}
-                       disabled={disabled !== undefined ? disabled : false}
-                       style={{height: height}}
-                       defaultValue={defaultValue}
+                <input
+                    type={type}
+                    className={className}
+                    placeholder={placeholder !== undefined ? placeholder : ""}
+                    autoFocus={autoFocus !== undefined ? autoFocus : false}
+                    disabled={disabled !== undefined ? disabled : false}
+                    style={{height: height}}
+                    defaultValue={defaultValue}
+                    {...register(name, {required: required})}
                 />
             </div>
         );

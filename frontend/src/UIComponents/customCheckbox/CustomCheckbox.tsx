@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, FormEvent, useCallback, useState} from 'react';
 import "./customCheckbox.scss"
 
 interface ICustomCheckboxProps {
     text: string,
     id: string,
     additionalClassName?: string,
-    handleOnChange?: () => void
+    handleOnChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 interface ICheckboxContainerProps {
@@ -14,15 +14,16 @@ interface ICheckboxContainerProps {
 
 const CustomCheckbox: React.FC<ICustomCheckboxProps> = ({text, id, additionalClassName, handleOnChange}) => {
     const [isChecked, changeIsChecked] = useState(false);
-    const onChangeHandler = () => {
+    const onChangeHandler = useCallback((e: FormEvent<HTMLInputElement>) => {
         changeIsChecked(!isChecked)
-        if (handleOnChange) handleOnChange()
-    }
+        if (handleOnChange) handleOnChange(e.currentTarget.checked)
+    }, [handleOnChange, isChecked])
 
 
     return (
-        <div className={additionalClassName ? additionalClassName + " " + "custom-checkbox" : "custom-checkbox"}
-             onClick={onChangeHandler}>
+        <div
+            className={additionalClassName ? additionalClassName + " " + "custom-checkbox" : "custom-checkbox"}
+            onClick={onChangeHandler}>
             {isChecked ? <CheckboxActive classContainer="svg-container"/> : <Checkbox classContainer="svg-container"/>}
             <input type="checkbox" id={id}
                    className="input__checkbox"

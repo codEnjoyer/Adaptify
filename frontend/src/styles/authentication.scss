@@ -1,4 +1,5 @@
 @import "variablesStyles";
+@import "./../UIComponents/UIVariablesStyle";
 
 .auth-page {
   position: relative;
@@ -51,6 +52,30 @@ body {
 
 .auth__btn {
   margin-top: 60px;
+
+  width: 170px;
+  height: 48px;
+
+  color: #F9F9F9;
+  font-size: 16px;
+
+  background-color: $bgColor;
+  border: none;
+  border-radius: 20px;
+  transition: linear 0.1s;
+  font-family: Montserrat, sans-serif;
+
+  &:hover {
+    background-color: $bgColorHovered;
+  }
+
+  &:active {
+    background-color: $bgColorActive;
+  }
+
+  &:disabled {
+    background-color: $bgColorDisabled;
+  }
 }
 
 .is-remember-password__checkbox {

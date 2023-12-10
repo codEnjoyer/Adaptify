@@ -1,35 +1,54 @@
-import React from 'react';
-import CustomInput from "../../UIComponents/customInput/CustomInput.tsx";
-import authStore from "../../store/authStore.ts";
-import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
-import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
-import {useNavigate} from "react-router-dom"
-import {observer} from "mobx-react-lite";
+import React, {FormEvent, useCallback, useState} from 'react';
 
-const AuthForm: React.FC = observer(() => {
+import authStore from "../../store/authStore.ts";
+
+import CustomInput from "../../UIComponents/customInput/CustomInput.tsx";
+import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
+
+import {useNavigate} from "react-router-dom"
+import {useForm} from "react-hook-form";
+
+const AuthForm: React.FC = () => {
     const navigateTo = useNavigate()
+    const {register, handleSubmit} = useForm()
+
+    const [isPasswordShows, setIsPasswordShows] = useState(false)
+
+    const handleOnChangeIsPasswordShows = useCallback((event: FormEvent<HTMLInputElement>) => {
+        setIsPasswordShows(!event.currentTarget.checked)
+    }, [])
 
     return (
-        <form className="auth__form">
+        <form className="auth__form" onSubmit={handleSubmit((data) => {
+            console.log(data)
+        })}>
             <h2 className="auth-form-title">ВХОД</h2>
             <fieldset className="auth-fields">
-                <CustomInput type="email" value={authStore.userLogin} autoFocus={true} placeholder="Логин"
-                             handleOnChange={(e) => {
-                                 authStore.changeUserLogin(e)
-                                 authStore.changeUserEmail(e)
-                             }}/>
-                    <CustomInput
-                        type={authStore.isPasswordShows ? "text" : "password"} placeholder="Пароль"
-                        value={authStore.userPassword} handleOnChange={(e) => authStore.changeUserPassword(e)}/>
+                <CustomInput
+                    type="email"
+                    register={register}
+                    name={"userLogin"}
+                    autoFocus={true}
+                    placeholder="Логин"
+                    required={true}
+                />
+                <CustomInput
+                    type={isPasswordShows ? "text" : "password"}
+                    register={register}
+                    name={"userPassword"}
+                    placeholder="Пароль"
+                    required={true}
+                />
             </fieldset>
-            <CustomCheckbox text="Показать пароль" id="is-remember"
-                            additionalClassName="is-remember-password__checkbox"
-                            handleOnChange={authStore.changeIsPasswordShows}/>
-            <CustomButton additionalClassName="auth__btn" text="ВОЙТИ" handleOnClick={() => {
-                authStore.signIn().then(() => navigateTo('/map'))
-            }}/>
+            <CustomCheckbox
+                text="Показать пароль"
+                id="is-remember"
+                additionalClassName="is-remember-password__checkbox"
+                handleOnChange={handleOnChangeIsPasswordShows}
+            />
+            <input type="submit" className="auth__btn" value="ВОЙТИ"/>
         </form>
     );
-});
+};
 
 export default AuthForm;
