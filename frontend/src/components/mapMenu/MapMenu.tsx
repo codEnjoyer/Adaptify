@@ -8,6 +8,7 @@ import axios from "axios";
 import EmployeeMap from "./EmployeeMap/EmployeeMap.tsx";
 import SuperUserMap from "./SuperUserMap/SuperUserMap.tsx";
 import superUserStore from "../../store/superUserStore.ts";
+import Starfield from "react-starfield";
 
 const MapMenu: React.FC = observer(() => {
     const navigate = useNavigate()
@@ -41,6 +42,12 @@ const MapMenu: React.FC = observer(() => {
 
     return (
         <div>
+            <Starfield
+                starCount={1000}
+                starColor={[255, 255, 255]}
+                speedFactor={0.05}
+                backgroundColor="black"
+            />
             {user?.is_superuser
                 ? <SuperUserMap/>
                 : <EmployeeMap user={user} formattedDate={formattedDate}/>
