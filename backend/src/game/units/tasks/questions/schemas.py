@@ -7,6 +7,8 @@ from game.units.tasks.questions.answers.schemas import AnswerOptionRead, AnswerO
 from game.units.tasks.questions.enums import QuestionTypes
 
 
+# region Base
+
 class __QuestionBase(BaseModel):
     type: QuestionTypes
     question: str
@@ -14,27 +16,53 @@ class __QuestionBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class QuestionRead(__QuestionBase):
+class __QuestionReadBase(__QuestionBase):
     id: UUID
     task_id: UUID
+
+
+class __QuestionCreateBase(__QuestionBase):
+    pass
+
+
+class __QuestionUpdateBase(__QuestionBase):
+    type: QuestionTypes | None
+    question: str | None
+
+
+class __EmployeeQuestionPostBase(__QuestionBase):
+    id: UUID
+
+
+# endregion Base
+# region Test
+
+class TestQuestionRead(__QuestionReadBase):
     answer_options: list[AnswerOptionRead]
 
 
-class QuestionCreate(__QuestionBase):
+class TestQuestionCreate(__QuestionCreateBase):
     type: QuestionTypes = QuestionTypes.SingleChoice
     answer_options: list[AnswerOptionCreate]
 
 
-class QuestionUpdate(__QuestionBase):
-    type: QuestionTypes | None = None
-    question: str | None = None
+class TestQuestionUpdate(__QuestionUpdateBase):
     answer_options: list[AnswerOptionCreate] | None = None
 
 
-class EmployeeQuestionPost(__QuestionBase):
+class EmployeeTestQuestionPost(__EmployeeQuestionPostBase):
     id: UUID
     answers: list[EmployeeAnswerPost]
 
 
-class EmployeeQuestionRead(__QuestionBase):
+class EmployeeTestQuestionRead(__QuestionBase):
     results: list[EmployeeAnswerRead]
+
+
+# endregion Test
+# region Open
+
+class EmployeeOpenQuestionPost(__EmployeeQuestionPostBase):
+    answer: str
+
+# endregion Open

@@ -4,15 +4,15 @@ from fastapi import APIRouter
 
 from game.units.tasks.questions.answers.schemas import EmployeeAnswerRead
 from game.units.tasks.questions.enums import QuestionTypes
-from game.units.tasks.questions.schemas import QuestionRead, QuestionCreate, QuestionUpdate, EmployeeQuestionPost, \
-    EmployeeQuestionRead
+from game.units.tasks.questions.schemas import TestQuestionRead, TestQuestionCreate, TestQuestionUpdate, EmployeeTestQuestionPost, \
+    EmployeeTestQuestionRead
 from utils.types import QuestionServiceType, TaskUnitServiceType, AnswerOptionServiceType
 
 router = APIRouter(tags=["Questions"])
 
 
 @router.get('/questions/', tags=["Dev"])
-async def root(question_service: QuestionServiceType) -> list[QuestionRead]:
+async def root(question_service: QuestionServiceType) -> list[TestQuestionRead]:
     return await question_service.get_all()
 
 
@@ -21,8 +21,8 @@ async def post_question_to_task_unit(map_id: UUID,
                                      module_id: UUID,
                                      level_id: UUID,
                                      task_id: UUID,
-                                     question_create: QuestionCreate,
-                                     question_service: QuestionServiceType) -> QuestionRead:
+                                     question_create: TestQuestionCreate,
+                                     question_service: QuestionServiceType) -> TestQuestionRead:
     return await question_service.create_one(task_id, question_create)
 
 
@@ -31,8 +31,8 @@ async def autocheck_task_unit(map_id: UUID,
                               module_id: UUID,
                               level_id: UUID,
                               task_id: UUID,
-                              employee_questions_answers: list[EmployeeQuestionPost],
-                              answer_option_service: AnswerOptionServiceType) -> list[EmployeeQuestionRead]:
+                              employee_questions_answers: list[EmployeeTestQuestionPost],
+                              answer_option_service: AnswerOptionServiceType) -> list[EmployeeTestQuestionRead]:
     result = []
     for question_answer in employee_questions_answers:
         user_answers_on_question = question_answer.answers
@@ -45,9 +45,9 @@ async def autocheck_task_unit(map_id: UUID,
             answer_was_selected_correct = correct_answer_selected or incorrect_answer_not_selected
             answer_read = EmployeeAnswerRead(answer=answer.answer, was_selected_correct=answer_was_selected_correct)
             question_read_answers.append(answer_read)
-        question_read = EmployeeQuestionRead(type=question_answer.type,
-                                             question=question_answer.question,
-                                             results=question_read_answers)
+        question_read = EmployeeTestQuestionRead(type=question_answer.type,
+                                                 question=question_answer.question,
+                                                 results=question_read_answers)
         result.append(question_read)
     return result
 
@@ -66,7 +66,7 @@ async def delete_question_from_task_unit(map_id: UUID,
                                          level_id: UUID,
                                          task_id: UUID,
                                          question_id: UUID,
-                                         question_service: QuestionServiceType) -> QuestionRead:
+                                         question_service: QuestionServiceType) -> TestQuestionRead:
     return await question_service.delete_one(question_id)
 
 
@@ -76,6 +76,6 @@ async def update_question_in_task_unit(map_id: UUID,
                                        level_id: UUID,
                                        task_id: UUID,
                                        question_id: UUID,
-                                       question_update: QuestionUpdate,
-                                       question_service: QuestionServiceType) -> QuestionRead:
+                                       question_update: TestQuestionUpdate,
+                                       question_service: QuestionServiceType) -> TestQuestionRead:
     return await question_service.update_one(question_id, question_update)

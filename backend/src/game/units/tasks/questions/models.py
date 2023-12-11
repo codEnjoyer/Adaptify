@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
 from game.units.tasks.questions.enums import QuestionTypes
-from game.units.tasks.questions.schemas import QuestionRead
+from game.units.tasks.questions.schemas import TestQuestionRead
 
 if TYPE_CHECKING:
     from game.units.tasks import TaskUnit
@@ -27,9 +27,9 @@ class Question(BaseModel):
     answer_options: Mapped[list["AnswerOption"]] = relationship(
         back_populates='question', lazy='selectin', cascade='all, delete-orphan')
 
-    def to_read_schema(self) -> QuestionRead:
-        return QuestionRead(id=self.id,
-                            type=self.type,
-                            task_id=self.task_id,
-                            question=self.question,
-                            answer_options=[model.to_read_schema() for model in self.answer_options])
+    def to_read_schema(self) -> TestQuestionRead:
+        return TestQuestionRead(id=self.id,
+                                type=self.type,
+                                task_id=self.task_id,
+                                question=self.question,
+                                answer_options=[model.to_read_schema() for model in self.answer_options])

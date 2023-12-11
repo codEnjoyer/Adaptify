@@ -3,6 +3,7 @@ from enum import StrEnum, auto
 
 class TaskTypes(StrEnum):
     Test = auto()
+    Discussion = auto()
 
 
 class TaskStates(StrEnum):
