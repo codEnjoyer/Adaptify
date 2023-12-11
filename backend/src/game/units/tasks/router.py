@@ -2,32 +2,24 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
-from game.units.tasks.schemas import TestTaskUnitRead, TestTaskUnitCreate, TestTaskUnitUpdate
+from game.units.tasks.schemas import TestTaskUnitRead, TestTaskUnitCreate, TestTaskUnitUpdate, DiscussionTaskUnitCreate, \
+    DiscussionTaskUnitRead, DiscussionTaskUnitUpdate
 from utils.types import TaskUnitServiceType
 
 router = APIRouter(tags=["Task"])
 
 
 @router.get("/tasks/", tags=['Dev'])
-async def root(task_unit_service: TaskUnitServiceType) -> list[TestTaskUnitRead]:
+async def root(task_unit_service: TaskUnitServiceType) -> list[TestTaskUnitRead | DiscussionTaskUnitRead]:
     return await task_unit_service.get_all()
-
-
-# @router.get("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/")
-# async def get_task_in_level(map_id: UUID,
-#                             module_id: UUID,
-#                             level_id: UUID,
-#                             task_id: UUID,
-#                             task_unit_service: TaskUnitServiceType) -> TaskUnitRead:
-#     return await task_unit_service.get_one(task_id)
 
 
 @router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/")
 async def post_task_unit_to_level(map_id: UUID,
                                   module_id: UUID,
                                   level_id: UUID,
-                                  task_create: TestTaskUnitCreate,
-                                  task_unit_service: TaskUnitServiceType) -> TestTaskUnitRead:
+                                  task_create: TestTaskUnitCreate | DiscussionTaskUnitCreate,
+                                  task_unit_service: TaskUnitServiceType) -> TestTaskUnitRead | DiscussionTaskUnitRead:
     return await task_unit_service.create_one(level_id, task_create)
 
 
@@ -36,7 +28,7 @@ async def delete_task_unit_from_level(map_id: UUID,
                                       module_id: UUID,
                                       level_id: UUID,
                                       task_id: UUID,
-                                      task_unit_service: TaskUnitServiceType) -> TestTaskUnitRead:
+                                      task_unit_service: TaskUnitServiceType) -> TestTaskUnitRead | DiscussionTaskUnitRead:
     return await task_unit_service.delete_one(task_id)
 
 
@@ -45,6 +37,6 @@ async def update_task_unit_in_level(map_id: UUID,
                                     module_id: UUID,
                                     level_id: UUID,
                                     task_id: UUID,
-                                    task_update: TestTaskUnitUpdate,
-                                    task_unit_service: TaskUnitServiceType) -> TestTaskUnitRead:
+                                    task_update: TestTaskUnitUpdate | DiscussionTaskUnitUpdate,
+                                    task_unit_service: TaskUnitServiceType) -> TestTaskUnitRead | DiscussionTaskUnitRead:
     return await task_unit_service.update_one(task_id, task_update)

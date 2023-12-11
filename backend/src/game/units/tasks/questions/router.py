@@ -4,15 +4,16 @@ from fastapi import APIRouter
 
 from game.units.tasks.questions.answers.schemas import EmployeeAnswerRead
 from game.units.tasks.questions.enums import QuestionTypes
-from game.units.tasks.questions.schemas import TestQuestionRead, TestQuestionCreate, TestQuestionUpdate, EmployeeTestQuestionPost, \
-    EmployeeTestQuestionRead
+from game.units.tasks.questions.schemas import TestQuestionRead, TestQuestionCreate, TestQuestionUpdate, \
+    EmployeeTestQuestionPost, \
+    EmployeeTestQuestionRead, OpenQuestionCreate, OpenQuestionUpdate, OpenQuestionRead
 from utils.types import QuestionServiceType, TaskUnitServiceType, AnswerOptionServiceType
 
 router = APIRouter(tags=["Questions"])
 
 
 @router.get('/questions/', tags=["Dev"])
-async def root(question_service: QuestionServiceType) -> list[TestQuestionRead]:
+async def root(question_service: QuestionServiceType) -> list[TestQuestionRead | OpenQuestionRead]:
     return await question_service.get_all()
 
 
@@ -21,8 +22,8 @@ async def post_question_to_task_unit(map_id: UUID,
                                      module_id: UUID,
                                      level_id: UUID,
                                      task_id: UUID,
-                                     question_create: TestQuestionCreate,
-                                     question_service: QuestionServiceType) -> TestQuestionRead:
+                                     question_create: TestQuestionCreate | OpenQuestionCreate,
+                                     question_service: QuestionServiceType) -> TestQuestionRead | OpenQuestionRead:
     return await question_service.create_one(task_id, question_create)
 
 
@@ -66,7 +67,7 @@ async def delete_question_from_task_unit(map_id: UUID,
                                          level_id: UUID,
                                          task_id: UUID,
                                          question_id: UUID,
-                                         question_service: QuestionServiceType) -> TestQuestionRead:
+                                         question_service: QuestionServiceType) -> TestQuestionRead | OpenQuestionRead:
     return await question_service.delete_one(question_id)
 
 
@@ -76,6 +77,6 @@ async def update_question_in_task_unit(map_id: UUID,
                                        level_id: UUID,
                                        task_id: UUID,
                                        question_id: UUID,
-                                       question_update: TestQuestionUpdate,
-                                       question_service: QuestionServiceType) -> TestQuestionRead:
+                                       question_update: TestQuestionUpdate | OpenQuestionUpdate,
+                                       question_service: QuestionServiceType) -> TestQuestionRead | OpenQuestionRead:
     return await question_service.update_one(question_id, question_update)

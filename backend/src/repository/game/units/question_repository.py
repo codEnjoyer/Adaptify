@@ -14,7 +14,7 @@ class QuestionRepository(SQLAlchemyRepository):
 
     async def add_one(self, model: dict[str, typing.Any]) -> Question:
         async with async_session_maker() as session:
-            answer_options_list = model.pop('answer_options')
+            answer_options_list = model.pop('answer_options', list())
             question_to_add = Question(**model)
 
             possible_answers = [AnswerOption(**answer_option_dict, question_id=question_to_add.id) for

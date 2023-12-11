@@ -47,7 +47,7 @@ class TestQuestionCreate(__QuestionCreateBase):
 
 
 class TestQuestionUpdate(__QuestionUpdateBase):
-    answer_options: list[AnswerOptionCreate] | None = None
+    answer_options: list[AnswerOptionCreate] | None
 
 
 class EmployeeTestQuestionPost(__EmployeeQuestionPostBase):
@@ -55,12 +55,24 @@ class EmployeeTestQuestionPost(__EmployeeQuestionPostBase):
     answers: list[EmployeeAnswerPost]
 
 
-class EmployeeTestQuestionRead(__QuestionBase):
+class EmployeeTestQuestionRead(__QuestionReadBase):
     results: list[EmployeeAnswerRead]
 
 
 # endregion Test
 # region Open
+
+class OpenQuestionRead(__QuestionReadBase):
+    pass
+
+
+class OpenQuestionCreate(__QuestionCreateBase):
+    type: QuestionTypes = QuestionTypes.Open
+
+
+class OpenQuestionUpdate(__QuestionUpdateBase):
+    pass
+
 
 class EmployeeOpenQuestionPost(__EmployeeQuestionPostBase):
     answer: str
