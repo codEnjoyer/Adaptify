@@ -39,6 +39,7 @@ class TaskUnit(BaseModel):
 
 class EmployeeTask(BaseModel):
     __tablename__ = 'task_employees'
+    # TODO: Поменять task_id? Добавить поле? Таблицу? Не понятно, откуда брать ответы пользователя
 
     task_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('task_units.id'), primary_key=True)
     employee_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('employees.id'), primary_key=True)

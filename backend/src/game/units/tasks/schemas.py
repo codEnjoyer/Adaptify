@@ -3,7 +3,7 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict
 
 from game.units.tasks.questions.schemas import TestQuestionRead
-from game.units.tasks.enums import TaskTypes
+from game.units.tasks.enums import TaskTypes, TaskStates
 
 
 # region Base
@@ -61,4 +61,24 @@ class DiscussionTaskUnitCreate(__TaskUnitCreateBase):
 class DiscussionTaskUnitUpdate(__TaskUnitUpdateBase):
     pass
 
+
 # endregion Discussion
+# region EmployeeTask
+class __EmployeeTaskBase:
+    task_id: UUID
+    employee_id: UUID
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class EmployeeTaskRead(__EmployeeTaskBase):
+    state: TaskStates
+
+
+class EmployeeTaskCreate(__EmployeeTaskBase):
+    pass
+
+
+class EmployeeTaskUpdate(__EmployeeTaskBase):
+    state: TaskStates | None
+# endregion EmployeeTask
