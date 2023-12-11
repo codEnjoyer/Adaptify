@@ -14,5 +14,6 @@ class AnswerOptionService:
     async def get_all_correct(self, question_id: uuid.UUID) -> list[uuid.UUID]:
         correct_answers_models = await (self.__answers_options_repo
                                         .find_all_with_condition(Question.id == question_id,
-                                                                 AnswerOption.is_correct is True))
+                                                                 AnswerOption.is_correct.is_(True))
+                                        )
         return [correct_answer.id for correct_answer in correct_answers_models]

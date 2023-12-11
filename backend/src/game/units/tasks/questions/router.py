@@ -40,19 +40,10 @@ async def autocheck_task_unit(map_id: UUID,
         correct_answers_ids_on_question = set(correct_answers_ids_on_question)
         question_read_answers = []
         for answer in user_answers_on_question:
-            answer_was_selected_correct = (
-                    # Был выбран правильный ответ: (1 и 1) != (0 и 0) => 1
-                    # Был выбран неправильный ответ: (1 и 0) != (0 и 1) => 0
-                    # Правильный ответ не был выбран: (0 и 1) != (1 и 0) => 0
-                    # Неправильный ответ не был выбран: (0 и 0) != (1 и 1) => 1
-                    (answer.is_selected and answer.id in correct_answers_ids_on_question) !=
-                    (not answer.is_selected and answer.id not in correct_answers_ids_on_question)
-            )
             correct_answer_selected = answer.is_selected and answer.id in correct_answers_ids_on_question
             incorrect_answer_not_selected = not answer.is_selected and answer.id not in correct_answers_ids_on_question
-            answer_was_selected_correct = not (correct_answer_selected ^ incorrect_answer_not_selected)
+            answer_was_selected_correct = correct_answer_selected or incorrect_answer_not_selected
             answer_read = EmployeeAnswerRead(answer=answer.answer, was_selected_correct=answer_was_selected_correct)
-            # TODO: невыбранные неправильные ответы помечаются false
             question_read_answers.append(answer_read)
         question_read = EmployeeQuestionRead(type=question_answer.type,
                                              question=question_answer.question,
