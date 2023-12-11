@@ -11,6 +11,7 @@ import {observer} from "mobx-react-lite";
 import authStore from "../../store/authStore.ts";
 import auth from "../../utils/auth.ts";
 import Starfield from "react-starfield";
+import CustomProgressBar from "../../UIComponents/CustomProgressBar/CustomProgressBar.tsx";
 
 export type FormValues = {
     login: string,
@@ -74,6 +75,9 @@ const AuthForm: React.FC = observer(() => {
                 />
 
                 <input type="submit" className="auth__btn" value="ВОЙТИ"/>
+                <div id="user-progress">
+                    <CustomProgressBar containerName="user-progress"/>
+                </div>
             </form>
         </div>
     );

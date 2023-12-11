@@ -1,13 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import authStore from "../../store/authStore.ts";
 import {useNavigate} from "react-router-dom";
+
 import './../../styles/mapMenu.scss'
-import {observer} from "mobx-react-lite";
+
 import {IUserType} from "../../types/UserType.ts";
 import axios from "axios";
+
 import EmployeeMap from "./EmployeeMap/EmployeeMap.tsx";
+
 import SuperUserMap from "./SuperUserMap/SuperUserMap.tsx";
+
+import {observer} from "mobx-react-lite";
+
+import authStore from "../../store/authStore.ts";
 import superUserStore from "../../store/superUserStore.ts";
+
 import Starfield from "react-starfield";
 
 const MapMenu: React.FC = observer(() => {
@@ -15,7 +22,6 @@ const MapMenu: React.FC = observer(() => {
 
     const [user, setUser] = useState<IUserType>()
     const [formattedDate, setFormattedDate] = useState("")
-
 
     useEffect(() => {
         axios.get("http://localhost:8000/users/").then((response) => {
@@ -33,7 +39,7 @@ const MapMenu: React.FC = observer(() => {
                 setFormattedDate(`${date.getDay()}.${date.getMonth()}.${date.getUTCFullYear()}`)
             }
         })
-    }, [])
+    }, [user])
 
     useEffect(() => {
         if (!authStore.isUserAuthorized)
