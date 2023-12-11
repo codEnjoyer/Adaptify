@@ -6,24 +6,27 @@ import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx
 import {useNavigate} from "react-router-dom"
 import {useForm} from "react-hook-form";
 
-import rulesValidation from "../../utils/auth.ts";
+import {observer} from "mobx-react-lite";
 
-const AuthForm: React.FC = () => {
+import rulesValidation from "../../utils/auth.ts";
+import authStore from "../../store/authStore.ts";
+
+const AuthForm: React.FC = observer(() => {
     const navigateTo = useNavigate()
     const {register, handleSubmit} = useForm()
 
-    const [login, setLogin] = useState("")
-    const [password, setPassword] = useState("")
     const [isPasswordShows, setIsPasswordShows] = useState(false)
 
     const handleOnChangeIsPasswordShows = useCallback(() => {
         setIsPasswordShows(!isPasswordShows)
     }, [isPasswordShows])
 
+    const onHandleSubmit = useCallback(({login, password}) => {
+        authStore.signIn(login, password).then(() => navigateTo('/map'))
+    }, [navigateTo])
+
     return (
-        <form className="auth__form" onSubmit={handleSubmit((data) => {
-            console.log(data)
-        })}>
+        <form className="auth__form" onSubmit={handleSubmit((data) => onHandleSubmit(data))}>
             <h2 className="auth-form-title">ВХОД</h2>
             <fieldset className="auth-fields">
                 <CustomInput
@@ -33,9 +36,6 @@ const AuthForm: React.FC = () => {
                     validateRules={rulesValidation.login.rules}
                     autoFocus={true}
                     placeholder="Логин"
-                    required={true}
-                    value={login}
-                    changeValue={setLogin}
                 />
                 <CustomInput
                     type={isPasswordShows ? "text" : "password"}
@@ -43,9 +43,6 @@ const AuthForm: React.FC = () => {
                     name={rulesValidation.password.fieldName}
                     validateRules={rulesValidation.password.rules}
                     placeholder="Пароль"
-                    required={true}
-                    value={password}
-                    changeValue={setPassword}
                 />
             </fieldset>
             <CustomCheckbox
@@ -58,6 +55,6 @@ const AuthForm: React.FC = () => {
             <input type="submit" className="auth__btn" value="ВОЙТИ"/>
         </form>
     );
-};
+});
 
 export default AuthForm;

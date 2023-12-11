@@ -4,70 +4,38 @@ import axios from "axios";
 
 class AuthStore {
     isUserAuthorized: boolean = false
-    userRole: string | null = null
-    userLogin: string = ""
-
-    userPassword: string = ""
-    userEmail: string = ""
-    isPasswordShows: boolean = false
+    // userRole: string | null = null
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    changeIsPasswordShows() {
-        this.isPasswordShows = !this.isPasswordShows
-    }
-
-    signInUser() {
-        this.isUserAuthorized = true
-    }
-
     async logOutUser() {
-        this.signOutUser()
+        this.isUserAuthorized = false
         axios.post("http://localhost:8000/auth/logout").catch(reason => console.log(reason))
     }
 
-    signOutUser() {
-        this.isUserAuthorized = false
-    }
-
-    changeUserLogin(newLogin: string) {
-        this.userLogin = newLogin
-    }
-
-    changeUserPassword(newPassword: string) {
-        this.userPassword = newPassword
-    }
-
-    changeUserEmail(newEmail: string) {
-        this.userEmail = newEmail + "@example.com"
-    }
-
-    async signIn() {
+    async signIn(login: string, password: string) {
+        console.log(login, password)
         await axios.post("http://localhost:8000/auth/login", {
-            username: this.userEmail,
-            password: this.userPassword,
+            username: login,
+            password: password,
         }, {
             headers: {
                 'access': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
             }, withCredentials: true
         })
-            .then(() => this.signInUser())
+            .then(() => this.isUserAuthorized = true)
             .catch(reason => console.log(reason))
     }
 
-    async signUp() {
+    private async signUp(login: string, password: string,) {
         axios.post("http://localhost:8000/auth/register", {
-            username: this.userLogin,
-            email: this.userEmail,
-            password: this.userPassword
-        }).then(r => {
-            console.log(r.data)
-            this.changeUserLogin("")
-            this.changeUserPassword("")
-        }).catch(() => alert("Неправильно введены данные"))
+            username: login,
+            password: password
+        })
+            .catch(() => alert("Неправильно введены данные"))
     }
 }
 

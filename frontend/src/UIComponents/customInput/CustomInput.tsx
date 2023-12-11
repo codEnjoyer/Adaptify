@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import "./customInput.scss"
 import {FieldValues, RegisterOptions, UseFormRegister} from "react-hook-form";
 
@@ -15,8 +15,6 @@ interface IPropTypes {
     defaultValue?: string,
     register: UseFormRegister<FieldValues>,
     required?: boolean,
-    value: string,
-    changeValue?: (e: string) => void,
 }
 
 const CustomInput: React.FC<IPropTypes> =
@@ -32,18 +30,13 @@ const CustomInput: React.FC<IPropTypes> =
          defaultValue,
          register,
          validateRules,
-         value,
-         changeValue,
+        ...inputProps
      }) => {
-        const handleOnChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-            if (changeValue)
-                changeValue(e.currentTarget.value)
-        }, [changeValue])
         return (
-
-
             <div className="custom-input" style={{width: width, height: height}}>
+                <label htmlFor={name}></label>
                 <input
+                    id={name}
                     type={type}
                     className={className}
                     placeholder={placeholder !== undefined ? placeholder : ""}
@@ -52,9 +45,9 @@ const CustomInput: React.FC<IPropTypes> =
                     style={{height: height}}
                     defaultValue={defaultValue}
                     {...register(name, validateRules)}
-                    onChange={handleOnChange}
-                    value={value}
+                    {...inputProps}
                 />
+                {/*{error.message && <span className="custom-input__error">{error.message}</span>}*/}
             </div>
         );
     };
