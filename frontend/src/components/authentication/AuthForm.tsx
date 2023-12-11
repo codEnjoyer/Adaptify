@@ -8,12 +8,17 @@ import {useForm} from "react-hook-form";
 
 import {observer} from "mobx-react-lite";
 
-import rulesValidation from "../../utils/auth.ts";
 import authStore from "../../store/authStore.ts";
+import auth from "../../utils/auth.ts";
+
+export type FormValues = {
+    login: string,
+    password: string,
+}
 
 const AuthForm: React.FC = observer(() => {
     const navigateTo = useNavigate()
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit} = useForm<FormValues>()
 
     const [isPasswordShows, setIsPasswordShows] = useState(false)
 
@@ -21,30 +26,34 @@ const AuthForm: React.FC = observer(() => {
         setIsPasswordShows(!isPasswordShows)
     }, [isPasswordShows])
 
-    const onHandleSubmit = useCallback(({login, password}) => {
-        authStore.signIn(login, password).then(() => navigateTo('/map'))
+    const onHandleSubmit = useCallback((data: {login: string, password: string}) => {
+        authStore.signIn(data.login, data.password).then(() => navigateTo('/map'))
+        console.log(data.login, data.password)
     }, [navigateTo])
 
     return (
-        <form className="auth__form" onSubmit={handleSubmit((data) => onHandleSubmit(data))}>
+        <form
+            className="auth__form"
+            onSubmit={handleSubmit((data: FormValues) => onHandleSubmit(data))}
+        >
             <h2 className="auth-form-title">ВХОД</h2>
+
             <fieldset className="auth-fields">
                 <CustomInput
-                    type="email"
+                    type="text"
                     register={register}
-                    name={rulesValidation.login.fieldName}
-                    validateRules={rulesValidation.login.rules}
-                    autoFocus={true}
-                    placeholder="Логин"
+                    name="login"
+                    validateRules={auth.login.rules}
                 />
+
                 <CustomInput
                     type={isPasswordShows ? "text" : "password"}
                     register={register}
-                    name={rulesValidation.password.fieldName}
-                    validateRules={rulesValidation.password.rules}
-                    placeholder="Пароль"
+                    name={auth.password.fieldName}
+                    validateRules={auth.password.rules}
                 />
             </fieldset>
+
             <CustomCheckbox
                 text="Показать пароль"
                 id="is-remember"
@@ -52,6 +61,7 @@ const AuthForm: React.FC = observer(() => {
                 handleOnChange={handleOnChangeIsPasswordShows}
                 isChecked={isPasswordShows}
             />
+
             <input type="submit" className="auth__btn" value="ВОЙТИ"/>
         </form>
     );

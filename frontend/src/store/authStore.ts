@@ -4,19 +4,14 @@ import axios from "axios";
 
 class AuthStore {
     isUserAuthorized: boolean = false
+
     // userRole: string | null = null
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    async logOutUser() {
-        this.isUserAuthorized = false
-        axios.post("http://localhost:8000/auth/logout").catch(reason => console.log(reason))
-    }
-
     async signIn(login: string, password: string) {
-        console.log(login, password)
         await axios.post("http://localhost:8000/auth/login", {
             username: login,
             password: password,
@@ -26,8 +21,21 @@ class AuthStore {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }, withCredentials: true
         })
-            .then(() => this.isUserAuthorized = true)
+            .then(() => this.authorize())
             .catch(reason => console.log(reason))
+    }
+
+    async logOutUser() {
+        this.unauthorize()
+        axios.post("http://localhost:8000/auth/logout").catch(reason => console.log(reason))
+    }
+
+    private unauthorize = () => {
+        this.isUserAuthorized = false
+    }
+
+    private authorize = () => {
+        this.isUserAuthorized = true
     }
 
     private async signUp(login: string, password: string,) {

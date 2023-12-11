@@ -6,6 +6,6 @@ export interface IRuleValidationListType {
 }
 
 export interface IRuleValidationType {
-    fieldName: string,
+    fieldName: "login" | "password",
     rules: RegisterOptions<FieldValues, string>
 }

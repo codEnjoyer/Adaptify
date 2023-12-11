@@ -41,7 +41,7 @@ const MapMenu: React.FC = observer(() => {
 
     return (
         <div>
-            {!user?.is_superuser
+            {user?.is_superuser
                 ? <SuperUserMap/>
                 : <EmployeeMap user={user} formattedDate={formattedDate}/>
             }
