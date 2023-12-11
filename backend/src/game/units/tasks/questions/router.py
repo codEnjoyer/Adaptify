@@ -52,6 +52,14 @@ async def autocheck_task_unit(map_id: UUID,
     return result
 
 
+@router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/review/")
+async def submit_task_unit_for_review(map_id: UUID,
+                                      module_id: UUID,
+                                      level_id: UUID,
+                                      task_id: UUID):
+    pass
+
+
 @router.delete("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/questions/{question_id}/")
 async def delete_question_from_task_unit(map_id: UUID,
                                          module_id: UUID,

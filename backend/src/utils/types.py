@@ -4,8 +4,9 @@ from fastapi import Depends
 
 from auth.base_config import current_user, current_superuser
 from game.dependencies import map_service, module_service, level_service, task_unit_service, theory_unit_service, \
-    question_service, answer_option_service
+    question_service, answer_option_service, employee_task_service
 from services.game.units.answer_option_service import AnswerOptionService
+from services.game.units.employee_task_service import EmployeeTaskService
 from services.users.employee_service import EmployeeService
 from services.game.level_service import LevelService
 from services.game.map_service import MapService
@@ -25,6 +26,7 @@ MapServiceType = Annotated[MapService, Depends(map_service)]
 ModuleServiceType = Annotated[ModuleService, Depends(module_service)]
 LevelServiceType = Annotated[LevelService, Depends(level_service)]
 TaskUnitServiceType = Annotated[TaskUnitService, Depends(task_unit_service)]
+EmployeeTaskServiceType = Annotated[EmployeeTaskService, Depends(employee_task_service)]
 TheoryUnitServiceType = Annotated[TheoryUnitService, Depends(theory_unit_service)]
 QuestionServiceType = Annotated[QuestionService, Depends(question_service)]
 AnswerOptionServiceType = Annotated[AnswerOptionService, Depends(answer_option_service)]
