@@ -21,7 +21,7 @@ async def get_map(id: UUID,
 
 @router.post("/")
 async def post_map(map_create: MapCreate,
-                   map_service: MapServiceType) -> UUID:
+                   map_service: MapServiceType) -> MapRead:
     return await map_service.create_one(map_create)
 
 

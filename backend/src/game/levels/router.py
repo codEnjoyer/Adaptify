@@ -33,7 +33,7 @@ async def post_level_to_module(map_id: UUID,
                                module_id: UUID,
                                level_create: LevelCreate,
                                level_service: LevelServiceType) -> LevelRead:
-    return await level_service.create_one(level_create)
+    return await level_service.create_one(module_id, level_create)
 
 
 @router.delete("/maps/{map_id}/modules/{module_id}/levels/{level_id}/")

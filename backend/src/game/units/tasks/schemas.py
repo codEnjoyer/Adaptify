@@ -64,7 +64,7 @@ class DiscussionTaskUnitUpdate(__TaskUnitUpdateBase):
 
 # endregion Discussion
 # region EmployeeTask
-class __EmployeeTaskBase:
+class __EmployeeTaskBase(BaseModel):
     task_id: UUID
     employee_id: UUID
 

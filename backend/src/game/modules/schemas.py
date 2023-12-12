@@ -4,7 +4,6 @@ from pydantic import BaseModel, ConfigDict
 
 
 class __ModuleBase(BaseModel):
-    map_id: UUID
     title: str
     previous_module_id: UUID | None
     next_module_id: UUID | None
@@ -13,6 +12,7 @@ class __ModuleBase(BaseModel):
 
 
 class ModuleRead(__ModuleBase):
+    map_id: UUID
     id: UUID
     levels_ids: list[UUID]
 
@@ -22,6 +22,7 @@ class ModuleCreate(__ModuleBase):
 
 
 class ModuleUpdate(__ModuleBase):
-    title: str | None = None
-    previous_module_id: UUID | None = None
-    next_module_id: UUID | None = None
+    map_id: UUID | None
+    title: str | None
+    previous_module_id: UUID | None
+    next_module_id: UUID | None
