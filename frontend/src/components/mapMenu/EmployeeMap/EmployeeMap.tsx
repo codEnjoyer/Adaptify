@@ -22,7 +22,6 @@ interface IEmployeeMap {
 }
 
 const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => {
-    const [currentLevel, setCurrentLevel] = useState<ILevelType>()
 
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps().then(() => {
