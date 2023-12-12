@@ -1,12 +1,16 @@
 import React, {useEffect} from 'react';
+
 import Coins from "../UIMapMenu/Coins.tsx";
 import ChooseModuleWindow from "../UIMapMenu/ChooseModuleWindow.tsx";
-import mapMenuStore from "../../../store/mapMenuStore.ts";
 import UserProfile from "../UIMapMenu/UserProfile/UserProfile.tsx";
+import CustomProgressBar from "../../../UIComponents/CustomProgressBar/CustomProgressBar.tsx";
 import Level from "../UIMapMenu/Level/Level.tsx";
-import {IUserType} from "../../../types/UserType.ts";
-import {observer} from "mobx-react-lite";
+
+import mapMenuStore from "../../../store/mapMenuStore.ts";
 import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+import {observer} from "mobx-react-lite";
+
+import {IUserType} from "../../../types/UserType.ts";
 
 interface IEmployeeMap {
     user?: IUserType,
@@ -33,6 +37,7 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => 
             <Coins coins={100} additionalClassname="coins"/>
             <ChooseModuleWindow moduleName={moduleMenuStore.currentModule?.title}/>
             <UserProfile user={user} formattedDate={formattedDate}/>
+            <div className="progress-bar-wrapper"><CustomProgressBar progress={54}/></div>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {mapMenuStore.availableLevels.map((level, index) => {

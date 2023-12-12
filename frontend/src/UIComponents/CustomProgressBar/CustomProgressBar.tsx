@@ -1,31 +1,34 @@
-import React, {useEffect} from 'react';
-import ProgressBar from "progressbar.js";
+import React, {useEffect, useState} from 'react';
+import "./customProgressBar.scss"
 
 interface IPropTypes {
-    containerName: string;
+    progress: number;
 }
 
-const CustomProgressBar: React.FC<IPropTypes> = ({containerName}) => {
+const CustomProgressBar: React.FC<IPropTypes> = ({progress}) => {
 
+    const [filled, setFilled] = useState(0);
     useEffect(() => {
-        const container = document.querySelector(`#${containerName}`);
-        console.log(container)
-
-        if (container && container.children.length === 0) {
-            new ProgressBar.Line(`#${containerName}`, {
-                strokeWidth: 4,
-                easing: 'easeInOut',
-                duration: 1400,
-                color: '#FFEA82',
-                trailColor: '#eee',
-                trailWidth: 1,
-                svgStyle: {width: '100%', height: '100%'}
-            });
+        if (filled < progress) {
+            if (filled > progress - 5) {
+                setFilled(progress);
+            } else setTimeout(() => setFilled(prev => prev + 5), 10)
         }
-    }, [containerName])
+    }, [filled, progress])
 
     return (
-        <div id={`#${containerName}`}></div>
+        <div>
+            <div className="progressbar">
+                <div style=
+                         {{
+                             height: "100%",
+                             width: `${filled}%`,
+                             backgroundColor: "#00D29D",
+                             transition: "width 0.5s"
+                         }}></div>
+                <span className="progressPercent">{filled}%</span>
+            </div>
+        </div>
     );
 };
 

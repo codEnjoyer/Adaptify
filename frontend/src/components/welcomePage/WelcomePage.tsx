@@ -1,7 +1,8 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
-import './../../styles/welcomePage.scss'
 import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
+
+import './../../styles/welcomePage.scss'
 
 import Starfield from "react-starfield";
 
