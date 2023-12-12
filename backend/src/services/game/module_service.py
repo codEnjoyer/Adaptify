@@ -11,8 +11,9 @@ class ModuleService:
     def __init__(self, repository: type[AbstractRepository]):
         self.__module_repo = repository()
 
-    async def create_one(self, schema_create: ModuleCreate) -> ModuleRead:
+    async def create_one(self, map_id: uuid.UUID, schema_create: ModuleCreate) -> ModuleRead:
         schema_dict = schema_create.model_dump()
+        schema_dict["map_id"] = map_id
         return await self.__module_repo.add_one(schema_dict)
 
     async def get_all(self) -> list[ModuleRead]:

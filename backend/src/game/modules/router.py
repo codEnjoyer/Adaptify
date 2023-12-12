@@ -30,7 +30,7 @@ async def get_map_module(map_id: UUID,
 async def post_module_to_map(map_id: UUID,
                              module_create: ModuleCreate,
                              module_service: ModuleServiceType) -> ModuleRead:
-    return await module_service.create_one(module_create)
+    return await module_service.create_one(map_id, module_create)
 
 
 @router.delete("/maps/{map_id}/modules/{module_id}/")
