@@ -1,7 +1,6 @@
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException, status
-from sqlalchemy.exc import NoResultFound
+from fastapi import APIRouter
 
 from game.modules.schemas import ModuleRead, ModuleCreate, ModuleUpdate
 from utils.types import ModuleServiceType
@@ -17,7 +16,7 @@ async def root(module_service: ModuleServiceType) -> list[ModuleRead]:
 @router.get("/maps/{map_id}/modules/")
 async def get_map_modules(map_id: UUID,
                           module_service: ModuleServiceType) -> list[ModuleRead]:
-    return await module_service.get_all()
+    return await module_service.get_all_linked_to_map(map_id)
 
 
 @router.get("/maps/{map_id}/modules/{module_id}/")

@@ -2,7 +2,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-from game.units.tasks.schemas import TaskUnitRead
+from game.units.tasks.schemas import TestTaskUnitRead
 from game.units.theory.schemas import TheoryUnitRead
 
 
@@ -16,7 +16,7 @@ class __LevelBase(BaseModel):
 class LevelRead(__LevelBase):
     id: UUID
     theory_units: list[TheoryUnitRead]
-    task_units: list[TaskUnitRead]
+    task_units: list[TestTaskUnitRead]
 
 
 class LevelCreate(__LevelBase):

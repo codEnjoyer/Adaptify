@@ -18,7 +18,7 @@ class TheoryUnit(BaseModel):
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     title: Mapped[str] = mapped_column(String, nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False, default="Текст теории")
-    level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id'), default=uuid.uuid4)
+    level_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('levels.id', ondelete="CASCADE"), default=uuid.uuid4)
 
     # videos: Mapped[list["TheoryVideo"]] = relationship(back_populates="theory_block")
     level: Mapped[list["Level"]] = relationship(back_populates='theory_units')
