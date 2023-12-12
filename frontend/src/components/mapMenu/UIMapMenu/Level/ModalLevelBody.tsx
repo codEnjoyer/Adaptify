@@ -1,16 +1,21 @@
 import React from 'react';
+
 import "./modalLevelBody.scss"
+
 import ArrowLeft from "../../../../UIComponents/UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../../../../UIComponents/UIChooseModule/ArrowRight.tsx";
 import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx";
 import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
+
 import MenuItem from "./MenuItem.tsx";
+
 import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
 import {ITaskType} from "../../../../types/TaskType.ts";
+import {ILevelType} from "../../../../types/LevelType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
+
 import levelStore from "../../../../store/levelStore.ts";
 import {observer} from "mobx-react-lite";
-import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IModalLevelProps {
     level: ILevelType

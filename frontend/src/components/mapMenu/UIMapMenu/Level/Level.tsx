@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
+
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
+
 import ModalLevelBody from "./ModalLevelBody.tsx";
-import {ITheoryUnitType} from "../../../../types/TheoryUnitType.ts";
-import {ITaskType} from "../../../../types/TaskType.ts";
 import levelStore from "../../../../store/levelStore.ts";
+
 import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IModuleProps {
