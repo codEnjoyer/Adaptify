@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
+
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
+
 import ModalLevelBody from "./ModalLevelBody.tsx";
-import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
+
 import levelStore from "../../../../store/levelStore.ts";
+
+import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IModuleProps {
     id: string,
-    title: string,
-    theoryUnits?: ITheoryUnitType[],
-    taskUnits?: ITaskType[]
+    level: ILevelType,
 }
 
-const Level: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
+const Level: React.FC<IModuleProps> = ({id, level}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
 
@@ -24,7 +26,7 @@ const Level: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
                         setOpenModalWindow(!isOpenModalWindow)
                         levelStore.closeLevel()
                     }}
-                    body={<ModalLevelBody key={id} title={title} theoryUnits={theoryUnits} taskUnits={taskUnits}/>}
+                    body={<ModalLevelBody level={level}/>}
                 />
                 : ""}
 
@@ -43,7 +45,6 @@ const Level: React.FC<IModuleProps> = ({id, title, theoryUnits, taskUnits}) => {
                         </radialGradient>
                     </defs>
                 </svg>
-
             </div>
         </div>
     );

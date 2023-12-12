@@ -1,33 +1,39 @@
 import React from 'react';
+
 import "./modalLevelBody.scss"
+
 import ArrowLeft from "../../../../UIComponents/UIChooseModule/ArrowLeft.tsx";
 import ArrowRight from "../../../../UIComponents/UIChooseModule/ArrowRight.tsx";
 import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx";
 import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
+
 import MenuItem from "./MenuItem.tsx";
+
 import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
+import {ILevelType} from "../../../../types/LevelType.ts";
+
 import levelStore from "../../../../store/levelStore.ts";
 import {observer} from "mobx-react-lite";
 
 interface IModalLevelProps {
-    title: string,
-    theoryUnits?: ITheoryUnitType[],
-    taskUnits?: ITaskType[]
+    level: ILevelType
 }
 
-const ModalLevelBody: React.FC<IModalLevelProps> = observer(({title, theoryUnits = [], taskUnits = []}) => {
+const ModalLevelBody: React.FC<IModalLevelProps> = observer(({level}) => {
     const bodyHeader = renderBodyHeader()
+
+
     const menuItems: IMenuItemType[] = [
         {
             type: "theory",
-            length: theoryUnits.length,
-            item: theoryUnits
+            length: level?.theoryUnits.length,
+            item: level?.theoryUnits
         },
         {
-            length: taskUnits.length,
+            length: level?.taskUnits.length,
             type: "tests",
-            item: taskUnits
+            item: level?.taskUnits
         }
     ]
 
@@ -38,7 +44,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = observer(({title, theoryUnits
                     <ArrowLeft/>
                 </div>
                 <div className="level-name">
-                    {title.toUpperCase()}
+                    {level.title.toUpperCase()}
                 </div>
                 <div className="right-arrow">
                     <ArrowRight/>
@@ -100,11 +106,11 @@ const ModalLevelBody: React.FC<IModalLevelProps> = observer(({title, theoryUnits
         }
     }
 
-    function renderTasks(menuItems: IMenuItemType[], theoryUnits: ITheoryUnitType[], taskUnits: ITaskType[]) {
+    function renderTasks(menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) {
         console.log(levelStore.chosenTaskIndex)
-        if (levelStore.chosenTaskIndex <= menuItems[0].length)
+        if (menuItems && levelStore.chosenTaskIndex <= menuItems[0].length)
             return renderChosenTask(theoryUnits[levelStore.chosenTaskIndex - 1], "theory")
-        if (levelStore.chosenTaskIndex <= menuItems[0].length + menuItems[1].length)
+        if (menuItems && levelStore.chosenTaskIndex <= menuItems[0].length + menuItems[1].length)
             return renderChosenTask(taskUnits[levelStore.chosenTaskIndex - menuItems[0].length - 1], "test")
 
     }
@@ -114,12 +120,11 @@ const ModalLevelBody: React.FC<IModalLevelProps> = observer(({title, theoryUnits
             <HeaderModal body={bodyHeader}/>
 
             {menuItems
-                ? <div
-                    className="menu">{renderMenuUnitsBlocks(menuItems)}</div>
+                ? <div className="menu">{renderMenuUnitsBlocks(menuItems)}</div>
                 : ""
             }
 
-            {renderTasks(menuItems, theoryUnits, taskUnits)}
+            {renderTasks(menuItems, level.theoryUnits, level.taskUnits)}
         </div>
     );
 });

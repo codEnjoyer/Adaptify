@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Coins from "../UIMapMenu/Coins.tsx";
 import ChooseModuleWindow from "../UIMapMenu/ChooseModuleWindow.tsx";
@@ -6,11 +6,15 @@ import UserProfile from "../UIMapMenu/UserProfile/UserProfile.tsx";
 import CustomProgressBar from "../../../UIComponents/CustomProgressBar/CustomProgressBar.tsx";
 import Level from "../UIMapMenu/Level/Level.tsx";
 
-import mapMenuStore from "../../../store/mapMenuStore.ts";
-import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+
 import {observer} from "mobx-react-lite";
 
+import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+import mapMenuStore from "../../../store/mapMenuStore.ts"
+
 import {IUserType} from "../../../types/UserType.ts";
+import {ILevelType} from "../../../types/LevelType.ts";
+
 
 interface IEmployeeMap {
     user?: IUserType,
@@ -18,6 +22,8 @@ interface IEmployeeMap {
 }
 
 const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => {
+    const [currentLevel, setCurrentLevel] = useState<ILevelType>()
+
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps().then(() => {
             mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
@@ -41,8 +47,10 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => 
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {mapMenuStore.availableLevels.map((level, index) => {
-                        return <Level id={(index + 1).toString()} key={level.id} title={level.title}
-                                      theoryUnits={level.theoryUnits} taskUnits={level.taskUnits}/>
+                        return <Level
+                            id={(index + 1).toString()}
+                            level={level}
+                        />
                     })}
                 </div>
             </div>
