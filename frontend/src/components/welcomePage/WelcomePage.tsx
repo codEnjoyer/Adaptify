@@ -24,7 +24,7 @@ const WelcomePage: React.FC = () => {
             <h1>ADAPTIFY</h1>
             <h2>WELCOME PAGE</h2>
             <CustomButton
-                additionalClassName="navigate_to_auth__btn"
+                className="navigate_to_auth__btn"
                 handleOnClick={handleOnClickToNavigate}
                 text="Авторизоваться"
             />

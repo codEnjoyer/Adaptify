@@ -4,13 +4,13 @@ import styles from './customButton.module.scss'
 interface ICustomButtonInterface {
     text: string,
     handleOnClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-    additionalClassName?: string
+    className?: string
 }
 
 const CustomButton: React.FC<ICustomButtonInterface> =
-    ({text, handleOnClick, additionalClassName}: ICustomButtonInterface) => {
+    ({text, handleOnClick, className}: ICustomButtonInterface) => {
         return (
-            <button className={styles.custom__btn + " " + additionalClassName} onClick={(e) => handleOnClick(e)}>
+            <button className={styles.custom__btn + " " + className} onClick={(e) => handleOnClick(e)}>
                 {text}
             </button>
         );

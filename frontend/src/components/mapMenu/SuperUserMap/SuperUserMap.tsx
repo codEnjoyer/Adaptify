@@ -75,15 +75,31 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
 
 
             <CustomButton
-                additionalClassName="users-list__btn"
+                className="users-list__btn"
                 handleOnClick={handleOnClickChangeIsModalOpen}
                 text="Открыть список сотрудников"
             />
 
-            {/*<select>*/}
-            {/*    {superUserStore.allUsers.map((user) =>*/}
-            {/*        <option key={user.username} value={user.username}>{user.username}</option>)}*/}
-            {/*</select>*/}
+            <br/>
+
+            <select className="available-maps">
+                <option value="-"></option>
+                {mapMenuStore.availableMaps?.map((map, index) =>
+                    <option
+                        key={map.id}
+                        value={map.title}
+                        onClick={() => handleOnClickOptionMap(map, index)}
+                    >
+                        {map.title}
+                    </option>)
+                }
+            </select>
+
+            <CustomButton
+                text="Удалить выбранную карту"
+                className="delete-map__btn"
+                handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}
+            />
 
             <div className="map-creator-item map-create">
                 <CustomInput
@@ -96,34 +112,8 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                 />
             </div>
 
-            <div className="map-creator-item module-create">
-                <CustomInput
-                    type="text"
-                    value={moduleName}
-                    handleOnChange={(e) => handleOnChangeModuleName(e)}
-                />
-                <CustomAddButton
-                    handleOnClick={() => handleOnClickCreateModule(moduleName)}
-                />
-            </div>
 
-            <select className="available-maps">
-                {mapMenuStore.availableMaps?.map((map, index) =>
-                    <option
-                        key={map.id}
-                        value={map.title}
-                        onClick={() => handleOnClickOptionMap(map, index)}
-                    >
-                        {map.title}
-                    </option>)
-                }
-            </select>
-            <CustomButton
-                text="Удалить выбранную карту"
-                additionalClassName="delete-map__btn"
-                handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}
-            />
-
+            <div className="change-module">
             <select className="available-modules">
                 {moduleMenuStore.availableModules.map((module, index) =>
                     <option
@@ -135,11 +125,25 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                     </option>)
                 }
             </select>
+
+
             <CustomButton
                 text="Удалить выбранный модуль"
-                additionalClassName="delete-module__btn"
+                className="delete-module__btn"
                 handleOnClick={() => moduleMenuStore.deleteModule(moduleMenuStore.currentModule?.id)}
             />
+            </div>
+
+            <div className="map-creator-item module-create">
+                <CustomInput
+                    type="text"
+                    value={moduleName}
+                    handleOnChange={(e) => handleOnChangeModuleName(e)}
+                />
+                <CustomAddButton
+                    handleOnClick={() => handleOnClickCreateModule(moduleName)}
+                />
+            </div>
         </div>
     );
 });

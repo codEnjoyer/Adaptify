@@ -15,7 +15,7 @@ const Authentication: React.FC = observer(() => {
         <div className="auth-page">
             <AuthForm/>
             <CustomButton
-                additionalClassName="back-to-welcome-page__btn"
+                className="back-to-welcome-page__btn"
                 text="Вернуться обратно"
                 handleOnClick={handleOnClickBackToWelcomePage}
             />
