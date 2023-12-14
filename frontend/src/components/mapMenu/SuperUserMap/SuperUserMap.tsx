@@ -8,6 +8,7 @@ import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 import {IMapType} from "../../../types/MapType.ts";
 import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UsersListModalBody from "./UsersListModalBody.tsx";
+import CustomAddButton from "../../../UIComponents/customAddButton/CustomAddButton.tsx";
 
 interface ISuperUserMap {
 
@@ -15,6 +16,10 @@ interface ISuperUserMap {
 
 const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
+
+    const [mapName, setMapName] = useState<string>("")
+    const [moduleName, setModuleName] = useState<string>("")
+    const [levelName, setLevelName] = useState<string>("")
 
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps()
@@ -41,7 +46,10 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                     />
                     : null
             }
-            <CustomButton handleOnClick={handleOnClickChangeIsModalOpen} text="Открыть список сотрудников"/>
+
+
+            <CustomButton additionalClassName="users-list__btn" handleOnClick={handleOnClickChangeIsModalOpen}
+                          text="Открыть список сотрудников"/>
 
             {/*<select>*/}
             {/*    {superUserStore.allUsers.map((user) =>*/}
@@ -49,10 +57,13 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
             {/*</select>*/}
 
             <div className="map-create">
-                <CustomButton text="Создать новую карту"
-                              handleOnClick={() => mapMenuStore.createMap(mapMenuStore.newNameMap)}/>
-                <CustomInput type="text" value={mapMenuStore.newNameMap}
-                             handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}/>
+                <CustomInput
+                    type="text" value={mapMenuStore.newNameMap}
+                    handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}
+                />
+                <CustomAddButton
+                    handleOnClick={() => mapMenuStore.createMap(mapMenuStore.newNameMap)}
+                />
             </div>
 
             <div className="module-create">
@@ -62,13 +73,13 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                              handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}/>
             </div>
 
-            {/*<select className="available-maps">*/}
-            {/*    {mapMenuStore.availableMaps?.map((map, index) =>*/}
-            {/*        <option key={map.id} value={map.title}*/}
-            {/*                onClick={() => handleOnClickOptionMap(map, index)}>{map.title}</option>)}*/}
-            {/*    <CustomButton text="Удалить выбранную карту" additionalClassName="delete-map__btn"*/}
-            {/*                  handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}/>*/}
-            {/*</select>*/}
+            <select className="available-maps">
+                {mapMenuStore.availableMaps?.map((map, index) =>
+                    <option key={map.id} value={map.title}
+                            onClick={() => handleOnClickOptionMap(map, index)}>{map.title}</option>)}
+            </select>
+            <CustomButton text="Удалить выбранную карту" additionalClassName="delete-map__btn"
+                          handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}/>
 
             {/*<select className="available-modules">*/}
             {/*    {moduleMenuStore.availableModules.map((module) =>*/}

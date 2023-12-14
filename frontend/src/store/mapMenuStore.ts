@@ -48,8 +48,8 @@ class MapMenuStore {
                 id: level.id,
                 title: level.title,
                 body: level.body,
-                theoryUnits: level.theory_units,
-                taskUnits: level.task_units
+                theoryUnits: level.theoryUnits,
+                taskUnits: level.taskUnits,
             }
         })
     }
@@ -107,7 +107,7 @@ class MapMenuStore {
     // Для суперпользователя
 
     createMap(mapName: string) {
-        axios.post("http://localhost:8000/maps/", {title: mapName}).then()
+        axios.post("http://localhost:8000/maps/", {title: mapName}).then(() => this.fetchAvailableMaps())
         this.newNameMap = ""
     }
 
@@ -127,7 +127,7 @@ class MapMenuStore {
 
     deleteMap(mapId?: string) {
         axios.delete("http://localhost:8000/maps/" + mapId)
-            .then()
+            .then(() => this.fetchAvailableMaps())
             .catch(() => alert("Выбрана несуществующая карта"))
     }
 }
