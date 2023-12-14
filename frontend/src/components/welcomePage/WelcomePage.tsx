@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useNavigate} from "react-router-dom";
 import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 
@@ -8,6 +8,10 @@ import Starfield from "react-starfield";
 
 const WelcomePage: React.FC = () => {
     const navigateTo = useNavigate()
+
+    const handleOnClickToNavigate = useCallback(() => {
+        navigateTo("/login")
+    }, [navigateTo])
 
     return (
         <div className="welcome-page">
@@ -21,7 +25,7 @@ const WelcomePage: React.FC = () => {
             <h2>WELCOME PAGE</h2>
             <CustomButton
                 additionalClassName="navigate_to_auth__btn"
-                handleOnClick={() => navigateTo("/login")}
+                handleOnClick={handleOnClickToNavigate}
                 text="Авторизоваться"
             />
         </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 
@@ -17,18 +17,24 @@ const Level: React.FC<IModuleProps> = ({id, level}) => {
     const [isOpenModalWindow, setOpenModalWindow] = useState(false)
     const classNameGeolocation = "geolocation-" + id
 
+    const onHandleCloseModalWindow = useCallback(() => {
+        setOpenModalWindow(!isOpenModalWindow)
+        levelStore.closeLevel()
+    }, [isOpenModalWindow])
+
+    const onHandleOpenModalWindow = useCallback(() => {
+        setOpenModalWindow(!isOpenModalWindow)
+    }, [isOpenModalWindow])
+
     return (
-        <div onClick={() => setOpenModalWindow(!isOpenModalWindow)} className={classNameGeolocation}>
+        <div onClick={onHandleOpenModalWindow} className={classNameGeolocation}>
 
             {isOpenModalWindow
                 ? <ModalWindow
-                    onClose={() => {
-                        setOpenModalWindow(!isOpenModalWindow)
-                        levelStore.closeLevel()
-                    }}
+                    onClose={onHandleCloseModalWindow}
                     body={<ModalLevelBody level={level}/>}
                 />
-                : ""}
+                : null}
 
             <div>
                 <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
