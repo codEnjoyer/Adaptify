@@ -8,7 +8,7 @@ from users.enums import UserRoles
 
 
 class __CustomUser:
-    username: str
+    pass
 
 
 class UserRead(BaseUser[uuid.UUID], __CustomUser):
@@ -22,6 +22,6 @@ class UserCreate(BaseUserCreate, __CustomUser):
     pass
 
 
-class UserUpdate(BaseUserUpdate, __CustomUser):
-    username: str | None = None
-    role: UserRoles | None = None
+class UserUpdate(UserCreate):
+    email: EmailStr | None
+    role: UserRoles | None

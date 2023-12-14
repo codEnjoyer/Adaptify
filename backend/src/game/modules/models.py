@@ -18,13 +18,13 @@ class Level(BaseModel):
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
     title: Mapped[str] = mapped_column(String(length=255), nullable=False)
-    map_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('maps.id'))
+    map_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('maps.id', ondelete="CASCADE"))
     previous_module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=True)
     next_module_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('modules.id'), nullable=True)
 
     map: Mapped["Map"] = relationship(back_populates='modules', lazy='selectin')
 
-    levels: Mapped[list["Level"]] = relationship(back_populates='module', lazy='selectin')
+    levels: Mapped[list["Level"]] = relationship(back_populates='module', lazy='selectin', cascade='all, delete-orphan')
     levels_ids: AssociationProxy[list[uuid.UUID]] = association_proxy('levels', 'id')
 
     def to_read_schema(self) -> ModuleRead:

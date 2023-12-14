@@ -10,8 +10,9 @@ class LevelService:
     def __init__(self, repository: type[AbstractRepository]):
         self.__level_repo = repository()
 
-    async def create_one(self, level_create: LevelCreate) -> LevelRead:
+    async def create_one(self, module_id: uuid.UUID, level_create: LevelCreate) -> LevelRead:
         level_dict = level_create.model_dump()
+        level_dict["module_id"] = module_id
         return await self.__level_repo.add_one(level_dict)
 
     async def get_all(self) -> list[LevelRead]:

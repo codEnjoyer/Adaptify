@@ -15,7 +15,7 @@ class AnswerOption(BaseModel):
     __tablename__ = 'answer_options'
 
     id: Mapped[uuid.UUID] = mapped_column(UUID, primary_key=True, default=uuid.uuid4)
-    question_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('questions.id'), default=uuid.uuid4)
+    question_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('questions.id', ondelete="CASCADE"), default=uuid.uuid4)
     answer: Mapped[str] = mapped_column(String, nullable=False, default='Ответ?')
     is_correct: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
 
