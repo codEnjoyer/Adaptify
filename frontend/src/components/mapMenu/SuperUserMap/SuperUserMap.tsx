@@ -46,7 +46,7 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
         setMapName(e.currentTarget.value)
     }, [])
 
-    const handleOnClickCreateMap = useCallback(() => {
+    const handleOnClickCreateMap = useCallback((mapName: string) => {
         mapName !== "" ? mapMenuStore.createMap(mapName) : alert("Введите название карты")
         mapMenuStore.fetchAvailableMaps().then()
     }, [])
@@ -56,7 +56,7 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
         setModuleName(e.currentTarget.value)
     }, [])
 
-    const handleOnClickCreateModule = useCallback(() => {
+    const handleOnClickCreateModule = useCallback((moduleName: string) => {
         moduleName !== "" ? moduleMenuStore.createModule(moduleName) : alert("Введите название модуля")
         moduleMenuStore.fetchModules().then()
     }, [])
@@ -89,10 +89,10 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                 <CustomInput
                     type="text"
                     value={mapName}
-                    handleOnChange={handleOnChangeMapName}
+                    handleOnChange={(e) => handleOnChangeMapName(e)}
                 />
                 <CustomAddButton
-                    handleOnClick={handleOnClickCreateMap}
+                    handleOnClick={() => handleOnClickCreateMap(mapName)}
                 />
             </div>
 
@@ -100,10 +100,10 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                 <CustomInput
                     type="text"
                     value={moduleName}
-                    handleOnChange={handleOnChangeModuleName}
+                    handleOnChange={(e) => handleOnChangeModuleName(e)}
                 />
                 <CustomAddButton
-                    handleOnClick={handleOnClickCreateModule}
+                    handleOnClick={() => handleOnClickCreateModule(moduleName)}
                 />
             </div>
 

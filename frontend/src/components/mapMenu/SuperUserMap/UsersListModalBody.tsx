@@ -28,10 +28,12 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({users}) => {
             <div className="users-list">
                 {users.map((user) => (
                     isUsersCardModalOpen
-                        ? <ModalWindow body={userProfileModalBody}
-                                       onClose={handleOnCloseUserCard}/>
+                        ? <ModalWindow
+                            body={userProfileModalBody}
+                            onClose={handleOnCloseUserCard}
+                        />
                         : (
-                            <div className="users-list-user" onClick={() => handleOnClickUserCard(user)}>
+                            <div key={user.email} className="users-list-user" onClick={() => handleOnClickUserCard(user)}>
                                 <div className="users-list-user-name">
                                     {user.username}
                                 </div>

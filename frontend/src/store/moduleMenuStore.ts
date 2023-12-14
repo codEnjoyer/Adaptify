@@ -43,13 +43,11 @@ class ModuleMenuStore {
     }
 
     async createModule(title: string) {
-        const newId = uuidv4();
-
         await axios.post("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/", {
             map_id: mapMenuStore.currentMapId,
             title: title,
-            previous_module_id: newId,
-            next_module_id: newId,
+            previous_module_id: null,
+            next_module_id: null,
         })
     }
 

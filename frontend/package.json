@@ -24,14 +24,12 @@
     "react-starfield": "^1.0.3",
     "sass": "^1.69.5",
     "serve": "^14.2.1",
-    "sort-by": "^0.0.2",
-    "uuid": "^9.0.1"
+    "sort-by": "^0.0.2"
   },
   "devDependencies": {
     "@types/progressbar.js": "^1.1.7",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react-swc": "^3.3.2",

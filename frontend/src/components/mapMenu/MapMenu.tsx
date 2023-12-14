@@ -33,13 +33,12 @@ const MapMenu: React.FC = observer(() => {
 
             superUserStore.setAllUsers(response.data)
 
-
             if (user) {
                 const date = new Date(Date.parse(user!.registered_at))
                 setFormattedDate(`${date.getDay()}.${date.getMonth()}.${date.getUTCFullYear()}`)
             }
         })
-    }, [user])
+    }, [])
 
     useEffect(() => {
         if (!authStore.isUserAuthorized)
@@ -54,9 +53,10 @@ const MapMenu: React.FC = observer(() => {
                 speedFactor={0.05}
                 backgroundColor="black"
             />
-            {!user?.is_superuser
-                ? <SuperUserMap/>
-                : <EmployeeMap user={user} formattedDate={formattedDate}/>
+            {
+                user?.is_superuser
+                    ? <SuperUserMap/>
+                    : <EmployeeMap user={user} formattedDate={formattedDate}/>
             }
         </div>
     );
