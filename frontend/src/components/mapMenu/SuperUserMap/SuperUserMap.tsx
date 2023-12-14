@@ -48,8 +48,11 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
             }
 
 
-            <CustomButton additionalClassName="users-list__btn" handleOnClick={handleOnClickChangeIsModalOpen}
-                          text="Открыть список сотрудников"/>
+            <CustomButton
+                additionalClassName="users-list__btn"
+                handleOnClick={handleOnClickChangeIsModalOpen}
+                text="Открыть список сотрудников"
+            />
 
             {/*<select>*/}
             {/*    {superUserStore.allUsers.map((user) =>*/}

@@ -30,15 +30,15 @@ class AuthStore {
         axios.post("http://localhost:8000/auth/logout").catch(reason => console.log(reason))
     }
 
+    authorize = () => {
+        this.isUserAuthorized = true
+    }
+
     private unauthorize = () => {
         this.isUserAuthorized = false
     }
 
-    private authorize = () => {
-        this.isUserAuthorized = true
-    }
-
-    private async signUp(login: string, password: string,) {
+    private async signUp(login: string, password: string) {
         axios.post("http://localhost:8000/auth/register", {
             username: login,
             password: password
