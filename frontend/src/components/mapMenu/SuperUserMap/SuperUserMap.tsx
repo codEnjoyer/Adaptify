@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import CustomButton from "../../../UIComponents/customButton/CustomButton.tsx";
 import mapMenuStore from "../../../store/mapMenuStore.ts";
 import CustomInput from "../../../UIComponents/customInput/CustomInput.tsx";
@@ -26,31 +26,33 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
         mapMenuStore.selectMap(map).then(() => mapMenuStore.changeCurrentMapIndex(indexMap))
     }
 
-    function handleOnClickChangeIsModalOpen() {
+    const handleOnClickChangeIsModalOpen = useCallback(() => {
         setIsUserListModalOpen(!isUsersListModalOpen)
-    }
-
+    }, [isUsersListModalOpen])
 
     return (
         <div>
-            {isUsersListModalOpen
-                ? <ModalWindow
-                    onClose={handleOnClickChangeIsModalOpen}
-                    body={<UsersListModalBody users={superUserStore.allUsers}/>}
-                    windowContentStyles=""
-                />
-                : ""}
+            {
+                isUsersListModalOpen
+                    ? <ModalWindow
+                        onClose={handleOnClickChangeIsModalOpen}
+                        body={<UsersListModalBody users={superUserStore.allUsers}/>}
+                        windowContentStyles=""
+                    />
+                    : ""
+            }
             <CustomButton handleOnClick={handleOnClickChangeIsModalOpen} text="Открыть список сотрудников"/>
-            <select>
-                {superUserStore.allUsers.map((user) =>
-                    <option key={user.username} value={user.username}>{user.username}</option>)}
-            </select>
+
+            {/*<select>*/}
+            {/*    {superUserStore.allUsers.map((user) =>*/}
+            {/*        <option key={user.username} value={user.username}>{user.username}</option>)}*/}
+            {/*</select>*/}
 
             <div className="map-create">
-                <CustomInput type="text" value={mapMenuStore.newNameMap}
-                             handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}/>
                 <CustomButton text="Создать новую карту"
                               handleOnClick={() => mapMenuStore.createMap(mapMenuStore.newNameMap)}/>
+                <CustomInput type="text" value={mapMenuStore.newNameMap}
+                             handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}/>
             </div>
 
             <select className="available-maps">

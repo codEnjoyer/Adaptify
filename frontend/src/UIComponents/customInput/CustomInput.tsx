@@ -18,6 +18,7 @@ interface IPropTypes {
     register?: UseFormRegister<FormValues>,
     required?: boolean,
     value?: string,
+    handleOnChange?: (e: string) => void,
 }
 
 const CustomInput: React.FC<IPropTypes> =
@@ -33,6 +34,8 @@ const CustomInput: React.FC<IPropTypes> =
          defaultValue,
          register,
          validateRules,
+         value,
+         handleOnChange,
          ...inputProps
      }) => {
         return (
@@ -49,6 +52,8 @@ const CustomInput: React.FC<IPropTypes> =
                     defaultValue={defaultValue}
                     {...register !== undefined && name !== undefined ? {...register(name, validateRules)} : ""}
                     {...inputProps}
+                    value={value}
+                    onChange={(e) => handleOnChange ? (e.target.value) : undefined}
                 />
                 {/*{error.message && <span className="custom-input__error">{error.message}</span>}*/}
             </div>

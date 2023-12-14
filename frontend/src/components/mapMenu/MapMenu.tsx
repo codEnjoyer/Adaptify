@@ -54,7 +54,7 @@ const MapMenu: React.FC = observer(() => {
                 speedFactor={0.05}
                 backgroundColor="black"
             />
-            {user?.is_superuser
+            {!user?.is_superuser
                 ? <SuperUserMap/>
                 : <EmployeeMap user={user} formattedDate={formattedDate}/>
             }
