@@ -9,6 +9,7 @@ import {IMapType} from "../../../types/MapType.ts";
 import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UsersListModalBody from "./UsersListModalBody.tsx";
 import CustomAddButton from "../../../UIComponents/customAddButton/CustomAddButton.tsx";
+import {IModuleType} from "../../../types/ModuleType.ts";
 
 interface ISuperUserMap {
 
@@ -31,9 +32,33 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
         mapMenuStore.selectMap(map).then(() => mapMenuStore.changeCurrentMapIndex(indexMap))
     }, [])
 
+    const handleOnClickOptionModule = useCallback((module: IModuleType, index) => {
+        moduleMenuStore.selectModule(module).then(() => moduleMenuStore.changeCurrentModuleIndex(index))
+    }, [])
+
     const handleOnClickChangeIsModalOpen = useCallback(() => {
         setIsUserListModalOpen(!isUsersListModalOpen)
     }, [isUsersListModalOpen])
+
+
+    const handleOnChangeMapName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+        setMapName(e.currentTarget.value)
+    }, [])
+
+    const handleOnClickCreateMap = useCallback(() => {
+        mapName !== "" ? mapMenuStore.createMap(mapName) : alert("Введите название карты")
+        mapMenuStore.fetchAvailableMaps().then()
+    }, [])
+
+
+    const handleOnChangeModuleName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+        setModuleName(e.currentTarget.value)
+    }, [])
+
+    const handleOnClickCreateModule = useCallback(() => {
+        moduleName !== "" ? moduleMenuStore.createModule(moduleName) : alert("Введите название модуля")
+        moduleMenuStore.fetchModules().then()
+    }, [])
 
     return (
         <div>
@@ -59,35 +84,61 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
             {/*        <option key={user.username} value={user.username}>{user.username}</option>)}*/}
             {/*</select>*/}
 
-            <div className="map-create">
+            <div className="map-creator-item map-create">
                 <CustomInput
-                    type="text" value={mapMenuStore.newNameMap}
-                    handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}
+                    type="text"
+                    value={mapName}
+                    handleOnChange={handleOnChangeMapName}
                 />
                 <CustomAddButton
-                    handleOnClick={() => mapMenuStore.createMap(mapMenuStore.newNameMap)}
+                    handleOnClick={handleOnClickCreateMap}
                 />
             </div>
 
-            <div className="module-create">
-                <CustomButton text="Создать новый модуль"
-                              handleOnClick={() => mapMenuStore.createMap(mapMenuStore.newNameMap)}/>
-                <CustomInput type="text" value={mapMenuStore.newNameMap}
-                             handleOnChange={(e) => mapMenuStore.changeNewMapName(e)}/>
+            <div className="map-creator-item module-create">
+                <CustomInput
+                    type="text"
+                    value={moduleName}
+                    handleOnChange={handleOnChangeModuleName}
+                />
+                <CustomAddButton
+                    handleOnClick={handleOnClickCreateModule}
+                />
             </div>
 
             <select className="available-maps">
                 {mapMenuStore.availableMaps?.map((map, index) =>
-                    <option key={map.id} value={map.title}
-                            onClick={() => handleOnClickOptionMap(map, index)}>{map.title}</option>)}
+                    <option
+                        key={map.id}
+                        value={map.title}
+                        onClick={() => handleOnClickOptionMap(map, index)}
+                    >
+                        {map.title}
+                    </option>)
+                }
             </select>
-            <CustomButton text="Удалить выбранную карту" additionalClassName="delete-map__btn"
-                          handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}/>
+            <CustomButton
+                text="Удалить выбранную карту"
+                additionalClassName="delete-map__btn"
+                handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}
+            />
 
-            {/*<select className="available-modules">*/}
-            {/*    {moduleMenuStore.availableModules.map((module) =>*/}
-            {/*        <option key={module.id} value={module.title}>{module.title}</option>)}*/}
-            {/*</select>*/}
+            <select className="available-modules">
+                {moduleMenuStore.availableModules.map((module, index) =>
+                    <option
+                        key={module.id}
+                        value={module.title}
+                        onClick={() => handleOnClickOptionModule(module, index)}
+                    >
+                        {module.title}
+                    </option>)
+                }
+            </select>
+            <CustomButton
+                text="Удалить выбранный модуль"
+                additionalClassName="delete-module__btn"
+                handleOnClick={() => moduleMenuStore.deleteModule(moduleMenuStore.currentModule?.id)}
+            />
         </div>
     );
 });

@@ -28,9 +28,9 @@ const AuthForm: React.FC = observer(() => {
     }, [isPasswordShows])
 
     const onHandleSubmit = useCallback((data: { login: string, password: string }) => {
-        // authStore.signIn(data.login, data.password).then(() => navigateTo('/map'))
-        authStore.authorize()
-        navigateTo('/map')
+        authStore.signIn(data.login, data.password).then(() => navigateTo('/map'))
+        // authStore.authorize()
+        // navigateTo('/map')
     }, [navigateTo])
 
     return (

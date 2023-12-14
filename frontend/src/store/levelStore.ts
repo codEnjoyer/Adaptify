@@ -1,4 +1,7 @@
 import {makeAutoObservable} from "mobx";
+import axios from "axios";
+import mapMenuStore from "./mapMenuStore.ts";
+import {IModuleType} from "../types/ModuleType.ts";
 
 class levelStore {
     chosenTaskIndex: number = 1
@@ -13,6 +16,14 @@ class levelStore {
 
     closeLevel() {
         this.chosenTaskIndex = 1
+    }
+
+    async fetchLevels() {
+        await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/")
+            .then((response) => {
+                this.setAvailableModules([])
+                this.setAvailableModules(response.data.filter((module: IModuleType) => module.map_id === mapMenuStore.currentMapId))
+            })
     }
 }
 

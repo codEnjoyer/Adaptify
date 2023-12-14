@@ -2,12 +2,15 @@ import {makeAutoObservable} from "mobx";
 import {IModuleType} from "../types/ModuleType.ts";
 import axios from "axios";
 import mapMenuStore from "./mapMenuStore.ts";
+import {v4 as uuidv4} from 'uuid';
+import levelStore from "./levelStore.ts";
 
 class ModuleMenuStore {
     currentModuleId: string | null = null
     modulesMap: string[] = []
     availableModules: IModuleType[] = []
     currentModule: IModuleType | null = null
+    currentModuleIndex: number = 0
 
     constructor() {
         makeAutoObservable(this)
@@ -21,8 +24,14 @@ class ModuleMenuStore {
         this.availableModules = modules
     }
 
-    setCurrentModule(newModule: IModuleType) {
+    async selectModule(newModule: IModuleType) {
         this.currentModule = newModule
+        this.currentModuleId = newModule.id
+    }
+
+    changeCurrentModuleIndex(newIndex: number) {
+        this.currentModuleIndex = newIndex
+        this.fetchModuleById(this.availableModules[this.currentModuleIndex].id).then(() => levelStore.fetchLevels())
     }
 
     async fetchModules() {
@@ -33,24 +42,27 @@ class ModuleMenuStore {
             })
     }
 
-    async createModule(mapId: string, title: string, previousModuleId: string, nextModuleId: string) {
-        axios.post("http://localhost:8000/maps/" + mapId + "/modules/", {
-            map_id: mapId,
+    async createModule(title: string) {
+        const newId = uuidv4();
+
+        await axios.post("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/", {
+            map_id: mapMenuStore.currentMapId,
             title: title,
-            previous_module_id: previousModuleId,
-            next_module_id: nextModuleId,
+            previous_module_id: newId,
+            next_module_id: newId,
         })
     }
 
     async fetchModuleById(id: string) {
         await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + id).then((response) => {
-            this.setCurrentModule(response.data)
+            this.selectModule(response.data)
             this.currentModuleId = response.data.id
         })
     }
 
-    async deleteModule(id: string) {
-        axios.delete("http://localhost:8000/modules/" + id)
+    async deleteModule(id?: string) {
+        console.log(id)
+        axios.delete("http://localhost:8000/modules/" + id).catch(() => alert("Выберите модуль"))
     }
 
     updateModuleById(mapId: string, id: string, title?: string, previousModuleId?: string, nextModuleId?: string, levels?: string[]) {
