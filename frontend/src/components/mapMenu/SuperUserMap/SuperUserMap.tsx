@@ -32,7 +32,8 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
         mapMenuStore.selectMap(map).then(() => mapMenuStore.changeCurrentMapIndex(indexMap))
     }, [])
 
-    const handleOnClickOptionModule = useCallback((module: IModuleType, index) => {
+    const handleOnClickOptionModule = useCallback((module: IModuleType, index: number) => {
+        console.log(module)
         moduleMenuStore.selectModule(module).then(() => moduleMenuStore.changeCurrentModuleIndex(index))
     }, [])
 

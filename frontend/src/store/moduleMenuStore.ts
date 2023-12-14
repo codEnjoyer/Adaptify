@@ -62,7 +62,7 @@ class ModuleMenuStore {
 
     async deleteModule(id?: string) {
         console.log(id)
-        axios.delete("http://localhost:8000/modules/" + id).catch(() => alert("Выберите модуль"))
+        axios.delete("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + id).catch(() => alert("Выберите модуль"))
     }
 
     updateModuleById(mapId: string, id: string, title?: string, previousModuleId?: string, nextModuleId?: string, levels?: string[]) {
