@@ -1,15 +1,15 @@
 import React, {useCallback, useState} from 'react';
 
-import CustomInput from "../../UIComponents/customInput/CustomInput.tsx";
-import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox.tsx";
+import CustomInput from "../../UIComponents/customInput/CustomInput";
+import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox";
 
 import {useNavigate} from "react-router-dom"
 import {useForm} from "react-hook-form";
 
 import {observer} from "mobx-react-lite";
 
-import authStore from "../../store/authStore.ts";
-import auth from "../../utils/auth.ts";
+import authStore from "../../store/authStore";
+import auth from "../../utils/auth";
 import Starfield from "react-starfield";
 
 export type FormValues = {
@@ -29,7 +29,6 @@ const AuthForm: React.FC = observer(() => {
 
     const onHandleSubmit = useCallback((data: { login: string, password: string }) => {
         authStore.signIn(data.login, data.password).then(() => navigateTo('/map'))
-        console.log(data.login, data.password)
     }, [navigateTo])
 
     return (
