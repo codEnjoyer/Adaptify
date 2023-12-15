@@ -1,8 +1,11 @@
-import React, {ReactNode, useState} from 'react';
-import {IUserType} from "../../../types/UserType.ts";
-import superUserStore from "../../../store/superUserStore.ts";
+import React, {ReactNode, useCallback, useState} from 'react';
+
 import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UserProfileModalBody from "../UIMapMenu/UserProfile/UserProfileModalBody.tsx";
+
+import superUserStore from "../../../store/superUserStore.ts";
+
+import {IUserType} from "../../../types/UserType.ts";
 
 interface IUsersListModalBody {
     users: IUserType[]
@@ -18,10 +21,10 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({users}) => {
         setUserProfileModalBody(<UserProfileModalBody user={user} formattedDate=""/>)
     }
 
-    const handleOnCloseUserCard = () => {
+    const handleOnCloseUserCard = useCallback(() => {
         setIsUserCardModalOpen(false)
         superUserStore.selectUser(null)
-    }
+    }, [])
 
     return (
         <div>
@@ -35,7 +38,7 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({users}) => {
                         : (
                             <div key={user.email} className="users-list-user" onClick={() => handleOnClickUserCard(user)}>
                                 <div className="users-list-user-name">
-                                    {user.username}
+                                    {user.email}
                                 </div>
                                 <img src="https://i.ibb.co/GQzwW82/Qf-EKp-Mlf-Xfw.jpg" alt="Employee Photo"
                                      className="user-photo"/>

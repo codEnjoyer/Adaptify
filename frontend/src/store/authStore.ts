@@ -38,13 +38,13 @@ class AuthStore {
         this.isUserAuthorized = true
     }
 
-    private async signUp(login: string, password: string,) {
-        axios.post("http://localhost:8000/auth/register", {
-            username: login,
-            password: password
-        })
-            .catch(() => alert("Неправильно введены данные"))
-    }
+    // private async signUp(login: string, password: string,) {
+    //     axios.post("http://localhost:8000/auth/register", {
+    //         username: login,
+    //         password: password
+    //     })
+    //         .catch(() => alert("Неправильно введены данные"))
+    // }
 }
 
 export default new AuthStore()

@@ -7,9 +7,10 @@ import {IUserType} from "../../../../types/UserType.ts";
 interface IPropTypes {
     user?: IUserType,
     formattedDate: string,
+    logOut: () => void
 }
 
-const UserProfile: React.FC<IPropTypes> = ({user, formattedDate}) => {
+const UserProfile: React.FC<IPropTypes> = ({user, formattedDate, logOut}) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     return (
@@ -29,7 +30,7 @@ const UserProfile: React.FC<IPropTypes> = ({user, formattedDate}) => {
                     </g>
                 </svg>
             </div>
-            {isModalOpen && <ModalWindow onClose={() => setIsModalOpen(!isModalOpen)} body={<UserProfileModalBody user={user} formattedDate={formattedDate}/>}/>}
+            {isModalOpen && <ModalWindow onClose={() => setIsModalOpen(!isModalOpen)} body={<UserProfileModalBody logOut={logOut} user={user} formattedDate={formattedDate}/>}/>}
         </div>
     );
 };

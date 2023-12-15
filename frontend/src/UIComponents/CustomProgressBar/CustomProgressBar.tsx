@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import "./customProgressBar.scss"
 
 interface IPropTypes {
-    progress: number;
+    progress: number,
+    className: string
 }
 
-const CustomProgressBar: React.FC<IPropTypes> = ({progress}) => {
+const CustomProgressBar: React.FC<IPropTypes> = ({progress, className}) => {
 
     const [filled, setFilled] = useState(0);
     useEffect(() => {
@@ -17,7 +18,7 @@ const CustomProgressBar: React.FC<IPropTypes> = ({progress}) => {
     }, [filled, progress])
 
     return (
-        <div>
+        <div className={className}>
             <div className="progressbar">
                 <div style=
                          {{

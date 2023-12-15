@@ -18,10 +18,11 @@ import {ILevelType} from "../../../types/LevelType.ts";
 
 interface IEmployeeMap {
     user?: IUserType,
-    formattedDate: string
+    formattedDate: string,
+    logOut: () => void
 }
 
-const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => {
+const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logOut}) => {
     const [currentLevel, setCurrentLevel] = useState<ILevelType>()
 
     useEffect(() => {
@@ -42,8 +43,8 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate}) => 
         <div className="employee-interface">
             <Coins coins={100} additionalClassname="coins"/>
             <ChooseModuleWindow moduleName={moduleMenuStore.currentModule?.title}/>
-            <UserProfile user={user} formattedDate={formattedDate}/>
-            <div className="progress-bar-wrapper"><CustomProgressBar progress={54}/></div>
+            <UserProfile logOut={logOut} user={user} formattedDate={formattedDate}/>
+            <CustomProgressBar className="progress-bar-wrapper" progress={54}/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
                     {mapMenuStore.availableLevels.map((level, index) => {

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
 import './../../styles/mapMenu.scss'
@@ -30,7 +30,7 @@ const MapMenu: React.FC = observer(() => {
                     setUser(user)
                 }
             })
-
+            console.log(response.data)
             superUserStore.setAllUsers(response.data)
 
             if (user) {
@@ -45,6 +45,12 @@ const MapMenu: React.FC = observer(() => {
             navigate("/")
     }, [navigate])
 
+    const handleOnLogOut = useCallback(() => {
+        authStore.logOutUser().then(() => {
+            navigate("/login")
+        })
+    }, [])
+
     return (
         <div>
             <Starfield
@@ -56,7 +62,7 @@ const MapMenu: React.FC = observer(() => {
             {
                 user?.is_superuser
                     ? <SuperUserMap/>
-                    : <EmployeeMap user={user} formattedDate={formattedDate}/>
+                    : <EmployeeMap logOut={handleOnLogOut} user={user} formattedDate={formattedDate}/>
             }
         </div>
     );
