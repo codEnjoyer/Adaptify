@@ -43,6 +43,7 @@ class ModuleMenuStore {
     }
 
     async createModule(title: string) {
+        console.log(title)
         await axios.post("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/", {
             map_id: mapMenuStore.currentMapId,
             title: title,
@@ -59,7 +60,7 @@ class ModuleMenuStore {
     }
 
     async deleteModule(id?: string) {
-        axios.delete("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + id).catch(() => alert("Выберите модуль"))
+        await axios.delete("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + id).catch(() => alert("Выберите модуль"))
     }
 
     updateModuleById(mapId: string, id: string, title?: string, previousModuleId?: string, nextModuleId?: string, levels?: string[]) {

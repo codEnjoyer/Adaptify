@@ -35,7 +35,10 @@ const UserProfileModalBody: React.FC<IUserProfileModalProps> = ({user, formatted
             <div className="header-modal-user-profile">
                 <h3 className="user-profile-title">ПРОФИЛЬ СОТРУДНИКА</h3>
             </div>
-            <CustomButton className="user-profile-logout__btn" text="Выйти" handleOnClick={handleOnLogOut}/>
+            {logOut ?
+                <CustomButton className="user-profile-logout__btn" text="Выйти" handleOnClick={handleOnLogOut}/>
+                : null
+            }
             <UserInfo user={user} formattedDate={formattedDate}/>
             <Achievements achievements={achievements}/>
         </div>

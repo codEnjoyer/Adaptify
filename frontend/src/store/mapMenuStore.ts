@@ -106,8 +106,8 @@ class MapMenuStore {
 
     // Для суперпользователя
 
-    createMap(mapName: string) {
-        axios.post("http://localhost:8000/maps/", {title: mapName}).then(() => this.fetchAvailableMaps())
+    async createMap(mapName: string) {
+        await axios.post("http://localhost:8000/maps/", {title: mapName}).then()
         this.newNameMap = ""
     }
 
@@ -125,10 +125,8 @@ class MapMenuStore {
         this.currentMapId = newMap.id
     }
 
-    deleteMap(mapId?: string) {
-        axios.delete("http://localhost:8000/maps/" + mapId)
-            .then(() => this.fetchAvailableMaps())
-            .catch(() => alert("Выбрана несуществующая карта"))
+    async deleteMap(mapId?: string) {
+        await axios.delete("http://localhost:8000/maps/" + mapId)
     }
 }
 

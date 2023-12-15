@@ -1,4 +1,4 @@
-export interface IModuleType {
+export type IModuleType = {
     map_id: string,
     title: string,
     previous_module_id: string,

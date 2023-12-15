@@ -1,6 +1,6 @@
 import {ITaskType, ITheoryUnitType} from "./TaskType.ts";
 
-export interface ILevelType {
+export type ILevelType = {
     id: string,
     title: string,
     body?: string,

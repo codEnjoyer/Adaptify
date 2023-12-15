@@ -42,7 +42,7 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logO
     return (
         <div className="employee-interface">
             <Coins coins={100} additionalClassname="coins"/>
-            <ChooseModuleWindow moduleName={moduleMenuStore.currentModule?.title}/>
+            <ChooseModuleWindow moduleName={moduleMenuStore.currentModule?.title.toUpperCase()}/>
             <UserProfile logOut={logOut} user={user} formattedDate={formattedDate}/>
             <CustomProgressBar className="progress-bar-wrapper" progress={54}/>
             <div className="geolocations">

@@ -13,6 +13,9 @@ import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 
 import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
+import CreateUnit from "./superUserControlPanel/CreateUnit.tsx";
+import {ILevelType} from "../../../types/LevelType.ts";
+import {map} from "mobx-state-tree/dist/types/complex-types/map";
 
 interface ISuperUserMap {
 
@@ -22,17 +25,30 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
 
     const [mapName, setMapName] = useState<string>("")
+    const [currentMap, setCurrentMap] = useState<IMapType | undefined>(undefined)
+    const [currentMapIndex, setCurrentMapIndex] = useState<number>(0)
+
     const [moduleName, setModuleName] = useState<string>("")
+    const [currentModule, setCurrentModule] = useState<IModuleType | undefined>(undefined)
+    const [currentModuleId, setCurrentModuleId] = useState<string>("")
+    const [currentModuleIndex, setCurrentModuleIndex] = useState<number>(0)
+
+
     const [levelName, setLevelName] = useState<string>("")
+    const [currentLevel, setCurrentLevel] = useState<ILevelType | undefined>(undefined)
+    const [currentLevelId, setCurrentLevelId] = useState<string>("")
+    const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0)
 
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps()
-            .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[mapMenuStore.currentMapIndex].id)
+            .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[currentMapIndex].id)
                 .then(() => moduleMenuStore.fetchModules()))
     }, []);
 
     const handleOnClickOptionMap = useCallback((map: IMapType, indexMap: number) => {
-        mapMenuStore.selectMap(map).then(() => mapMenuStore.changeCurrentMapIndex(indexMap))
+        setCurrentMap(map)
+        setCurrentMapIndex(indexMap)
+        mapMenuStore.fetchMapById(map.id).then()
     }, [])
 
     const handleOnClickOptionModule = useCallback((module: IModuleType, index: number) => {
@@ -50,8 +66,7 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
     }, [])
 
     const handleOnClickCreateMap = useCallback((mapName: string) => {
-        mapName !== "" ? mapMenuStore.createMap(mapName) : alert("Введите название карты")
-        mapMenuStore.fetchAvailableMaps().then()
+        mapName !== "" ? mapMenuStore.createMap(mapName).then(() => currentMap ? mapMenuStore.fetchMapById(currentMap?.id).then() : undefined) : alert("Введите название карты")
     }, [])
 
 
@@ -62,6 +77,14 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
     const handleOnClickCreateModule = useCallback((moduleName: string) => {
         moduleName !== "" ? moduleMenuStore.createModule(moduleName) : alert("Введите название модуля")
         moduleMenuStore.fetchModules().then()
+    }, [])
+
+    const handleOnClickDeleteMap = useCallback((mapId: string) => {
+        mapMenuStore.deleteMap(mapId).then(() => mapMenuStore.fetchAvailableMaps())
+    }, [])
+
+    const handleOnClickDeleteModule = useCallback((moduleId: string) => {
+        moduleMenuStore.deleteModule(moduleId).then(() => moduleMenuStore.fetchModules())
     }, [])
 
     return (
@@ -84,69 +107,29 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
 
             <br/>
 
-            <select className="available-maps">
-                <option value="-">-</option>
-                {mapMenuStore.availableMaps?.map((map, index) =>
-                    <option
-                        key={map.id}
-                        value={map.title}
-                        onClick={() => handleOnClickOptionMap(map, index)}
-                    >
-                        {map.title}
-                    </option>)
-                }
-            </select>
-
-            <CustomButton
-                text="Удалить выбранную карту"
-                className="delete-map__btn"
-                handleOnClick={() => mapMenuStore.deleteMap(mapMenuStore.mapMenu?.id)}
+            <CreateUnit
+                classNameSelect="available-maps"
+                handleOnClickOptionUnit={handleOnClickOptionMap}
+                handleOnClickDeleteUnit={handleOnClickDeleteMap}
+                unitName="map"
+                unitNameValue={mapName}
+                handleOnChangeUnitName={handleOnChangeMapName}
+                handleOnClickCreateUnit={handleOnClickCreateMap}
+                currentUnitId={currentMap?.id}
+                availableUnits={mapMenuStore.availableMaps}
             />
 
-            <div className="map-creator-item map-create">
-                <CustomInput
-                    type="text"
-                    value={mapName}
-                    handleOnChange={(e) => handleOnChangeMapName(e)}
-                />
-                <CustomAddButton
-                    handleOnClick={() => handleOnClickCreateMap(mapName)}
-                />
-            </div>
-
-
-            <div className="change-module">
-                <select className="available-modules">
-                    <option value="-">-</option>
-                    {moduleMenuStore.availableModules.map((module, index) =>
-                        <option
-                            key={module.id}
-                            value={module.title}
-                            onClick={() => handleOnClickOptionModule(module, index)}
-                        >
-                            {module.title}
-                        </option>)
-                    }
-                </select>
-
-
-                <CustomButton
-                    text="Удалить выбранный модуль"
-                    className="delete-module__btn"
-                    handleOnClick={() => moduleMenuStore.deleteModule(moduleMenuStore.currentModule?.id)}
-                />
-            </div>
-
-            <div className="map-creator-item module-create">
-                <CustomInput
-                    type="text"
-                    value={moduleName}
-                    handleOnChange={(e) => handleOnChangeModuleName(e)}
-                />
-                <CustomAddButton
-                    handleOnClick={() => handleOnClickCreateModule(moduleName)}
-                />
-            </div>
+            <CreateUnit
+                classNameSelect="available-modules"
+                handleOnClickOptionUnit={handleOnClickOptionModule}
+                handleOnClickDeleteUnit={handleOnClickDeleteModule}
+                unitName="module"
+                unitNameValue={moduleName}
+                handleOnChangeUnitName={handleOnChangeModuleName}
+                handleOnClickCreateUnit={handleOnClickCreateModule}
+                currentUnitId={currentModule?.id}
+                availableUnits={moduleMenuStore.availableModules}
+            />
         </div>
     );
 });

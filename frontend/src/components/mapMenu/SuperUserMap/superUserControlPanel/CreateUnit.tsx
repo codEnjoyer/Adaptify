@@ -1,5 +1,4 @@
 import React from 'react';
-import mapMenuStore from "../../../../store/mapMenuStore.ts";
 import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx";
 import CustomInput from "../../../../UIComponents/customInput/CustomInput.tsx";
 import CustomAddButton from "../../../../UIComponents/customAddButton/CustomAddButton.tsx";
@@ -9,12 +8,14 @@ import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IPropTypes {
     classNameSelect: string,
-    handleOnClickOptionUnit: (unit: IMapType | IModuleType | ILevelType, index: number) => void,
+    handleOnClickOptionUnit: (unit: IMapType & IModuleType & ILevelType, index: number) => void,
     handleOnClickDeleteUnit: (unitId: string) => void,
     unitName: string,
+    unitNameValue: string,
     handleOnChangeUnitName: (e: React.FormEvent<HTMLInputElement>) => void,
     handleOnClickCreateUnit: (unitName: string) => void,
-    currentUnitId: string
+    currentUnitId?: string,
+    availableUnits: IMapType[] & IModuleType[] & ILevelType[]
 }
 
 const CreateUnit: React.FC<IPropTypes> =
@@ -23,15 +24,27 @@ const CreateUnit: React.FC<IPropTypes> =
          handleOnClickOptionUnit,
          handleOnClickDeleteUnit,
          unitName,
+         unitNameValue,
          handleOnChangeUnitName,
          handleOnClickCreateUnit,
-         currentUnitId
+         currentUnitId,
+         availableUnits
      }) => {
+        let btnText = ""
+
+        if (unitName === "map") {
+            btnText = "Удалить выбранную карту"
+        } else if (unitName === "module") {
+            btnText = "Удалить выбранный модуль"
+        } else {
+            btnText = "Удалить выбранный уровень"
+        }
+
         return (
             <div>
                 <select className={classNameSelect}>
                     <option value="-">-</option>
-                    {mapMenuStore.availableMaps?.map((map, index) =>
+                    {availableUnits.map((map, index) =>
                         <option
                             key={map.id}
                             value={map.title}
@@ -43,19 +56,19 @@ const CreateUnit: React.FC<IPropTypes> =
                 </select>
 
                 <CustomButton
-                    text="Удалить выбранную карту"
+                    text={btnText}
                     className={`delete-${unitName}__btn`}
-                    handleOnClick={() => handleOnClickDeleteUnit(currentUnitId)}
+                    handleOnClick={() => currentUnitId ? handleOnClickDeleteUnit(currentUnitId) : undefined}
                 />
 
                 <div className={`map-creator-item ${unitName}-create`}>
                     <CustomInput
                         type="text"
-                        value={unitName}
+                        value={unitNameValue}
                         handleOnChange={(e) => handleOnChangeUnitName(e)}
                     />
                     <CustomAddButton
-                        handleOnClick={() => handleOnClickCreateUnit(unitName)}
+                        handleOnClick={() => handleOnClickCreateUnit(unitNameValue)}
                     />
                 </div>
             </div>

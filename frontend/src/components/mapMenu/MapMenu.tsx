@@ -62,7 +62,11 @@ const MapMenu: React.FC = observer(() => {
             {
                 user?.is_superuser
                     ? <SuperUserMap/>
-                    : <EmployeeMap logOut={handleOnLogOut} user={user} formattedDate={formattedDate}/>
+                    : <EmployeeMap
+                        logOut={handleOnLogOut}
+                        user={user}
+                        formattedDate={formattedDate}
+                    />
             }
         </div>
     );
