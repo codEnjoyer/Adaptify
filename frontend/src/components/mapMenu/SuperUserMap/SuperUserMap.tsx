@@ -1,27 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CustomButton from "../../../UIComponents/customButton/CustomButton.tsx";
-import CustomInput from "../../../UIComponents/customInput/CustomInput.tsx";
-import CustomAddButton from "../../../UIComponents/customAddButton/CustomAddButton.tsx";
 import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UsersListModalBody from "./UsersListModalBody.tsx";
+import CreateUnit from "./superUserControlPanel/CreateUnit.tsx";
 
 import {observer} from "mobx-react-lite";
 import mapMenuStore from "../../../store/mapMenuStore.ts";
 import superUserStore from "../../../store/superUserStore.ts";
-import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 
+import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
-import CreateUnit from "./superUserControlPanel/CreateUnit.tsx";
 import {ILevelType} from "../../../types/LevelType.ts";
-import {map} from "mobx-state-tree/dist/types/complex-types/map";
 
-interface ISuperUserMap {
-
-}
-
-const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
+const SuperUserMap: React.FC = observer(() => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
 
     const [mapName, setMapName] = useState<string>("")
@@ -39,11 +32,19 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
     const [currentLevelId, setCurrentLevelId] = useState<string>("")
     const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0)
 
+
+    // Загрузка карт модулей
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps()
             .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[currentMapIndex].id)
                 .then(() => moduleMenuStore.fetchModules()))
     }, []);
+
+    const handleOnClickChangeIsModalOpen = useCallback(() => {
+        setIsUserListModalOpen(!isUsersListModalOpen)
+    }, [isUsersListModalOpen])
+
+    // Работа с картами
 
     const handleOnClickOptionMap = useCallback((map: IMapType, indexMap: number) => {
         setCurrentMap(map)
@@ -51,24 +52,26 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
         mapMenuStore.fetchMapById(map.id).then()
     }, [])
 
-    const handleOnClickOptionModule = useCallback((module: IModuleType, index: number) => {
-        console.log(module)
-        moduleMenuStore.selectModule(module).then(() => moduleMenuStore.changeCurrentModuleIndex(index))
-    }, [])
-
-    const handleOnClickChangeIsModalOpen = useCallback(() => {
-        setIsUserListModalOpen(!isUsersListModalOpen)
-    }, [isUsersListModalOpen])
-
-
     const handleOnChangeMapName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         setMapName(e.currentTarget.value)
     }, [])
 
+
     const handleOnClickCreateMap = useCallback((mapName: string) => {
-        mapName !== "" ? mapMenuStore.createMap(mapName).then(() => currentMap ? mapMenuStore.fetchMapById(currentMap?.id).then() : undefined) : alert("Введите название карты")
+        mapName !== "" ? mapMenuStore.createMap(mapName).then(() => currentMap ? mapMenuStore.fetchAvailableMaps().then() : undefined) : alert("Введите название карты")
     }, [])
 
+    const handleOnClickDeleteMap = useCallback((mapId: string) => {
+        mapMenuStore.deleteMap(mapId).then(() => mapMenuStore.fetchAvailableMaps())
+    }, [])
+
+
+    // Работа с модулями
+
+    const handleOnClickOptionModule = useCallback((module: IModuleType, index: number) => {
+        console.log(module)
+        moduleMenuStore.selectModule(module).then(() => moduleMenuStore.changeCurrentModuleIndex(index))
+    }, [])
 
     const handleOnChangeModuleName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         setModuleName(e.currentTarget.value)
@@ -77,10 +80,6 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
     const handleOnClickCreateModule = useCallback((moduleName: string) => {
         moduleName !== "" ? moduleMenuStore.createModule(moduleName) : alert("Введите название модуля")
         moduleMenuStore.fetchModules().then()
-    }, [])
-
-    const handleOnClickDeleteMap = useCallback((mapId: string) => {
-        mapMenuStore.deleteMap(mapId).then(() => mapMenuStore.fetchAvailableMaps())
     }, [])
 
     const handleOnClickDeleteModule = useCallback((moduleId: string) => {

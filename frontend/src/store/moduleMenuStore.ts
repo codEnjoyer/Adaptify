@@ -2,7 +2,6 @@ import {makeAutoObservable} from "mobx";
 import {IModuleType} from "../types/ModuleType.ts";
 import axios from "axios";
 import mapMenuStore from "./mapMenuStore.ts";
-import {v4 as uuidv4} from 'uuid';
 import levelStore from "./levelStore.ts";
 
 class ModuleMenuStore {
@@ -14,10 +13,6 @@ class ModuleMenuStore {
 
     constructor() {
         makeAutoObservable(this)
-    }
-
-    setModulesMap(newModulesMap: string[]) {
-        this.modulesMap = newModulesMap
     }
 
     setAvailableModules(modules: IModuleType[]) {

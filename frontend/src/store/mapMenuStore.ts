@@ -23,7 +23,11 @@ class MapMenuStore {
     }
 
     async fetchAvailableMaps() {
-        await axios.get("http://localhost:8000/maps/").then((response) => this.availableMaps = response.data)
+        await axios.get("http://localhost:8000/maps/").then((response) => this.setMaps(response.data))
+    }
+
+    setMaps(maps: IMapType[]) {
+        this.availableMaps = maps
     }
 
     async fetchMapById(id: string) {
@@ -109,20 +113,6 @@ class MapMenuStore {
     async createMap(mapName: string) {
         await axios.post("http://localhost:8000/maps/", {title: mapName}).then()
         this.newNameMap = ""
-    }
-
-    changeNewMapName(newName: string) {
-        this.newNameMap = newName
-    }
-
-    changeCurrentMapIndex(newIndex: number) {
-        this.currentMapIndex = newIndex
-        this.fetchMapById(this.availableMaps[this.currentMapIndex].id).then(() => moduleMenuStore.fetchModules())
-    }
-
-    async selectMap(newMap: IMapType) {
-        this.mapMenu = newMap
-        this.currentMapId = newMap.id
     }
 
     async deleteMap(mapId?: string) {
