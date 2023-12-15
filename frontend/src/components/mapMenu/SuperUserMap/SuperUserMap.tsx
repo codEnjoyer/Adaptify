@@ -1,14 +1,17 @@
 import React, {useCallback, useEffect, useState} from 'react';
+
 import CustomButton from "../../../UIComponents/customButton/CustomButton.tsx";
-import mapMenuStore from "../../../store/mapMenuStore.ts";
 import CustomInput from "../../../UIComponents/customInput/CustomInput.tsx";
-import {observer} from "mobx-react-lite";
-import superUserStore from "../../../store/superUserStore.ts";
-import moduleMenuStore from "../../../store/moduleMenuStore.ts";
-import {IMapType} from "../../../types/MapType.ts";
+import CustomAddButton from "../../../UIComponents/customAddButton/CustomAddButton.tsx";
 import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UsersListModalBody from "./UsersListModalBody.tsx";
-import CustomAddButton from "../../../UIComponents/customAddButton/CustomAddButton.tsx";
+
+import {observer} from "mobx-react-lite";
+import mapMenuStore from "../../../store/mapMenuStore.ts";
+import superUserStore from "../../../store/superUserStore.ts";
+import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+
+import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
 
 interface ISuperUserMap {
@@ -73,7 +76,6 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
                     : null
             }
 
-
             <CustomButton
                 className="users-list__btn"
                 handleOnClick={handleOnClickChangeIsModalOpen}
@@ -83,7 +85,7 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
             <br/>
 
             <select className="available-maps">
-                <option value="-"></option>
+                <option value="-">-</option>
                 {mapMenuStore.availableMaps?.map((map, index) =>
                     <option
                         key={map.id}
@@ -114,24 +116,25 @@ const SuperUserMap: React.FC<ISuperUserMap> = observer(() => {
 
 
             <div className="change-module">
-            <select className="available-modules">
-                {moduleMenuStore.availableModules.map((module, index) =>
-                    <option
-                        key={module.id}
-                        value={module.title}
-                        onClick={() => handleOnClickOptionModule(module, index)}
-                    >
-                        {module.title}
-                    </option>)
-                }
-            </select>
+                <select className="available-modules">
+                    <option value="-">-</option>
+                    {moduleMenuStore.availableModules.map((module, index) =>
+                        <option
+                            key={module.id}
+                            value={module.title}
+                            onClick={() => handleOnClickOptionModule(module, index)}
+                        >
+                            {module.title}
+                        </option>)
+                    }
+                </select>
 
 
-            <CustomButton
-                text="Удалить выбранный модуль"
-                className="delete-module__btn"
-                handleOnClick={() => moduleMenuStore.deleteModule(moduleMenuStore.currentModule?.id)}
-            />
+                <CustomButton
+                    text="Удалить выбранный модуль"
+                    className="delete-module__btn"
+                    handleOnClick={() => moduleMenuStore.deleteModule(moduleMenuStore.currentModule?.id)}
+                />
             </div>
 
             <div className="map-creator-item module-create">
