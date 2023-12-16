@@ -8,6 +8,7 @@ from users.schemas import UserRead
 class __TutorBase(BaseModel):
     name: str
     last_name: str
+    patronymic: str
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -22,6 +23,7 @@ class TutorCreate(__TutorBase):
 
 
 class TutorUpdate(__TutorBase):
-    name: str | None = None
-    last_name: str | None = None
-    user_id: UUID | None = None
+    name: str | None
+    last_name: str | None
+    user_id: UUID | None
+    patronymic: str | None

@@ -4,12 +4,14 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from game.units.tasks.enums import TaskStates
-from game.units.tasks.questions.answers.schemas import EmployeeAnswerRead
+from game.units.tasks.questions.answers.schemas import EmployeeAnswerRead, EmployeeAnswerPost
 from game.units.tasks.questions.schemas import EmployeeTestQuestionPost, EmployeeTestQuestionRead, \
     EmployeeOpenQuestionPost
 from game.units.tasks.schemas import TestTaskUnitRead, TestTaskUnitCreate, TestTaskUnitUpdate, DiscussionTaskUnitCreate, \
     DiscussionTaskUnitRead, DiscussionTaskUnitUpdate, EmployeeTaskRead
-from utils.types import TaskUnitServiceType, AnswerOptionServiceType, EmployeeTaskServiceType
+from users.employees.schemas import EmployeeUpdate
+from utils.types import TaskUnitServiceType, AnswerOptionServiceType, EmployeeTaskServiceType, CurrentUser, \
+    EmployeeServiceType
 
 router = APIRouter(tags=["Task"])
 
@@ -34,24 +36,44 @@ async def autocheck_task_unit(map_id: UUID,
                               level_id: UUID,
                               task_id: UUID,
                               employee_questions_answers: list[EmployeeTestQuestionPost],
-                              answer_option_service: AnswerOptionServiceType) -> list[EmployeeTestQuestionRead]:
-    result = []
-    for question_answer in employee_questions_answers:
-        user_answers_on_question = question_answer.answers
-        correct_answers_ids_on_question = await answer_option_service.get_all_correct(question_answer.id)
-        correct_answers_ids_on_question = set(correct_answers_ids_on_question)
-        question_read_answers = []
-        for answer in user_answers_on_question:
-            correct_answer_selected = answer.is_selected and answer.id in correct_answers_ids_on_question
-            incorrect_answer_not_selected = not answer.is_selected and answer.id not in correct_answers_ids_on_question
-            answer_was_selected_correct = correct_answer_selected or incorrect_answer_not_selected
-            answer_read = EmployeeAnswerRead(answer=answer.answer, was_selected_correct=answer_was_selected_correct)
-            question_read_answers.append(answer_read)
-        question_read = EmployeeTestQuestionRead(type=question_answer.type,
-                                                 question=question_answer.question,
-                                                 results=question_read_answers)
-        result.append(question_read)
+                              answer_option_service: AnswerOptionServiceType,
+                              task_unit_service: TaskUnitServiceType,
+                              user: CurrentUser,
+                              employee_service: EmployeeServiceType) -> list[EmployeeTestQuestionRead]:
+    result, answers_correctness = await get_all_answers(employee_questions_answers, answer_option_service, task_id)
+    if all(answers_correctness):
+
+        reward = (await task_unit_service.get_one(task_id)).score_reward
+        await employee_service.update_one(user.employee.id, EmployeeUpdate(coins=user.employee.coins + reward))
     return result
+
+
+async def get_all_answers(
+        employee_questions_answers: list[EmployeeTestQuestionPost],
+        answer_option_service: AnswerOptionServiceType,
+        task_id: UUID) -> (list[EmployeeTestQuestionRead], list[bool]):
+    result, answers_correctness = [], []
+    for question_answer in employee_questions_answers:
+        correct_answers_ids_on_question = await answer_option_service.get_all_correct(question_answer.id)
+        question_read_answers = []
+        for answer in question_answer.answers:
+            answer_was_selected_correct = is_answer_selected_correct(answer, set(correct_answers_ids_on_question))
+
+            answers_correctness.append(answer_was_selected_correct)
+            question_read_answers.append(EmployeeAnswerRead(answer=answer.answer,
+                                                            was_selected_correct=answer_was_selected_correct))
+        result.append(EmployeeTestQuestionRead(id=question_answer.id,
+                                               task_id=task_id,
+                                               type=question_answer.type,
+                                               question=question_answer.question,
+                                               results=question_read_answers))
+    return result, answers_correctness
+
+
+def is_answer_selected_correct(answer: EmployeeAnswerPost, correct_answers_ids_on_question: set[UUID]) -> bool:
+    correct_answer_selected = answer.is_selected and answer.id in correct_answers_ids_on_question
+    incorrect_answer_not_selected = not answer.is_selected and answer.id not in correct_answers_ids_on_question
+    return correct_answer_selected or incorrect_answer_not_selected
 
 
 @router.post("/maps/{map_id}/modules/{module_id}/levels/{level_id}/tasks/{task_id}/review/")

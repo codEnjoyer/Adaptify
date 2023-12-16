@@ -2,7 +2,7 @@ import typing
 import uuid
 import datetime
 
-from sqlalchemy import UUID, String, Date, func, ForeignKey
+from sqlalchemy import UUID, String, Date, func, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import BaseModel
@@ -25,6 +25,7 @@ class Employee(BaseModel):
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     patronymic: Mapped[str] = mapped_column(String(length=255))
     hired_at: Mapped[datetime.date] = mapped_column(Date, server_default=func.current_date(), nullable=False)
+    coins: Mapped[int] = mapped_column(Integer, default=0)
 
     user: Mapped["User"] = relationship(back_populates='employee', lazy='selectin')
     tutor: Mapped["Tutor"] = relationship(back_populates='employees', lazy='selectin')
@@ -38,5 +39,6 @@ class Employee(BaseModel):
                             tutor_id=self.tutor_id,
                             name=self.name,
                             last_name=self.last_name,
+                            patronymic=self.patronymic,
                             hired_at=self.hired_at,
-                            )
+                            coins=self.coins)
