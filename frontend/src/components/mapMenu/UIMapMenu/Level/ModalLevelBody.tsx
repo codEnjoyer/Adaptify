@@ -19,7 +19,7 @@ interface IModalLevelProps {
 
 const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
     const bodyHeader = renderBodyHeader()
-    const [levelIndex, setLevelIndex] = useState(0)
+    const [levelIndex, setLevelIndex] = useState(1)
 
     const menuItems: IMenuItemType[] = [
         {
@@ -81,7 +81,6 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
     }
 
     const renderTest = (unit: ITaskType | null) => {
-        console.log(unit)
         return (
             <div className="task-info">
                 <form className="level-body">
@@ -116,10 +115,10 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
 
     function renderTasks(menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) {
         if (menuItems && levelIndex <= menuItems[0].length) {
-            return renderTheory(theoryUnits ? theoryUnits[levelIndex] : null)
+            return renderTheory(theoryUnits ? theoryUnits[levelIndex - menuItems[0].length] : null)
         }
         if (menuItems && levelIndex <= menuItems[0].length + menuItems[1].length) {
-            return renderTest(taskUnits ? taskUnits[levelIndex] : null)
+            return renderTest(taskUnits ? taskUnits[levelIndex - menuItems[0].length - menuItems[1].length] : null)
         }
     }
 

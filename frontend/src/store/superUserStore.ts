@@ -1,21 +1,21 @@
 import {makeAutoObservable} from "mobx";
-import {IUserType} from "../types/UserType.ts";
+import {IEmployeeType} from "../types/EmployeeType.ts";
 
 
 class SuperUserStore {
-    allUsers: IUserType[] = []
-    currentUser: IUserType | null = null
+    allEmployees: IEmployeeType[] = []
+    currentEmployee: IEmployeeType | null = null
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    setAllUsers(fetchedUsers: IUserType[]) {
-        this.allUsers = fetchedUsers
+    setAllEmployees(fetchedEmployees: IEmployeeType[]) {
+        this.allEmployees = fetchedEmployees
     }
 
-    selectUser(newUser: IUserType | null) {
-        this.currentUser = newUser
+    selectUser(newUser: IEmployeeType | null) {
+        this.currentEmployee = newUser
     }
 }
 

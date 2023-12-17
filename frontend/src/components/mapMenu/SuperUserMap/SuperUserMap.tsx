@@ -14,8 +14,13 @@ import superUserStore from "../../../store/superUserStore.ts";
 import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
 import {ILevelType} from "../../../types/LevelType.ts";
+import axios from "axios";
 
-const SuperUserMap: React.FC = observer(() => {
+interface ISuperUserMapProps {
+    logOut: () => void
+}
+
+const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
 
     const [mapName, setMapName] = useState<string>("")
@@ -27,6 +32,13 @@ const SuperUserMap: React.FC = observer(() => {
         mapMenuStore.fetchAvailableMaps()
             .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[mapMenuStore.currentMapIndex].id)
                 .then(() => moduleMenuStore.fetchModules()))
+    }, []);
+
+    // Загрузка списка сотрудников
+    useEffect(() => {
+        axios.get("http://localhost:8000/employees/").then((response) => {
+            superUserStore.setAllEmployees(response.data)
+        })
     }, []);
 
     const handleOnClickChangeIsModalOpen = useCallback(() => {
@@ -115,7 +127,7 @@ const SuperUserMap: React.FC = observer(() => {
                 isUsersListModalOpen
                     ? <ModalWindow
                         onClose={handleOnClickChangeIsModalOpen}
-                        body={<UsersListModalBody users={superUserStore.allUsers}/>}
+                        body={<UsersListModalBody employees={superUserStore.allEmployees}/>}
                         windowContentStyles=""
                     />
                     : null
@@ -167,6 +179,10 @@ const SuperUserMap: React.FC = observer(() => {
                 // @ts-ignore: Unreachable code error
                 availableUnits={levelStore.availableLevels}
             />
+
+            <br/>
+
+            <CustomButton text="ВЫЙТИ" handleOnClick={logOut}/>
         </div>
     );
 });

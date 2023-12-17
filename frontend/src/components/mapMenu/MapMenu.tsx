@@ -13,7 +13,6 @@ import SuperUserMap from "./SuperUserMap/SuperUserMap.tsx";
 import {observer} from "mobx-react-lite";
 
 import authStore from "../../store/authStore.ts";
-import superUserStore from "../../store/superUserStore.ts";
 
 import Starfield from "react-starfield";
 
@@ -30,7 +29,6 @@ const MapMenu: React.FC = observer(() => {
                     setUser(user)
                 }
             })
-            superUserStore.setAllUsers(response.data)
             setIsLoading(false)
         })
     }, [])
@@ -57,7 +55,9 @@ const MapMenu: React.FC = observer(() => {
                 />
                 : (
                     user?.is_superuser
-                        ? <SuperUserMap/>
+                        ? <SuperUserMap
+                            logOut={handleOnLogOut}
+                        />
                         : <EmployeeMap
                             logOut={handleOnLogOut}
                             user={user}

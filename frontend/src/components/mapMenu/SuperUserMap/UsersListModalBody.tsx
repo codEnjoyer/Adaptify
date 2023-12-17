@@ -4,21 +4,20 @@ import ModalWindow from "../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UserProfileModalBody from "../UIMapMenu/UserProfile/UserProfileModalBody.tsx";
 
 import superUserStore from "../../../store/superUserStore.ts";
-
-import {IUserType} from "../../../types/UserType.ts";
+import {IEmployeeType} from "../../../types/EmployeeType.ts";
 
 interface IUsersListModalBody {
-    users: IUserType[]
+    employees: IEmployeeType[]
 }
 
-const UsersListModalBody: React.FC<IUsersListModalBody> = ({users}) => {
+const UsersListModalBody: React.FC<IUsersListModalBody> = ({employees}) => {
     const [isUsersCardModalOpen, setIsUserCardModalOpen] = useState<boolean>(false)
     const [userProfileModalBody, setUserProfileModalBody] = useState<ReactNode>()
 
-    const handleOnClickUserCard = (user: IUserType) => {
+    const handleOnClickUserCard = (employee: IEmployeeType) => {
         setIsUserCardModalOpen(true)
-        superUserStore.selectUser(user)
-        setUserProfileModalBody(<UserProfileModalBody user={user} formattedDate=""/>)
+        superUserStore.selectUser(employee)
+        setUserProfileModalBody(<UserProfileModalBody employee={employee}/>)
     }
 
     const handleOnCloseUserCard = useCallback(() => {
@@ -29,19 +28,23 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({users}) => {
     return (
         <div>
             <div className="users-list">
-                {users.map((user) => (
+                {employees.map((employee) => (
                     isUsersCardModalOpen
                         ? <ModalWindow
                             body={userProfileModalBody}
                             onClose={handleOnCloseUserCard}
                         />
                         : (
-                            <div key={user.email} className="users-list-user" onClick={() => handleOnClickUserCard(user)}>
-                                <div className="users-list-user-name">
-                                    {user.email}
+                            <div key={employee.name} className="users-list-user"
+                                 onClick={() => handleOnClickUserCard(employee)}>
+                                <div className="users-list-user-info">
+                                    <div className="users-list-user-lastname">{employee.last_name}</div>
+                                    <div className="users-list-user-name">{employee.name}</div>
+                                    <div className="users-list-user-patronymic">{employee.patronymic}</div>
                                 </div>
                                 <img src="https://i.ibb.co/GQzwW82/Qf-EKp-Mlf-Xfw.jpg" alt="Employee Photo"
-                                     className="user-photo"/>
+                                     className="user-photo"
+                                />
                             </div>
                         )
                 ))}
