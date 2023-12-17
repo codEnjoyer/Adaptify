@@ -9,7 +9,7 @@ import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 
 import MenuItem from "./MenuItem.tsx";
 
-import {ITaskType, ITheoryUnitType, IQuestionType} from "../../../../types/TaskType.ts";
+import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
 
@@ -25,11 +25,13 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         {
             type: "theory",
             length: level.theory_units ? level.theory_units.length : 0,
+            // @ts-ignore
             item: level?.theory_units
         },
         {
             length: level.task_units ? level?.task_units.length : 0,
             type: "tests",
+            // @ts-ignore
             item: level?.task_units
         }
     ]
@@ -57,7 +59,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         for (let i = 0; i < menuItems.length; i++) {
             for (let j = 0; j < menuItems[i].length; j++) {
                 index++
-                taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>)
+                taskBlocks.push(<MenuItem indexType={i} index={index} key={index} indexSelectedItem={levelIndex} setLevelIndex={setLevelIndex}/>)
 
             }
         }
@@ -91,7 +93,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
 
                                     {question.answer_options.map((answer) => {
                                             return (
-                                                <div className="question-answer-option">
+                                                <div className="question-answer-option" key={answer.id}>
                                                     <input id={answer.answer} type="radio" value="question"/>
                                                     <label htmlFor={answer.answer}>{answer.answer}</label>
                                                 </div>
@@ -117,7 +119,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
             return renderTheory(theoryUnits ? theoryUnits[levelIndex] : null)
         }
         if (menuItems && levelIndex <= menuItems[0].length + menuItems[1].length) {
-            return renderTest(taskUnits ? taskUnits[levelIndex - menuItems[0].length] : null)
+            return renderTest(taskUnits ? taskUnits[levelIndex] : null)
         }
     }
 

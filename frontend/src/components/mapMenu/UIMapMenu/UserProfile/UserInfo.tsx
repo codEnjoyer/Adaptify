@@ -11,7 +11,7 @@ const UserInfo: React.FC<IPropTypes> = ({employee}) => {
         <div>
             <img
                 className="user-profile-photo"
-                src="https://clck.ru/36wj9g"
+                src="https://clck.ru/37AFXb"
                 alt="Фото профиля"
             />
             <div className="user-info-fields">
