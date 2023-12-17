@@ -30,7 +30,6 @@ const MapMenu: React.FC = observer(() => {
                     setUser(user)
                 }
             })
-            console.log(response.data)
             superUserStore.setAllUsers(response.data)
 
             if (user) {

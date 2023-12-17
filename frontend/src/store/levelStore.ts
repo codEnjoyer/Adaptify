@@ -10,6 +10,7 @@ import {ILevelType} from "../types/LevelType.ts";
 class levelStore {
     chosenTaskIndex: number = 1
     availableLevels: ILevelType[] = []
+    choosedLevel: ILevelType | null = null
 
     constructor() {
         makeAutoObservable(this)
@@ -23,16 +24,37 @@ class levelStore {
         this.chosenTaskIndex = 1
     }
 
+    chooseLevel(level: ILevelType) {
+        this.choosedLevel = level
+    }
+
     setAvailableLevels(levels: ILevelType[]) {
         this.availableLevels = levels
     }
 
     async fetchLevels() {
-        await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + moduleMenuStore.currentModuleId + "/levels")
+        await axios.get("http://localhost:8000/maps/" + mapMenuStore.choosedMap?.id + "/modules/" + moduleMenuStore.choosedModule?.id + "/levels")
             .then((response) => {
                 this.setAvailableLevels([])
                 this.setAvailableLevels(response.data)
             })
+    }
+
+    async createLevel(levelName: string) {
+        if (!mapMenuStore.choosedMap?.id) {
+            alert("Выберите карту")
+            return
+        }
+
+        if (!moduleMenuStore.choosedModule?.id) {
+            alert("Выберите модуль")
+            return
+        }
+        await axios.post("http://localhost:8000/maps/" + mapMenuStore.choosedMap?.id + "/modules/" + moduleMenuStore.choosedModule?.id + "/levels/", {title: levelName})
+    }
+
+    async deleteLevel() {
+        await axios.delete("http://localhost:8000/maps/" + mapMenuStore.choosedMap?.id + "/modules/" + moduleMenuStore.choosedModule?.id + "/levels/" + this.choosedLevel?.id)
     }
 }
 

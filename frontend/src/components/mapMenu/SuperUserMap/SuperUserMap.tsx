@@ -7,11 +7,13 @@ import CreateUnit from "./superUserControlPanel/CreateUnit.tsx";
 
 import {observer} from "mobx-react-lite";
 import mapMenuStore from "../../../store/mapMenuStore.ts";
-import superUserStore from "../../../store/superUserStore.ts";
 import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+import levelStore from "../../../store/levelStore.ts";
+import superUserStore from "../../../store/superUserStore.ts";
 
 import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
+import {ILevelType} from "../../../types/LevelType.ts";
 
 const SuperUserMap: React.FC = observer(() => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
@@ -36,17 +38,19 @@ const SuperUserMap: React.FC = observer(() => {
     }, [])
 
     const handleOnClickOptionMap = useCallback((map: IMapType) => {
-        mapMenuStore.chooseMap(map)
+        mapMenuStore.chooseMap(map).then(() => refreshData())
     }, [])
 
-    const handleOnClickDeleteMap = useCallback((mapId: string) => {
-        mapMenuStore.deleteMap(mapId).then(() => mapMenuStore.fetchAvailableMaps().then())
+    const handleOnClickDeleteMap = useCallback(() => {
+        mapMenuStore.deleteMap().then(() => refreshData())
     }, [])
 
     const handleOnClickCreateMap = useCallback((mapName: string) => {
         mapMenuStore.createMap(mapName)
-            .then(() => mapMenuStore.fetchAvailableMaps()
-                .then(() => setMapName("")))
+            .then(() => {
+                refreshData()
+                setMapName("")
+            })
     }, [])
 
     const handleOnChangeModuleName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
@@ -57,16 +61,49 @@ const SuperUserMap: React.FC = observer(() => {
         moduleMenuStore.chooseModule(module)
     }, [])
 
-    const handleOnClickDeleteModule = useCallback((mapId: string) => {
-        moduleMenuStore.deleteModule(mapId).then(() => moduleMenuStore.fetchModules().then())
+    const handleOnClickDeleteModule = useCallback(() => {
+        moduleMenuStore.deleteModule().then(() => refreshData())
     }, [])
 
     const handleOnClickCreateModule = useCallback((moduleName: string) => {
         moduleMenuStore.createModule(moduleName)
-            .then(() => moduleMenuStore.fetchModules()
-                .then(() => setModuleName("")))
+            .then(() => {
+                refreshData()
+                setModuleName("")
+            })
     }, [])
 
+    const handleOnChangeLevelName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+        setLevelName(e.currentTarget.value)
+    }, [])
+
+    const handleOnClickOptionLevel = useCallback((level: ILevelType) => {
+        levelStore.chooseLevel(level)
+    }, [])
+
+    const handleOnClickDeleteLevel = useCallback(() => {
+        levelStore.deleteLevel().then(() => refreshData())
+    }, [])
+
+    const handleOnClickCreateLevel = useCallback((levelName: string) => {
+        levelStore.createLevel(levelName)
+            .then(() => {
+                refreshData()
+                setLevelName("")
+            })
+    }, [])
+
+    const refreshData = () => {
+        mapMenuStore.fetchAvailableMaps().then(() => {
+            if (mapMenuStore.choosedMap !== null) {
+                moduleMenuStore.fetchModules().then(() => {
+                    if (moduleMenuStore.choosedModule !== null) {
+                        levelStore.fetchLevels().then()
+                    }
+                })
+            }
+        })
+    }
 
     return (
         <div>
@@ -96,21 +133,36 @@ const SuperUserMap: React.FC = observer(() => {
                 unitNameValue={mapName}
                 handleOnChangeUnitName={handleOnChangeMapName}
                 handleOnClickCreateUnit={handleOnClickCreateMap}
-                currentUnitId={mapMenuStore.choosedMap ? mapMenuStore.choosedMap.id : null}
+                currentUnitId={mapMenuStore.choosedMap?.id}
+                // @ts-ignore: Unreachable code error
                 availableUnits={mapMenuStore.availableMaps}
             />
 
-            {/*<CreateUnit*/}
-            {/*    classNameSelect="available-modules"*/}
-            {/*    handleOnClickOptionUnit={handleOnClickOptionModule}*/}
-            {/*    handleOnClickDeleteUnit={handleOnClickDeleteModule}*/}
-            {/*    unitName="module"*/}
-            {/*    unitNameValue={moduleName}*/}
-            {/*    handleOnChangeUnitName={handleOnChangeModuleName}*/}
-            {/*    handleOnClickCreateUnit={handleOnClickCreateModule}*/}
-            {/*    currentUnitId={currentModule?.id}*/}
-            {/*    availableUnits={moduleMenuStore.availableModules}*/}
-            {/*/>*/}
+            <CreateUnit
+                classNameSelect="available-modules"
+                handleOnClickOptionUnit={handleOnClickOptionModule}
+                handleOnClickDeleteUnit={handleOnClickDeleteModule}
+                unitName="module"
+                unitNameValue={moduleName}
+                handleOnChangeUnitName={handleOnChangeModuleName}
+                handleOnClickCreateUnit={handleOnClickCreateModule}
+                currentUnitId={moduleMenuStore.choosedModule?.id}
+                // @ts-ignore: Unreachable code error
+                availableUnits={moduleMenuStore.availableModules}
+            />
+
+            <CreateUnit
+                classNameSelect="available-levels"
+                handleOnClickOptionUnit={handleOnClickOptionLevel}
+                handleOnClickDeleteUnit={handleOnClickDeleteLevel}
+                unitName="level"
+                unitNameValue={levelName}
+                handleOnChangeUnitName={handleOnChangeLevelName}
+                handleOnClickCreateUnit={handleOnClickCreateLevel}
+                currentUnitId={levelStore.choosedLevel?.id}
+                // @ts-ignore: Unreachable code error
+                availableUnits={levelStore.availableLevels}
+            />
         </div>
     );
 });

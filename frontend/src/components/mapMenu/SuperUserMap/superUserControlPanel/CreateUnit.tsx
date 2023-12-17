@@ -8,14 +8,14 @@ import {ILevelType} from "../../../../types/LevelType.ts";
 
 interface IPropTypes {
     classNameSelect: string,
-    handleOnClickOptionUnit: (unit: IMapType & IModuleType & ILevelType, index: number) => void,
+    handleOnClickOptionUnit: (unit: IMapType & IModuleType, index: number) => void,
     handleOnClickDeleteUnit: (unitId: string) => void,
     unitName: string,
     unitNameValue: string,
     handleOnChangeUnitName: (e: React.FormEvent<HTMLInputElement>) => void,
     handleOnClickCreateUnit: (unitName: string) => void,
     currentUnitId?: string | null,
-    availableUnits: IMapType[]
+    availableUnits: IMapType[] & IModuleType[] & ILevelType[]
 }
 
 const CreateUnit: React.FC<IPropTypes> =
@@ -44,13 +44,13 @@ const CreateUnit: React.FC<IPropTypes> =
             <div>
                 <select className={classNameSelect}>
                     <option value="-">-</option>
-                    {availableUnits.map((map, index) =>
+                    {availableUnits.map((unit, index) =>
                         <option
-                            key={map.id}
-                            value={map.title}
-                            onClick={() => handleOnClickOptionUnit(map, index)}
+                            key={unit.id}
+                            value={unit.title}
+                            onClick={() => handleOnClickOptionUnit(unit, index)}
                         >
-                            {map.title}
+                            {unit.title}
                         </option>)
                     }
                 </select>

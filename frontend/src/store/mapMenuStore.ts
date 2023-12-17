@@ -16,6 +16,7 @@ class MapMenuStore {
 
     async fetchAvailableMaps() {
         await axios.get("http://localhost:8000/maps/").then((response) => {
+            this.setMaps([])
             this.setMaps(response.data)
             this.chooseMap(response.data[0])
         })
@@ -25,7 +26,7 @@ class MapMenuStore {
         this.availableMaps = maps
     }
 
-    chooseMap(map: IMapType) {
+    async chooseMap(map: IMapType) {
         this.choosedMap = map
     }
 
@@ -40,8 +41,8 @@ class MapMenuStore {
         await axios.post("http://localhost:8000/maps/", {title: mapName}).then()
     }
 
-    async deleteMap(mapId?: string) {
-        await axios.delete("http://localhost:8000/maps/" + mapId)
+    async deleteMap() {
+        await axios.delete("http://localhost:8000/maps/" + this.currentMapId)
     }
 }
 
