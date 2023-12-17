@@ -41,7 +41,7 @@ const CreateUnit: React.FC<IPropTypes> =
         }
 
         return (
-            <div>
+            <div className="unit-list">
                 <select className={classNameSelect}>
                     <option value="-">-</option>
                     {availableUnits.map((unit, index) =>
@@ -61,7 +61,7 @@ const CreateUnit: React.FC<IPropTypes> =
                     className={`delete-${unitName}__btn`}
                     handleOnClick={() => currentUnitId ? handleOnClickDeleteUnit(currentUnitId) : undefined}
                     width={150}
-                    height={100}
+                    height={70}
                 />
 
                 <div className={`map-creator-item ${unitName}-create`}>
