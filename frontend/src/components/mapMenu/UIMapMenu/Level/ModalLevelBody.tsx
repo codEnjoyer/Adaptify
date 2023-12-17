@@ -23,16 +23,20 @@ interface IModalLevelProps {
 const ModalLevelBody: React.FC<IModalLevelProps> = observer(({level}) => {
     const bodyHeader = renderBodyHeader()
 
-
     const menuItems: IMenuItemType[] = [
         {
             type: "theory",
-            length: level?.theoryUnits.length,
+            length: level.theoryUnits ? level.theoryUnits.length : 0,
             item: level?.theoryUnits
         },
         {
-            length: level?.taskUnits.length,
+            length: level.taskUnits ? level?.taskUnits.length : 0,
             type: "tests",
+            item: level?.taskUnits
+        },
+        {
+            type: "task",
+            length: level.taskUnits ? level?.taskUnits.length : 0,
             item: level?.taskUnits
         }
     ]
@@ -101,18 +105,23 @@ const ModalLevelBody: React.FC<IModalLevelProps> = observer(({level}) => {
                         </form>
                     </div>
                 )
+            case ("task"):
+                return (
+                    <div>
+                        {unit.title}
+                        {unit.content}
+                    </div>
+                )
             default:
                 return (<div>Блок пуст</div>)
         }
     }
 
     function renderTasks(menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) {
-        console.log(levelStore.chosenTaskIndex)
         if (menuItems && levelStore.chosenTaskIndex <= menuItems[0].length)
             return renderChosenTask(theoryUnits[levelStore.chosenTaskIndex - 1], "theory")
         if (menuItems && levelStore.chosenTaskIndex <= menuItems[0].length + menuItems[1].length)
             return renderChosenTask(taskUnits[levelStore.chosenTaskIndex - menuItems[0].length - 1], "test")
-
     }
 
     return (

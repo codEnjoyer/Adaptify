@@ -1,14 +1,16 @@
 import {makeAutoObservable} from "mobx";
 import axios from "axios";
 
-
 class AuthStore {
     isUserAuthorized: boolean = false
-
-    // userRole: string | null = null
+    nickname: string | null = null
 
     constructor() {
         makeAutoObservable(this)
+    }
+
+    setUser(nickname: string) {
+        this.nickname = nickname
     }
 
     async signIn(login: string, password: string) {

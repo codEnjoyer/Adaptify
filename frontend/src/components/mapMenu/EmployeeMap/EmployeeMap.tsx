@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Coins from "../UIMapMenu/Coins.tsx";
 import ChooseModuleWindow from "../UIMapMenu/ChooseModuleWindow.tsx";
@@ -11,9 +11,11 @@ import {observer} from "mobx-react-lite";
 
 import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 import mapMenuStore from "../../../store/mapMenuStore.ts"
+import levelStore from "../../../store/levelStore.ts";
 
 import {IUserType} from "../../../types/UserType.ts";
-import levelStore from "../../../store/levelStore.ts";
+import axios from "axios";
+import Starfield from "react-starfield";
 
 
 interface IEmployeeMap {
@@ -23,14 +25,28 @@ interface IEmployeeMap {
 }
 
 const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logOut}) => {
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [employee, setEmployee] = useState(null)
+
+    useEffect(() => {
+        // console.log(user)
+        axios.get("http://localhost:8000/employees").then((r) => {
+            r.data.map((employee) => {
+                if (user?.id === employee.user.id) {
+                    setEmployee(employee)
+                    setIsLoading(false)
+                }
+            })
+        })
+    }, []);
+
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps().then(() => {
             mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
                 moduleMenuStore.fetchModules().then(() => {
                     moduleMenuStore.fetchModuleById(moduleMenuStore.availableModules[0].id).then(() => {
                         levelStore.fetchLevels().then(() => {
-
-                        }).catch(() => alert("Нет доступных уровней для данного модуля"))
+                        })
                     })
                 }).catch(() => alert("Нет доступных модулей для данной карты"))
             })
@@ -38,22 +54,52 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logO
     }, []);
 
     return (
-        <div className="employee-interface">
-            <Coins coins={100} additionalClassname="coins"/>
-            <ChooseModuleWindow moduleName={moduleMenuStore.choosedModule?.title.toUpperCase()}/>
-            <UserProfile logOut={logOut} user={user} formattedDate={formattedDate}/>
-            <CustomProgressBar className="progress-bar-wrapper" progress={54}/>
-            <div className="geolocations">
-                <div className="geolocations__wrapper">
-                    {levelStore.availableLevels.map((level, index) => {
-                        return <Level
-                            id={(index + 1).toString()}
-                            level={level}
-                        />
-                    })}
+        isLoading ? (
+                <Starfield
+                    starCount={1000}
+                    starColor={[255, 255, 255]}
+                    speedFactor={0.05}
+                    backgroundColor="black"
+                />
+            )
+            :
+            (
+                <div className="employee-interface">
+                    <Starfield
+                        starCount={1000}
+                        starColor={[255, 255, 255]}
+                        speedFactor={0.05}
+                        backgroundColor="black"
+                    />
+                    <Coins
+                        coins={employee ? employee.coins : 0}
+                        additionalClassname="coins"
+                    />
+                    <ChooseModuleWindow
+                        moduleName={moduleMenuStore.choosedModule?.title.toUpperCase()}
+                    />
+                    <UserProfile
+                        logOut={logOut}
+                        user={user}
+                        formattedDate={formattedDate}
+                    />
+                    <CustomProgressBar
+                        className="progress-bar-wrapper"
+                        progress={54}
+                    />
+                    <div className="geolocations">
+                        <div className="geolocations__wrapper">
+                            {levelStore.availableLevels.map((level, index) => {
+                                return <Level
+                                    key={level.id}
+                                    id={(index + 1).toString()}
+                                    level={level}
+                                />
+                            })}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )
     );
 });
 

@@ -21,12 +21,13 @@ const MapMenu: React.FC = observer(() => {
     const navigate = useNavigate()
 
     const [user, setUser] = useState<IUserType>()
-    const [formattedDate, setFormattedDate] = useState("")
+    const [formattedDate, setFormattedDate] = useState<string>("")
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
         axios.get("http://localhost:8000/users/").then((response) => {
             response.data.map((user: IUserType) => {
-                if (user.username === authStore.userLogin) {
+                if (user.email === authStore.nickname) {
                     setUser(user)
                 }
             })
@@ -36,6 +37,7 @@ const MapMenu: React.FC = observer(() => {
                 const date = new Date(Date.parse(user!.registered_at))
                 setFormattedDate(`${date.getDay()}.${date.getMonth()}.${date.getUTCFullYear()}`)
             }
+            setIsLoading(false)
         })
     }, [])
 
@@ -52,20 +54,22 @@ const MapMenu: React.FC = observer(() => {
 
     return (
         <div>
-            <Starfield
-                starCount={1000}
-                starColor={[255, 255, 255]}
-                speedFactor={0.05}
-                backgroundColor="black"
-            />
-            {
-                user?.is_superuser
-                    ? <SuperUserMap/>
-                    : <EmployeeMap
-                        logOut={handleOnLogOut}
-                        user={user}
-                        formattedDate={formattedDate}
-                    />
+            {isLoading
+                ? <Starfield
+                    starCount={1000}
+                    starColor={[255, 255, 255]}
+                    speedFactor={0.05}
+                    backgroundColor="black"
+                />
+                : (
+                    user?.is_superuser
+                        ? <SuperUserMap/>
+                        : <EmployeeMap
+                            logOut={handleOnLogOut}
+                            user={user}
+                            formattedDate={formattedDate}
+                        />
+                )
             }
         </div>
     );

@@ -30,7 +30,7 @@ const CreateUnit: React.FC<IPropTypes> =
          currentUnitId,
          availableUnits
      }) => {
-        let btnText = ""
+        let btnText: string
 
         if (unitName === "map") {
             btnText = "Удалить выбранную карту"
@@ -48,6 +48,7 @@ const CreateUnit: React.FC<IPropTypes> =
                         <option
                             key={unit.id}
                             value={unit.title}
+                            // @ts-ignore: Unreachable code error
                             onClick={() => handleOnClickOptionUnit(unit, index)}
                         >
                             {unit.title}
