@@ -87,7 +87,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                     {unit
                         ? unit.questions.map((question) => {
                             return (
-                                <div className="question">
+                                <div className="question" key={question.id}>
                                     <div className="question-title">{question.question}</div>
 
                                     {question.answer_options.map((answer) => {

@@ -17,7 +17,7 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({employees}) => {
     const handleOnClickUserCard = (employee: IEmployeeType) => {
         setIsUserCardModalOpen(true)
         superUserStore.selectUser(employee)
-        setUserProfileModalBody(<UserProfileModalBody employee={employee}/>)
+        setUserProfileModalBody(<UserProfileModalBody key={employee.id} employee={employee}/>)
     }
 
     const handleOnCloseUserCard = useCallback(() => {
@@ -33,6 +33,7 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({employees}) => {
                         ? <ModalWindow
                             body={userProfileModalBody}
                             onClose={handleOnCloseUserCard}
+                            key={employee.id}
                         />
                         : (
                             <div key={employee.name} className="users-list-user"
