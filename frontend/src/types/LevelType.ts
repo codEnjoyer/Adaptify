@@ -4,6 +4,6 @@ export type ILevelType = {
     id: string,
     title: string,
     body?: string,
-    theoryUnits?: ITheoryUnitType[]
-    taskUnits?: ITaskType[]
+    theory_units?: ITheoryUnitType[]
+    task_units?: ITaskType[]
 }

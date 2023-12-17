@@ -19,15 +19,13 @@ export interface IAnswerType {
 }
 
 
-export interface IUnitType extends ITheoryUnitType, ITaskType{
-
-}
 export interface IQuestionType {
-    id: string
-    possibleAnswers: IAnswerType[]
-    question: string
-    taskId: string
-    type: string
+    id: string,
+    possibleAnswers: IAnswerType[],
+    question: string,
+    taskId: string,
+    type: string,
+    answer_options: IAnswerType[]
 }
 
 

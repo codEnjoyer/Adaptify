@@ -8,7 +8,7 @@ import moduleMenuStore from "./moduleMenuStore.ts";
 import {ILevelType} from "../types/LevelType.ts";
 
 class levelStore {
-    chosenTaskIndex: number = 1
+    chosenTaskIndex: number = 0
     availableLevels: ILevelType[] = []
     choosedLevel: ILevelType | null = null
 

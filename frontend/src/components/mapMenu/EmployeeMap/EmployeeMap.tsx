@@ -89,11 +89,13 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, logOut}) => {
                     <div className="geolocations">
                         <div className="geolocations__wrapper">
                             {levelStore.availableLevels.map((level, index) => {
-                                return <Level
-                                    key={level.id}
-                                    id={(index + 1).toString()}
-                                    level={level}
-                                />
+                                return (
+                                    <Level
+                                        key={level.id}
+                                        id={(index + 1).toString()}
+                                        level={level}
+                                    />
+                                )
                             })}
                         </div>
                     </div>

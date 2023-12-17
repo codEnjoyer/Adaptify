@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import "./modalLevelBody.scss"
 
@@ -9,35 +9,28 @@ import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 
 import MenuItem from "./MenuItem.tsx";
 
-import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
+import {ITaskType, ITheoryUnitType, IQuestionType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
-
-import levelStore from "../../../../store/levelStore.ts";
-import {observer} from "mobx-react-lite";
 
 interface IModalLevelProps {
     level: ILevelType
 }
 
-const ModalLevelBody: React.FC<IModalLevelProps> = observer(({level}) => {
+const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
     const bodyHeader = renderBodyHeader()
+    const [levelIndex, setLevelIndex] = useState(0)
 
     const menuItems: IMenuItemType[] = [
         {
             type: "theory",
-            length: level.theoryUnits ? level.theoryUnits.length : 0,
-            item: level?.theoryUnits
+            length: level.theory_units ? level.theory_units.length : 0,
+            item: level?.theory_units
         },
         {
-            length: level.taskUnits ? level?.taskUnits.length : 0,
+            length: level.task_units ? level?.task_units.length : 0,
             type: "tests",
-            item: level?.taskUnits
-        },
-        {
-            type: "task",
-            length: level.taskUnits ? level?.taskUnits.length : 0,
-            item: level?.taskUnits
+            item: level?.task_units
         }
     ]
 
@@ -65,77 +58,79 @@ const ModalLevelBody: React.FC<IModalLevelProps> = observer(({level}) => {
             for (let j = 0; j < menuItems[i].length; j++) {
                 index++
                 taskBlocks.push(<MenuItem indexType={i} index={index} key={index}/>)
+
             }
         }
         return taskBlocks
     }
 
-    function renderChosenTask(unit: ITheoryUnitType & ITaskType, type: string) {
-        switch (type) {
-            case ("theory"):
-                return (
+    const renderTheory = (unit: ITheoryUnitType | null) => {
+        return (
+            unit
+                ? (
                     <div className="task-info">
                         <div className="level-title">{unit.title}</div>
                         <div className="level-body">{unit.content}</div>
                     </div>
                 )
-            case ("test"):
-                return (
-                    <div className="task-info">
-                        <form className="level-body">
-                            {unit.questions.map((question) => {
-                                return (
-                                    <div className="question">
-                                        <div className="question-title">{question.question}</div>
+                : null
 
-                                        {question.answer_options.map((answer) => {
-                                                return (
-                                                    <div className="question-answer-option">
-                                                        <input id={answer.answer} type="radio" value="question"/>
-                                                        <label htmlFor={answer.answer}>{answer.answer}</label>
-                                                    </div>
-                                                )
-                                            }
-                                        )}
-                                    </div>
-                                )
-                            })}
-                            <CustomButton handleOnClick={(e) => e.preventDefault()}
-                                          text="Отправить ответ"/>
-                        </form>
-                    </div>
-                )
-            case ("task"):
-                return (
-                    <div>
-                        {unit.title}
-                        {unit.content}
-                    </div>
-                )
-            default:
-                return (<div>Блок пуст</div>)
-        }
+        )
+    }
+
+    const renderTest = (unit: ITaskType | null) => {
+        console.log(unit)
+        return (
+            <div className="task-info">
+                <form className="level-body">
+                    {unit
+                        ? unit.questions.map((question) => {
+                            return (
+                                <div className="question">
+                                    <div className="question-title">{question.question}</div>
+
+                                    {question.answer_options.map((answer) => {
+                                            return (
+                                                <div className="question-answer-option">
+                                                    <input id={answer.answer} type="radio" value="question"/>
+                                                    <label htmlFor={answer.answer}>{answer.answer}</label>
+                                                </div>
+                                            )
+                                        }
+                                    )}
+                                </div>
+                            )
+                        })
+                        : null
+                    }
+                    <CustomButton
+                        handleOnClick={(e) => e.preventDefault()}
+                        text="Отправить ответ"
+                    />
+                </form>
+            </div>
+        )
     }
 
     function renderTasks(menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) {
-        if (menuItems && levelStore.chosenTaskIndex <= menuItems[0].length)
-            return renderChosenTask(theoryUnits[levelStore.chosenTaskIndex - 1], "theory")
-        if (menuItems && levelStore.chosenTaskIndex <= menuItems[0].length + menuItems[1].length)
-            return renderChosenTask(taskUnits[levelStore.chosenTaskIndex - menuItems[0].length - 1], "test")
+        if (menuItems && levelIndex <= menuItems[0].length) {
+            return renderTheory(theoryUnits ? theoryUnits[levelIndex] : null)
+        }
+        if (menuItems && levelIndex <= menuItems[0].length + menuItems[1].length) {
+            return renderTest(taskUnits ? taskUnits[levelIndex - menuItems[0].length] : null)
+        }
     }
 
     return (
         <div>
             <HeaderModal body={bodyHeader}/>
-
             {menuItems
                 ? <div className="menu">{renderMenuUnitsBlocks(menuItems)}</div>
                 : ""
             }
-
-            {renderTasks(menuItems, level.theoryUnits, level.taskUnits)}
+            {renderTasks(menuItems, level.theory_units, level.task_units)}
         </div>
     );
-});
+};
 
 export default ModalLevelBody;

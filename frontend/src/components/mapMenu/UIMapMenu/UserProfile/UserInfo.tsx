@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import CustomInput from "../../../../UIComponents/customInput/CustomInput.tsx";
 import {IEmployeeType} from "../../../../types/EmployeeType.ts";
 
