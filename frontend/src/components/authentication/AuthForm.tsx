@@ -11,6 +11,7 @@ import {observer} from "mobx-react-lite";
 import authStore from "../../store/authStore";
 import auth from "../../utils/auth";
 import Starfield from "react-starfield";
+import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 
 export type FormValues = {
     login: string,
@@ -29,7 +30,7 @@ const AuthForm: React.FC = observer(() => {
 
     const onHandleSubmit = useCallback((data: { login: string, password: string }) => {
         authStore.signIn(data.login, data.password).then(() => navigateTo('/map'))
-    }, [navigateTo])
+    }, [])
 
     return (
         <div>
@@ -72,7 +73,11 @@ const AuthForm: React.FC = observer(() => {
                     isChecked={isPasswordShows}
                 />
 
-                <input type="submit" className="auth__btn" value="ВОЙТИ"/>
+                <CustomButton
+                    type="submit"
+                    className="auth__btn"
+                    text="ВОЙТИ"
+                />
             </form>
         </div>
     );

@@ -5,8 +5,6 @@ import mapMenuStore from "./mapMenuStore.ts";
 import levelStore from "./levelStore.ts";
 
 class ModuleMenuStore {
-    currentModuleId: string | null = null
-    modulesMap: string[] = []
     availableModules: IModuleType[] = []
     currentModule: IModuleType | null = null
     currentModuleIndex: number = 0
@@ -21,12 +19,6 @@ class ModuleMenuStore {
 
     async selectModule(newModule: IModuleType) {
         this.currentModule = newModule
-        this.currentModuleId = newModule.id
-    }
-
-    changeCurrentModuleIndex(newIndex: number) {
-        this.currentModuleIndex = newIndex
-        this.fetchModuleById(this.availableModules[this.currentModuleIndex].id).then(() => levelStore.fetchLevels())
     }
 
     async fetchModules() {
@@ -50,7 +42,6 @@ class ModuleMenuStore {
     async fetchModuleById(id: string) {
         await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + id).then((response) => {
             this.selectModule(response.data)
-            this.currentModuleId = response.data.id
         })
     }
 

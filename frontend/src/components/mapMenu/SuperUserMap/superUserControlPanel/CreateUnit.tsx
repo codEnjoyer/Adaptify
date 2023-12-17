@@ -14,8 +14,8 @@ interface IPropTypes {
     unitNameValue: string,
     handleOnChangeUnitName: (e: React.FormEvent<HTMLInputElement>) => void,
     handleOnClickCreateUnit: (unitName: string) => void,
-    currentUnitId?: string,
-    availableUnits: IMapType[] & IModuleType[] & ILevelType[]
+    currentUnitId?: string | null,
+    availableUnits: IMapType[]
 }
 
 const CreateUnit: React.FC<IPropTypes> =

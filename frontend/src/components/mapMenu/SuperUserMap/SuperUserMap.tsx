@@ -8,35 +8,22 @@ import CreateUnit from "./superUserControlPanel/CreateUnit.tsx";
 import {observer} from "mobx-react-lite";
 import mapMenuStore from "../../../store/mapMenuStore.ts";
 import superUserStore from "../../../store/superUserStore.ts";
-
 import moduleMenuStore from "../../../store/moduleMenuStore.ts";
+
 import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
-import {ILevelType} from "../../../types/LevelType.ts";
 
 const SuperUserMap: React.FC = observer(() => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
 
     const [mapName, setMapName] = useState<string>("")
-    const [currentMap, setCurrentMap] = useState<IMapType | undefined>(undefined)
-    const [currentMapIndex, setCurrentMapIndex] = useState<number>(0)
-
     const [moduleName, setModuleName] = useState<string>("")
-    const [currentModule, setCurrentModule] = useState<IModuleType | undefined>(undefined)
-    const [currentModuleId, setCurrentModuleId] = useState<string>("")
-    const [currentModuleIndex, setCurrentModuleIndex] = useState<number>(0)
-
-
     const [levelName, setLevelName] = useState<string>("")
-    const [currentLevel, setCurrentLevel] = useState<ILevelType | undefined>(undefined)
-    const [currentLevelId, setCurrentLevelId] = useState<string>("")
-    const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(0)
-
 
     // Загрузка карт модулей
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps()
-            .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[currentMapIndex].id)
+            .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[mapMenuStore.currentMapIndex].id)
                 .then(() => moduleMenuStore.fetchModules()))
     }, []);
 
@@ -44,47 +31,42 @@ const SuperUserMap: React.FC = observer(() => {
         setIsUserListModalOpen(!isUsersListModalOpen)
     }, [isUsersListModalOpen])
 
-    // Работа с картами
-
-    const handleOnClickOptionMap = useCallback((map: IMapType, indexMap: number) => {
-        setCurrentMap(map)
-        setCurrentMapIndex(indexMap)
-        mapMenuStore.fetchMapById(map.id).then()
-    }, [])
-
     const handleOnChangeMapName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         setMapName(e.currentTarget.value)
     }, [])
 
-
-    const handleOnClickCreateMap = useCallback((mapName: string) => {
-        mapName !== "" ? mapMenuStore.createMap(mapName).then(() => currentMap ? mapMenuStore.fetchAvailableMaps().then() : undefined) : alert("Введите название карты")
+    const handleOnClickOptionMap = useCallback((map: IMapType) => {
+        mapMenuStore.chooseMap(map)
     }, [])
 
     const handleOnClickDeleteMap = useCallback((mapId: string) => {
-        mapMenuStore.deleteMap(mapId).then(() => mapMenuStore.fetchAvailableMaps())
+        mapMenuStore.deleteMap(mapId).then(() => mapMenuStore.fetchAvailableMaps().then())
     }, [])
 
-
-    // Работа с модулями
-
-    const handleOnClickOptionModule = useCallback((module: IModuleType, index: number) => {
-        console.log(module)
-        moduleMenuStore.selectModule(module).then(() => moduleMenuStore.changeCurrentModuleIndex(index))
+    const handleOnClickCreateMap = useCallback((mapName: string) => {
+        mapMenuStore.createMap(mapName)
+            .then(() => mapMenuStore.fetchAvailableMaps()
+                .then(() => setMapName("")))
     }, [])
 
     const handleOnChangeModuleName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         setModuleName(e.currentTarget.value)
     }, [])
 
-    const handleOnClickCreateModule = useCallback((moduleName: string) => {
-        moduleName !== "" ? moduleMenuStore.createModule(moduleName) : alert("Введите название модуля")
-        moduleMenuStore.fetchModules().then()
+    const handleOnClickOptionModule = useCallback((module: IModuleType) => {
+        moduleMenuStore.chooseModule(module)
     }, [])
 
-    const handleOnClickDeleteModule = useCallback((moduleId: string) => {
-        moduleMenuStore.deleteModule(moduleId).then(() => moduleMenuStore.fetchModules())
+    const handleOnClickDeleteModule = useCallback((mapId: string) => {
+        moduleMenuStore.deleteModule(mapId).then(() => moduleMenuStore.fetchModules().then())
     }, [])
+
+    const handleOnClickCreateModule = useCallback((moduleName: string) => {
+        moduleMenuStore.createModule(moduleName)
+            .then(() => moduleMenuStore.fetchModules()
+                .then(() => setModuleName("")))
+    }, [])
+
 
     return (
         <div>
@@ -114,21 +96,21 @@ const SuperUserMap: React.FC = observer(() => {
                 unitNameValue={mapName}
                 handleOnChangeUnitName={handleOnChangeMapName}
                 handleOnClickCreateUnit={handleOnClickCreateMap}
-                currentUnitId={currentMap?.id}
+                currentUnitId={mapMenuStore.choosedMap ? mapMenuStore.choosedMap.id : null}
                 availableUnits={mapMenuStore.availableMaps}
             />
 
-            <CreateUnit
-                classNameSelect="available-modules"
-                handleOnClickOptionUnit={handleOnClickOptionModule}
-                handleOnClickDeleteUnit={handleOnClickDeleteModule}
-                unitName="module"
-                unitNameValue={moduleName}
-                handleOnChangeUnitName={handleOnChangeModuleName}
-                handleOnClickCreateUnit={handleOnClickCreateModule}
-                currentUnitId={currentModule?.id}
-                availableUnits={moduleMenuStore.availableModules}
-            />
+            {/*<CreateUnit*/}
+            {/*    classNameSelect="available-modules"*/}
+            {/*    handleOnClickOptionUnit={handleOnClickOptionModule}*/}
+            {/*    handleOnClickDeleteUnit={handleOnClickDeleteModule}*/}
+            {/*    unitName="module"*/}
+            {/*    unitNameValue={moduleName}*/}
+            {/*    handleOnChangeUnitName={handleOnChangeModuleName}*/}
+            {/*    handleOnClickCreateUnit={handleOnClickCreateModule}*/}
+            {/*    currentUnitId={currentModule?.id}*/}
+            {/*    availableUnits={moduleMenuStore.availableModules}*/}
+            {/*/>*/}
         </div>
     );
 });

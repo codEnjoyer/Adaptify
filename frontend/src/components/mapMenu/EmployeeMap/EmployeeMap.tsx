@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 
 import Coins from "../UIMapMenu/Coins.tsx";
 import ChooseModuleWindow from "../UIMapMenu/ChooseModuleWindow.tsx";
@@ -13,7 +13,7 @@ import moduleMenuStore from "../../../store/moduleMenuStore.ts";
 import mapMenuStore from "../../../store/mapMenuStore.ts"
 
 import {IUserType} from "../../../types/UserType.ts";
-import {ILevelType} from "../../../types/LevelType.ts";
+import levelStore from "../../../store/levelStore.ts";
 
 
 interface IEmployeeMap {
@@ -23,14 +23,12 @@ interface IEmployeeMap {
 }
 
 const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logOut}) => {
-    const [currentLevel, setCurrentLevel] = useState<ILevelType>()
-
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps().then(() => {
             mapMenuStore.fetchMapById(mapMenuStore.availableMaps[0].id).then(() => {
                 moduleMenuStore.fetchModules().then(() => {
                     moduleMenuStore.fetchModuleById(moduleMenuStore.availableModules[0].id).then(() => {
-                        mapMenuStore.fetchLevels().then(() => {
+                        levelStore.fetchLevels().then(() => {
 
                         }).catch(() => alert("Нет доступных уровней для данного модуля"))
                     })
@@ -47,7 +45,7 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logO
             <CustomProgressBar className="progress-bar-wrapper" progress={54}/>
             <div className="geolocations">
                 <div className="geolocations__wrapper">
-                    {mapMenuStore.availableLevels.map((level, index) => {
+                    {levelStore.availableLevels.map((level, index) => {
                         return <Level
                             id={(index + 1).toString()}
                             level={level}
