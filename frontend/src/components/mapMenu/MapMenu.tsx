@@ -21,7 +21,6 @@ const MapMenu: React.FC = observer(() => {
     const navigate = useNavigate()
 
     const [user, setUser] = useState<IUserType>()
-    const [formattedDate, setFormattedDate] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     useEffect(() => {
@@ -32,11 +31,6 @@ const MapMenu: React.FC = observer(() => {
                 }
             })
             superUserStore.setAllUsers(response.data)
-
-            if (user) {
-                const date = new Date(Date.parse(user!.registered_at))
-                setFormattedDate(`${date.getDay()}.${date.getMonth()}.${date.getUTCFullYear()}`)
-            }
             setIsLoading(false)
         })
     }, [])
@@ -67,7 +61,6 @@ const MapMenu: React.FC = observer(() => {
                         : <EmployeeMap
                             logOut={handleOnLogOut}
                             user={user}
-                            formattedDate={formattedDate}
                         />
                 )
             }

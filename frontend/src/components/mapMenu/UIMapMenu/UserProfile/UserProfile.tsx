@@ -2,15 +2,14 @@ import React, {useState} from 'react';
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 import UserProfileModalBody from "./UserProfileModalBody.tsx";
 import "./userProfileModalBody.scss"
-import {IUserType} from "../../../../types/UserType.ts";
+import {IEmployeeType} from "../../../../types/EmployeeType.ts";
 
 interface IPropTypes {
-    user?: IUserType,
-    formattedDate: string,
+    employee?: IEmployeeType,
     logOut: () => void
 }
 
-const UserProfile: React.FC<IPropTypes> = ({user, formattedDate, logOut}) => {
+const UserProfile: React.FC<IPropTypes> = ({employee, logOut}) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
     return (
@@ -30,7 +29,7 @@ const UserProfile: React.FC<IPropTypes> = ({user, formattedDate, logOut}) => {
                     </g>
                 </svg>
             </div>
-            {isModalOpen && <ModalWindow onClose={() => setIsModalOpen(!isModalOpen)} body={<UserProfileModalBody logOut={logOut} user={user} formattedDate={formattedDate}/>}/>}
+            {isModalOpen && <ModalWindow onClose={() => setIsModalOpen(!isModalOpen)} body={<UserProfileModalBody logOut={logOut} employee={employee}/>}/>}
         </div>
     );
 };

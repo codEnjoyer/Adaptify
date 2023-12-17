@@ -16,22 +16,22 @@ import levelStore from "../../../store/levelStore.ts";
 import {IUserType} from "../../../types/UserType.ts";
 import axios from "axios";
 import Starfield from "react-starfield";
+import {IEmployeeType} from "../../../types/EmployeeType.ts";
 
 
 interface IEmployeeMap {
     user?: IUserType,
-    formattedDate: string,
     logOut: () => void
 }
 
-const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logOut}) => {
+const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, logOut}) => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [employee, setEmployee] = useState(null)
+    const [employee, setEmployee] = useState<IEmployeeType>()
 
     useEffect(() => {
         // console.log(user)
         axios.get("http://localhost:8000/employees").then((r) => {
-            r.data.map((employee) => {
+            r.data.map((employee: IEmployeeType) => {
                 if (user?.id === employee.user.id) {
                     setEmployee(employee)
                     setIsLoading(false)
@@ -80,8 +80,7 @@ const EmployeeMap: React.FC<IEmployeeMap> = observer(({user, formattedDate, logO
                     />
                     <UserProfile
                         logOut={logOut}
-                        user={user}
-                        formattedDate={formattedDate}
+                        employee={employee}
                     />
                     <CustomProgressBar
                         className="progress-bar-wrapper"
