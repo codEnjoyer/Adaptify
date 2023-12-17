@@ -42,7 +42,7 @@ const SuperUserMap: React.FC = observer(() => {
     }, [])
 
     const handleOnClickDeleteMap = useCallback(() => {
-        mapMenuStore.deleteMap().then(() => refreshData())
+        mapMenuStore.deleteMap().then(() => refreshDataAfterDelete())
     }, [])
 
     const handleOnClickCreateMap = useCallback((mapName: string) => {
@@ -58,11 +58,11 @@ const SuperUserMap: React.FC = observer(() => {
     }, [])
 
     const handleOnClickOptionModule = useCallback((module: IModuleType) => {
-        moduleMenuStore.chooseModule(module)
+        moduleMenuStore.chooseModule(module).then(() => refreshData())
     }, [])
 
     const handleOnClickDeleteModule = useCallback(() => {
-        moduleMenuStore.deleteModule().then(() => refreshData())
+        moduleMenuStore.deleteModule().then(() => refreshDataAfterDelete())
     }, [])
 
     const handleOnClickCreateModule = useCallback((moduleName: string) => {
@@ -78,11 +78,11 @@ const SuperUserMap: React.FC = observer(() => {
     }, [])
 
     const handleOnClickOptionLevel = useCallback((level: ILevelType) => {
-        levelStore.chooseLevel(level)
+        levelStore.chooseLevel(level).then(() => refreshData())
     }, [])
 
     const handleOnClickDeleteLevel = useCallback(() => {
-        levelStore.deleteLevel().then(() => refreshData())
+        levelStore.deleteLevel().then(() => refreshDataAfterDelete())
     }, [])
 
     const handleOnClickCreateLevel = useCallback((levelName: string) => {
@@ -95,14 +95,18 @@ const SuperUserMap: React.FC = observer(() => {
 
     const refreshData = () => {
         mapMenuStore.fetchAvailableMaps().then(() => {
-            if (mapMenuStore.choosedMap !== null) {
+            if (mapMenuStore.choosedMap !== null && mapMenuStore.availableMaps.length !== 0) {
                 moduleMenuStore.fetchModules().then(() => {
-                    if (moduleMenuStore.choosedModule !== null) {
+                    if (moduleMenuStore.choosedModule !== null || moduleMenuStore.availableModules.length !== 0) {
                         levelStore.fetchLevels().then()
                     }
                 })
             }
         })
+    }
+
+    const refreshDataAfterDelete = () => {
+        mapMenuStore.fetchAvailableMaps().then(() => moduleMenuStore.fetchModules().then(() => levelStore.fetchLevels().then()))
     }
 
     return (

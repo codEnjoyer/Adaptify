@@ -24,7 +24,7 @@ class levelStore {
         this.chosenTaskIndex = 1
     }
 
-    chooseLevel(level: ILevelType) {
+    async chooseLevel(level: ILevelType) {
         this.choosedLevel = level
     }
 
@@ -41,12 +41,12 @@ class levelStore {
     }
 
     async createLevel(levelName: string) {
-        if (!mapMenuStore.choosedMap?.id) {
+        if (mapMenuStore.choosedMap?.id === undefined || mapMenuStore.availableMaps.length === 0) {
             alert("Выберите карту")
             return
         }
 
-        if (!moduleMenuStore.choosedModule?.id) {
+        if (moduleMenuStore.choosedModule?.id === undefined || moduleMenuStore.availableModules.length === 0) {
             alert("Выберите модуль")
             return
         }

@@ -59,6 +59,8 @@ const CreateUnit: React.FC<IPropTypes> =
                     text={btnText}
                     className={`delete-${unitName}__btn`}
                     handleOnClick={() => currentUnitId ? handleOnClickDeleteUnit(currentUnitId) : undefined}
+                    width={150}
+                    height={100}
                 />
 
                 <div className={`map-creator-item ${unitName}-create`}>

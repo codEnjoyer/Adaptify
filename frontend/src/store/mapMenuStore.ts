@@ -7,7 +7,6 @@ class MapMenuStore {
     mapMenu: IMapType | null = null
     choosedMap: IMapType | null = null
     availableMaps: IMapType[] = []
-    currentMapId: string | null = null
     currentMapIndex: number = 0
 
     constructor() {
@@ -33,7 +32,6 @@ class MapMenuStore {
     async fetchMapById(id: string) {
         await axios.get("http://localhost:8000/maps/" + id).then((response) => {
             this.mapMenu = response?.data
-            this.currentMapId = response?.data.id
         })
     }
 
@@ -42,7 +40,7 @@ class MapMenuStore {
     }
 
     async deleteMap() {
-        await axios.delete("http://localhost:8000/maps/" + this.currentMapId)
+        await axios.delete("http://localhost:8000/maps/" + this.choosedMap?.id)
     }
 }
 

@@ -15,12 +15,12 @@ class ModuleMenuStore {
         this.availableModules = modules
     }
 
-    chooseModule(newModule: IModuleType) {
+    async chooseModule(newModule: IModuleType) {
         this.choosedModule = newModule
     }
 
     async fetchModules() {
-        await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/")
+        await axios.get("http://localhost:8000/maps/" + mapMenuStore.choosedMap?.id + "/modules/")
             .then((response) => {
                 this.setAvailableModules([])
                 this.setAvailableModules(response.data.filter((module: IModuleType) => module.map_id === mapMenuStore.choosedMap?.id))
@@ -28,13 +28,13 @@ class ModuleMenuStore {
     }
 
     async fetchModuleById(id: string) {
-        await axios.get("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + id).then((response) => {
+        await axios.get("http://localhost:8000/maps/" + mapMenuStore.choosedMap?.id + "/modules/" + id).then((response) => {
             this.chooseModule(response.data)
         })
     }
 
     async createModule(title: string) {
-        if (mapMenuStore.choosedMap?.id === undefined) {
+        if (mapMenuStore.choosedMap?.id === undefined || mapMenuStore.availableMaps.length === 0) {
             alert("Выберите уровень для которого будете создавать карту")
             return
         }
@@ -48,7 +48,7 @@ class ModuleMenuStore {
     }
 
     async deleteModule() {
-        await axios.delete("http://localhost:8000/maps/" + mapMenuStore.currentMapId + "/modules/" + this.choosedModule?.id).catch(() => alert("Выберите модуль"))
+        await axios.delete("http://localhost:8000/maps/" + mapMenuStore.choosedMap?.id + "/modules/" + this.choosedModule?.id).catch(() => alert("Выберите модуль"))
     }
 }
 
