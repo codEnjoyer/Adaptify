@@ -8,10 +8,12 @@ import CustomButton from "../../../../UIComponents/customButton/CustomButton.tsx
 import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 
 import MenuItem from "./MenuItem.tsx";
+import TaskOpenQuestionEditor from "./TaskOpenQuestionEditor.tsx";
 
 import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
+
 
 interface IModalLevelProps {
     level: ILevelType
@@ -20,6 +22,7 @@ interface IModalLevelProps {
 const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
     const bodyHeader = renderBodyHeader()
     const [levelIndex, setLevelIndex] = useState(1)
+    const [textOpenQuestion, setTextOpenQuestion] = useState("")
 
     const menuItems: IMenuItemType[] = [
         {
@@ -52,7 +55,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         )
     }
 
-    function renderMenuUnitsBlocks(menuItems: IMenuItemType[]) {
+    const renderMenuUnitsBlocks = (menuItems: IMenuItemType[]) => {
         const taskBlocks: JSX.Element[] = []
         let index = 0
 
@@ -127,6 +130,10 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                                     return (
                                         <div className="question" key={question.id}>
                                             <div className="question-title">{question.question}</div>
+                                            <TaskOpenQuestionEditor
+                                                text={textOpenQuestion}
+                                                setText={setTextOpenQuestion}
+                                            />
                                         </div>
                                     )
                                 }
@@ -144,7 +151,8 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         )
     }
 
-    function renderTasks(menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) {
+
+    const renderTasks = (menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) => {
         if (menuItems && levelIndex <= menuItems[0].length) {
             return renderTheory(theoryUnits ? theoryUnits[levelIndex - menuItems[0].length] : null)
         }
