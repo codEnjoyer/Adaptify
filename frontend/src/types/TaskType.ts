@@ -21,7 +21,6 @@ export interface IAnswerType {
 
 export interface IQuestionType {
     id: string,
-    possibleAnswers: IAnswerType[],
     question: string,
     taskId: string,
     type: string,

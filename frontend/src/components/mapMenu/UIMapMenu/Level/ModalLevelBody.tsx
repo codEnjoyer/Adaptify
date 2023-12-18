@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import "./modalLevelBody.scss"
 
@@ -10,9 +10,13 @@ import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 import MenuItem from "./MenuItem.tsx";
 import TaskOpenQuestionEditor from "./TaskOpenQuestionEditor.tsx";
 
-import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
+import {IAnswerType, ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
+import mapMenuStore from "../../../../store/mapMenuStore.ts";
+import moduleMenuStore from "../../../../store/moduleMenuStore.ts";
+import levelStore from "../../../../store/levelStore.ts";
+import axios from "axios";
 
 
 interface IModalLevelProps {
@@ -96,7 +100,6 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                 <form className="level-body">
                     {unit
                         ? unit.questions.map((question) => {
-                            console.log(question.type)
                             switch (question.type) {
                                 case "singlechoice": {
                                     return (
@@ -148,13 +151,24 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                         : null
                     }
                     <CustomButton
-                        handleOnClick={(e) => e.preventDefault()}
+                        handleOnClick={handleOnClickSendData}
                         text="Отправить ответ"
                     />
                 </form>
             </div>
         )
     }
+
+    const handleOnClickSendData = useCallback((e: Event) => {
+        e.preventDefault();
+        const openQuestionAnswer: IAnswerType = {}
+        axios.post("http://localhost:8000" +
+            " /maps/" + mapMenuStore.choosedMap?.id +
+            "/modules/" + moduleMenuStore.choosedModule?.id +
+            "/levels/" + level.id +
+            "/tasks/" + level.task_units[0].id +
+            "/check/", {}).then(r =>)
+    }, [])
 
 
     const renderTasks = (menuItems?: IMenuItemType[], theoryUnits?: ITheoryUnitType[], taskUnits?: ITaskType[]) => {
