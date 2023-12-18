@@ -38,13 +38,12 @@ async def autocheck_task_unit(map_id: UUID,
                               employee_questions_answers: list[EmployeeTestQuestionPost],
                               answer_option_service: AnswerOptionServiceType,
                               task_unit_service: TaskUnitServiceType,
-                              user: CurrentUser,
                               employee_service: EmployeeServiceType) -> list[EmployeeTestQuestionRead]:
     result, answers_correctness = await get_all_answers(employee_questions_answers, answer_option_service, task_id)
-    if all(answers_correctness):
-
-        reward = (await task_unit_service.get_one(task_id)).score_reward
-        await employee_service.update_one(user.employee.id, EmployeeUpdate(coins=user.employee.coins + reward))
+    # if all(answers_correctness):
+    #
+    #     reward = (await task_unit_service.get_one(task_id)).score_reward
+    #     await employee_service.update_one(user.employee.id, EmployeeUpdate(coins=user.employee.coins + reward))
     return result
 
 
