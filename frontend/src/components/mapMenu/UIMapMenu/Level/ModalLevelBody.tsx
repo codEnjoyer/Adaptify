@@ -10,13 +10,14 @@ import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 import MenuItem from "./MenuItem.tsx";
 import TaskOpenQuestionEditor from "./TaskOpenQuestionEditor.tsx";
 
-import {IAnswerType, ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
+import {ITaskType, ITheoryUnitType} from "../../../../types/TaskType.ts";
 import {IMenuItemType} from "../../../../types/MenuItemType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
 import mapMenuStore from "../../../../store/mapMenuStore.ts";
 import moduleMenuStore from "../../../../store/moduleMenuStore.ts";
-import levelStore from "../../../../store/levelStore.ts";
 import axios from "axios";
+import SingleChoice from "./QuestionTypes/SingleChoice.tsx";
+import {useForm} from "react-hook-form";
 
 
 interface IModalLevelProps {
@@ -27,6 +28,8 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
     const bodyHeader = renderBodyHeader()
     const [levelIndex, setLevelIndex] = useState(1)
     const [textOpenQuestion, setTextOpenQuestion] = useState("")
+    const {register, handleSubmit} = useForm()
+
 
     const menuItems: IMenuItemType[] = [
         {
@@ -97,7 +100,10 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
     const renderTest = (unit: ITaskType | null) => {
         return (
             <div className="task-info">
-                <form className="level-body">
+                <form
+                    className="level-body"
+                    onSubmit={handleSubmit((data) => onHandleSubmit(data))}
+                >
                     {unit
                         ? unit.questions.map((question) => {
                             switch (question.type) {
@@ -107,12 +113,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                                             <div className="question-title">{question.question}</div>
 
                                             {question.answer_options.map((answer) => {
-                                                    return (
-                                                        <div className="question-answer-option" key={answer.id}>
-                                                            <input id={answer.answer} type="radio" value="question"/>
-                                                            <label htmlFor={answer.answer}>{answer.answer}</label>
-                                                        </div>
-                                                    )
+                                                    return <SingleChoice answer={answer} register={register}/>
                                                 }
                                             )}
                                         </div>
@@ -126,7 +127,8 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                                             {question.answer_options.map((answer) => {
                                                     return (
                                                         <div className="question-answer-option" key={answer.id}>
-                                                            <input id={answer.answer} type="radio" value="question"/>
+                                                            <input id={answer.answer} type="checkbox"
+                                                                   value="question" {...register(answer.answer)}/>
                                                             <label htmlFor={answer.answer}>{answer.answer}</label>
                                                         </div>
                                                     )
@@ -151,7 +153,7 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                         : null
                     }
                     <CustomButton
-                        handleOnClick={handleOnClickSendData}
+                        type="submit"
                         text="Отправить ответ"
                     />
                 </form>
@@ -159,15 +161,37 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         )
     }
 
-    const handleOnClickSendData = useCallback((e: Event) => {
-        e.preventDefault();
-        const openQuestionAnswer: IAnswerType = {}
-        axios.post("http://localhost:8000" +
-            " /maps/" + mapMenuStore.choosedMap?.id +
-            "/modules/" + moduleMenuStore.choosedModule?.id +
-            "/levels/" + level.id +
-            "/tasks/" + level.task_units[0].id +
-            "/check/", {}).then(r =>)
+    const onHandleSubmit = useCallback((data: any) => {
+        console.log(data)
+        if (level.task_units) {
+            if (textOpenQuestion !== "") {
+                axios.post("http://localhost:8000" +
+                    " /maps/" + mapMenuStore.choosedMap?.id +
+                    "/modules/" + moduleMenuStore.choosedModule?.id +
+                    "/levels/" + level.id +
+                    "/tasks/" + level.task_units[0].id +
+                    "/check/", {
+                    type: "open",
+                    question: level.task_units[0].questions[0],
+                    id: level.task_units[0].id,
+                    answers: [
+                        {
+                            answer: textOpenQuestion,
+                            id: level.task_units[0].questions[0].answer_options[0].id,
+                        }
+                    ]
+                })
+                    .then(r => console.log(r))
+            } else {
+                axios.post("http://localhost:8000" +
+                    " /maps/" + mapMenuStore.choosedMap?.id +
+                    "/modules/" + moduleMenuStore.choosedModule?.id +
+                    "/levels/" + level.id +
+                    "/tasks/" + level.task_units[0].id +
+                    "/check/", {})
+                    .then(r => console.log(r))
+            }
+        }
     }, [])
 
 

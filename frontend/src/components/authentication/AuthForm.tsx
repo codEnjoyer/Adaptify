@@ -2,6 +2,7 @@ import React, {useCallback, useState} from 'react';
 
 import CustomInput from "../../UIComponents/customInput/CustomInput";
 import CustomCheckbox from "../../UIComponents/customCheckbox/CustomCheckbox";
+import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 
 import {useNavigate} from "react-router-dom"
 import {useForm} from "react-hook-form";
@@ -10,8 +11,8 @@ import {observer} from "mobx-react-lite";
 
 import authStore from "../../store/authStore";
 import auth from "../../utils/auth";
+
 import Starfield from "react-starfield";
-import CustomButton from "../../UIComponents/customButton/CustomButton.tsx";
 
 export type FormValues = {
     login: string,
