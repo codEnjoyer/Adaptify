@@ -62,9 +62,15 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         for (let i = 0; i < menuItems.length; i++) {
             for (let j = 0; j < menuItems[i].length; j++) {
                 index++
-                taskBlocks.push(<MenuItem indexType={i} index={index} key={index} indexSelectedItem={levelIndex}
-                                          setLevelIndex={setLevelIndex}/>)
-
+                taskBlocks.push(
+                    <MenuItem
+                        indexType={i}
+                        index={index}
+                        key={index}
+                        indexSelectedItem={levelIndex}
+                        setLevelIndex={setLevelIndex}
+                    />
+                )
             }
         }
         return taskBlocks
@@ -131,7 +137,6 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                                         <div className="question" key={question.id}>
                                             <div className="question-title">{question.question}</div>
                                             <TaskOpenQuestionEditor
-                                                text={textOpenQuestion}
                                                 setText={setTextOpenQuestion}
                                             />
                                         </div>
