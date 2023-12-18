@@ -26,14 +26,25 @@ const Level: React.FC<IModuleProps> = ({id, level}) => {
         setOpenModalWindow(!isOpenModalWindow)
     }, [isOpenModalWindow])
 
+    const renderModal = () => {
+        if (level.task_units && level.theory_units)
+            return (
+                level.task_units.length + level.theory_units.length !== 0
+                    ? <ModalWindow
+                        onClose={onHandleCloseModalWindow}
+                        body={<ModalLevelBody level={level}/>}
+                    />
+                    : <ModalWindow
+                        onClose={onHandleCloseModalWindow}
+                        body={<div className="error-nolvl-modal-window">Нет доступных заданий для этого уровня</div>}/>
+            )
+    }
+
     return (
         <div onClick={onHandleOpenModalWindow} className={classNameGeolocation}>
 
             {isOpenModalWindow
-                ? <ModalWindow
-                    onClose={onHandleCloseModalWindow}
-                    body={<ModalLevelBody level={level}/>}
-                />
+                ? renderModal()
                 : null}
 
             <div>

@@ -189,3 +189,12 @@
   border: 1px solid #F1F1F1;
   letter-spacing: 0;
 }
+
+.error-nolvl-modal-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  letter-spacing: 1px;
+}
