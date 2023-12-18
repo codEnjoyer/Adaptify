@@ -59,7 +59,8 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
         for (let i = 0; i < menuItems.length; i++) {
             for (let j = 0; j < menuItems[i].length; j++) {
                 index++
-                taskBlocks.push(<MenuItem indexType={i} index={index} key={index} indexSelectedItem={levelIndex} setLevelIndex={setLevelIndex}/>)
+                taskBlocks.push(<MenuItem indexType={i} index={index} key={index} indexSelectedItem={levelIndex}
+                                          setLevelIndex={setLevelIndex}/>)
 
             }
         }
@@ -86,21 +87,51 @@ const ModalLevelBody: React.FC<IModalLevelProps> = ({level}) => {
                 <form className="level-body">
                     {unit
                         ? unit.questions.map((question) => {
-                            return (
-                                <div className="question" key={question.id}>
-                                    <div className="question-title">{question.question}</div>
+                            console.log(question.type)
+                            switch (question.type) {
+                                case "singlechoice": {
+                                    return (
+                                        <div className="question" key={question.id}>
+                                            <div className="question-title">{question.question}</div>
 
-                                    {question.answer_options.map((answer) => {
-                                            return (
-                                                <div className="question-answer-option" key={answer.id}>
-                                                    <input id={answer.answer} type="radio" value="question"/>
-                                                    <label htmlFor={answer.answer}>{answer.answer}</label>
-                                                </div>
-                                            )
-                                        }
-                                    )}
-                                </div>
-                            )
+                                            {question.answer_options.map((answer) => {
+                                                    return (
+                                                        <div className="question-answer-option" key={answer.id}>
+                                                            <input id={answer.answer} type="radio" value="question"/>
+                                                            <label htmlFor={answer.answer}>{answer.answer}</label>
+                                                        </div>
+                                                    )
+                                                }
+                                            )}
+                                        </div>
+                                    )
+                                }
+                                case "multiplechoice": {
+                                    return (
+                                        <div className="question" key={question.id}>
+                                            <div className="question-title">{question.question}</div>
+
+                                            {question.answer_options.map((answer) => {
+                                                    return (
+                                                        <div className="question-answer-option" key={answer.id}>
+                                                            <input id={answer.answer} type="radio" value="question"/>
+                                                            <label htmlFor={answer.answer}>{answer.answer}</label>
+                                                        </div>
+                                                    )
+                                                }
+                                            )}
+                                        </div>
+                                    )
+                                }
+                                case "open": {
+                                    return (
+                                        <div className="question" key={question.id}>
+                                            <div className="question-title">{question.question}</div>
+                                        </div>
+                                    )
+                                }
+                            }
+
                         })
                         : null
                     }
