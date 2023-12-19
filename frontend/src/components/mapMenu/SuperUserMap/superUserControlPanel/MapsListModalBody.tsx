@@ -8,6 +8,7 @@ import {ILevelType} from "../../../../types/LevelType.ts";
 import CustomAddButton from "../../../../UIComponents/customAddButton/CustomAddButton.tsx";
 import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
 import ModulesListModalBody from "./ModulesListModalBody.tsx";
+import CreateMapModalBody from "./CreateMapModalBody.tsx";
 
 interface IMapsList {
     maps: IMapType[],
@@ -20,7 +21,8 @@ interface IMapsList {
 
 const MapsListModalBody: React.FC<IMapsList> = ({maps, chooseMap, modules, chooseModule, levels, chooseLevel}) => {
     const [isUsersMapsModalOpen, setIsUsersMapsModalOpen] = useState<boolean>(false)
-    console.log(levels)
+    const [isMapNameEditing, setIsMapNameEditing] = useState<boolean>(false)
+
 
     const handleOnClickModuleCard = (map: IMapType) => {
         setIsUsersMapsModalOpen(true)
@@ -30,6 +32,11 @@ const MapsListModalBody: React.FC<IMapsList> = ({maps, chooseMap, modules, choos
     const handleOnCloseModuleCard = useCallback(() => {
         setIsUsersMapsModalOpen(false)
     }, [])
+
+    const handleOnClickCreateMap = useCallback(() => {
+        setIsMapNameEditing(!isMapNameEditing)
+    }, [isMapNameEditing])
+
 
     return (
         <div>
@@ -49,25 +56,29 @@ const MapsListModalBody: React.FC<IMapsList> = ({maps, chooseMap, modules, choos
                         chooseLevel={chooseLevel}
                     />}
                 />)
-                : (
-                    <div className="users-list">
-                        {maps.map((map) => (
-                            (
-                                <div key={map.id} className="users-list-user"
-                                     onClick={() => handleOnClickModuleCard(map)}>
-                                    <div className="map-info">
-                                        {map.title.toUpperCase()}
+                : !isMapNameEditing ? (
+                        <div className="users-list">
+                            {maps.map((map) => (
+                                (
+                                    <div key={map.id} className="users-list-user"
+                                         onClick={() => handleOnClickModuleCard(map)}>
+                                        <div className="map-info">
+                                            {map.title.toUpperCase()}
+                                        </div>
                                     </div>
+                                )
+                            ))}
+                            <div className="users-list-user">
+                                <div className="map-info">
+                                    <CustomAddButton handleOnClick={handleOnClickCreateMap}/>
                                 </div>
-                            )
-                        ))}
-                        <div className="users-list-user">
-                            <div className="map-info">
-                                <CustomAddButton handleOnClick={() => console.log(1)}/> {/*openModalCreateMap}*/}
                             </div>
                         </div>
-                    </div>
-                )}
+                    ) :
+                    <ModalWindow
+                        onClose={handleOnClickCreateMap}
+                        body={<CreateMapModalBody/>}
+                    />}
         </div>
     );
 };

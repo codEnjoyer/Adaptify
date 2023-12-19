@@ -25,7 +25,11 @@ const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
     useEffect(() => {
         mapMenuStore.fetchAvailableMaps()
             .then(() => mapMenuStore.fetchMapById(mapMenuStore.availableMaps[mapMenuStore.currentMapIndex].id)
-                .then(() => moduleMenuStore.fetchModules().then(() => levelStore.fetchLevels())))
+                .then(() => moduleMenuStore.fetchModules()
+                    .then(() => moduleMenuStore.fetchModuleById(moduleMenuStore.availableModules[0].id)).then(() => levelStore.fetchLevels()
+                    )
+                )
+            )
     }, []);
 
     // Загрузка списка сотрудников
