@@ -15,7 +15,7 @@ class ModuleMenuStore {
         this.availableModules = modules
     }
 
-    async chooseModule(newModule: IModuleType) {
+    chooseModule = (newModule: IModuleType) => {
         this.choosedModule = newModule
     }
 

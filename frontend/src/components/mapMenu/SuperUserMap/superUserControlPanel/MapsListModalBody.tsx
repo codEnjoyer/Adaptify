@@ -1,4 +1,4 @@
-import React, {ReactNode, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
 
@@ -20,6 +20,7 @@ interface IMapsList {
 
 const MapsListModalBody: React.FC<IMapsList> = ({maps, chooseMap, modules, chooseModule, levels, chooseLevel}) => {
     const [isUsersMapsModalOpen, setIsUsersMapsModalOpen] = useState<boolean>(false)
+    console.log(levels)
 
     const handleOnClickModuleCard = (map: IMapType) => {
         setIsUsersMapsModalOpen(true)

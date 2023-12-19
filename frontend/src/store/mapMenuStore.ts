@@ -25,7 +25,7 @@ class MapMenuStore {
         this.availableMaps = maps
     }
 
-    async chooseMap(map: IMapType) {
+    chooseMap = (map: IMapType) => {
         this.choosedMap = map
     }
 

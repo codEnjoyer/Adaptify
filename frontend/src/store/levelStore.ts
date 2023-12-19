@@ -24,7 +24,7 @@ class levelStore {
         this.chosenTaskIndex = 1
     }
 
-    async chooseLevel(level: ILevelType) {
+    chooseLevel = (level: ILevelType) => {
         this.choosedLevel = level
     }
 

@@ -1,12 +1,11 @@
-import React, {ReactNode, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import ModalWindow from "../../../../UIComponents/modalWindow/ModalWindow.tsx";
-
-import {IMapType} from "../../../../types/MapType.ts";
 import {IModuleType} from "../../../../types/ModuleType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
 import CustomAddButton from "../../../../UIComponents/customAddButton/CustomAddButton.tsx";
 import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
+import LevelListModalBody from "./LevelListModalBody.tsx";
 
 interface IModulesList {
     modules: IModuleType[],
@@ -34,7 +33,13 @@ const MapsListModalBody: React.FC<IModulesList> = ({modules, chooseModule, level
             </div>}/>
 
             {isUsersMapsModalOpen
-                ? null
+                ? (<ModalWindow
+                    onClose={handleOnCloseModuleCard}
+                    body={<LevelListModalBody
+                        levels={levels}
+                        chooseLevel={chooseLevel}
+                    />}
+                />)
                 : (
                     <div className="users-list">
                         {modules.map((module) => (
