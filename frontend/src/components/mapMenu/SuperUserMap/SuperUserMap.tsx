@@ -25,8 +25,6 @@ const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
 
     const [isUsersMapsModalOpen, setIsUsersMapsModalOpen] = useState<boolean>(false)
-    const [isUsersModulesModalOpen, setIsUsersModulesModalOpen] = useState<boolean>(false)
-    const [isUsersLevelsModalOpen, setIsUsersLevelsModalOpen] = useState<boolean>(false)
 
     const [mapName, setMapName] = useState<string>("")
     const [moduleName, setModuleName] = useState<string>("")
@@ -144,7 +142,14 @@ const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
             {isUsersMapsModalOpen
                 ? <ModalWindow
                     onClose={handleOnClickChangeIsModalMapsOpen}
-                    body={<MapsListModalBody maps={mapMenuStore.availableMaps} chooseMap={mapMenuStore.chooseMap}/>}
+                    body={<MapsListModalBody
+                        maps={mapMenuStore.availableMaps}
+                        chooseMap={mapMenuStore.chooseMap}
+                        modules={moduleMenuStore.availableModules}
+                        chooseModule={moduleMenuStore.chooseModule}
+                        levels={levelStore.availableLevels}
+                        chooseLevel={levelStore.chooseLevel}
+                    />}
                 />
                 : null
             }

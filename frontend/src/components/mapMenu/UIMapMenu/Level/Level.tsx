@@ -36,7 +36,9 @@ const Level: React.FC<IModuleProps> = ({id, level}) => {
                     />
                     : <ModalWindow
                         onClose={onHandleCloseModalWindow}
-                        body={<div className="error-nolvl-modal-window">Нет доступных заданий для этого уровня</div>}/>
+                        body={<div className="error-nolvl-modal-window">
+                            Нет доступных заданий для этого уровня</div>
+                        }/>
             )
     }
 

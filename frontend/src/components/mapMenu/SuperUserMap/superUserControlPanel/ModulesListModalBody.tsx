@@ -7,23 +7,20 @@ import {IModuleType} from "../../../../types/ModuleType.ts";
 import {ILevelType} from "../../../../types/LevelType.ts";
 import CustomAddButton from "../../../../UIComponents/customAddButton/CustomAddButton.tsx";
 import HeaderModal from "../../../../UIComponents/modalWindow/HeaderModal.tsx";
-import ModulesListModalBody from "./ModulesListModalBody.tsx";
 
-interface IMapsList {
-    maps: IMapType[],
-    chooseMap: (map: IMapType) => void,
+interface IModulesList {
     modules: IModuleType[],
     chooseModule: (module: IModuleType) => void,
     levels: ILevelType[],
     chooseLevel: (level: ILevelType) => void
 }
 
-const MapsListModalBody: React.FC<IMapsList> = ({maps, chooseMap, modules, chooseModule, levels, chooseLevel}) => {
+const MapsListModalBody: React.FC<IModulesList> = ({modules, chooseModule, levels, chooseLevel}) => {
     const [isUsersMapsModalOpen, setIsUsersMapsModalOpen] = useState<boolean>(false)
 
-    const handleOnClickModuleCard = (map: IMapType) => {
+    const handleOnClickModuleCard = (module: IModuleType) => {
         setIsUsersMapsModalOpen(true)
-        chooseMap(map)
+        chooseModule(module)
     }
 
     const handleOnCloseModuleCard = useCallback(() => {
@@ -32,30 +29,20 @@ const MapsListModalBody: React.FC<IMapsList> = ({maps, chooseMap, modules, choos
 
     return (
         <div>
-            <HeaderModal
-                body={<div className="level-name">
-                    Карты
-                </div>}
-            />
+            <HeaderModal body={<div className="level-name">
+                Модули
+            </div>}/>
 
             {isUsersMapsModalOpen
-                ? (<ModalWindow
-                    onClose={handleOnCloseModuleCard}
-                    body={<ModulesListModalBody
-                        modules={modules}
-                        chooseModule={chooseModule}
-                        levels={levels}
-                        chooseLevel={chooseLevel}
-                    />}
-                />)
+                ? null
                 : (
                     <div className="users-list">
-                        {maps.map((map) => (
+                        {modules.map((module) => (
                             (
-                                <div key={map.id} className="users-list-user"
-                                     onClick={() => handleOnClickModuleCard(map)}>
+                                <div key={module.id} className="users-list-user"
+                                     onClick={() => handleOnClickModuleCard(module)}>
                                     <div className="map-info">
-                                        {map.title.toUpperCase()}
+                                        {module.title.toUpperCase()}
                                     </div>
                                 </div>
                             )
