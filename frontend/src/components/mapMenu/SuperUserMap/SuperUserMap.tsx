@@ -15,6 +15,7 @@ import {IMapType} from "../../../types/MapType.ts";
 import {IModuleType} from "../../../types/ModuleType.ts";
 import {ILevelType} from "../../../types/LevelType.ts";
 import axios from "axios";
+import MapsListModalBody from "./superUserControlPanel/MapsListModalBody.tsx";
 
 interface ISuperUserMapProps {
     logOut: () => void
@@ -22,6 +23,10 @@ interface ISuperUserMapProps {
 
 const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
     const [isUsersListModalOpen, setIsUserListModalOpen] = useState<boolean>(false)
+
+    const [isUsersMapsModalOpen, setIsUsersMapsModalOpen] = useState<boolean>(false)
+    const [isUsersModulesModalOpen, setIsUsersModulesModalOpen] = useState<boolean>(false)
+    const [isUsersLevelsModalOpen, setIsUsersLevelsModalOpen] = useState<boolean>(false)
 
     const [mapName, setMapName] = useState<string>("")
     const [moduleName, setModuleName] = useState<string>("")
@@ -41,9 +46,13 @@ const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
         })
     }, []);
 
-    const handleOnClickChangeIsModalOpen = useCallback(() => {
+    const handleOnClickChangeIsModalEmployeesOpen = useCallback(() => {
         setIsUserListModalOpen(!isUsersListModalOpen)
     }, [isUsersListModalOpen])
+
+    const handleOnClickChangeIsModalMapsOpen = useCallback(() => {
+        setIsUsersMapsModalOpen(!isUsersMapsModalOpen)
+    }, [isUsersMapsModalOpen])
 
     const handleOnChangeMapName = useCallback((e: React.FormEvent<HTMLInputElement>) => {
         setMapName(e.currentTarget.value)
@@ -126,20 +135,30 @@ const SuperUserMap: React.FC<ISuperUserMapProps> = observer(({logOut}) => {
             {
                 isUsersListModalOpen
                     ? <ModalWindow
-                        onClose={handleOnClickChangeIsModalOpen}
+                        onClose={handleOnClickChangeIsModalEmployeesOpen}
                         body={<UsersListModalBody employees={superUserStore.allEmployees}/>}
-                        windowContentStyles=""
                     />
                     : null
             }
 
+            {isUsersMapsModalOpen
+                ? <ModalWindow
+                    onClose={handleOnClickChangeIsModalMapsOpen}
+                    body={<MapsListModalBody maps={mapMenuStore.availableMaps} chooseMap={mapMenuStore.chooseMap}/>}
+                />
+                : null
+            }
+
+            <CustomButton text="Открыть список карт" handleOnClick={handleOnClickChangeIsModalMapsOpen}/>
+
             <CustomButton
                 className="users-list__btn"
-                handleOnClick={handleOnClickChangeIsModalOpen}
+                handleOnClick={handleOnClickChangeIsModalEmployeesOpen}
                 text="Открыть список сотрудников"
             />
 
             <br/>
+
 
             <CreateUnit
                 classNameSelect="available-maps"

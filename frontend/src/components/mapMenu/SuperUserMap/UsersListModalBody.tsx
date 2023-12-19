@@ -26,30 +26,28 @@ const UsersListModalBody: React.FC<IUsersListModalBody> = ({employees}) => {
     }, [])
 
     return (
-        <div>
-            <div className="users-list">
-                {employees.map((employee) => (
-                    isUsersCardModalOpen
-                        ? <ModalWindow
-                            body={userProfileModalBody}
-                            onClose={handleOnCloseUserCard}
-                            key={employee.id}
-                        />
-                        : (
-                            <div key={employee.name} className="users-list-user"
-                                 onClick={() => handleOnClickUserCard(employee)}>
-                                <div className="users-list-user-info">
-                                    <div className="users-list-user-lastname">{employee.last_name}</div>
-                                    <div className="users-list-user-name">{employee.name}</div>
-                                    <div className="users-list-user-patronymic">{employee.patronymic}</div>
-                                </div>
-                                <img src="https://clck.ru/37AFXb" alt="Employee Photo"
-                                     className="user-photo"
-                                />
+        <div className="users-list">
+            {employees.map((employee) => (
+                isUsersCardModalOpen
+                    ? <ModalWindow
+                        body={userProfileModalBody}
+                        onClose={handleOnCloseUserCard}
+                        key={employee.id}
+                    />
+                    : (
+                        <div key={employee.name} className="users-list-user"
+                             onClick={() => handleOnClickUserCard(employee)}>
+                            <div className="users-list-user-info">
+                                <div className="users-list-user-lastname">{employee.last_name}</div>
+                                <div className="users-list-user-name">{employee.name}</div>
+                                <div className="users-list-user-patronymic">{employee.patronymic}</div>
                             </div>
-                        )
-                ))}
-            </div>
+                            <img src="https://clck.ru/37AFXb" alt="Employee Photo"
+                                 className="user-photo"
+                            />
+                        </div>
+                    )
+            ))}
         </div>
     );
 };
