@@ -19,6 +19,7 @@ class Tutor(BaseModel):
     user_id: Mapped[uuid.UUID] = mapped_column(UUID, ForeignKey('users.id'), nullable=False)
     name: Mapped[str] = mapped_column(String(length=255), nullable=False)
     last_name: Mapped[str] = mapped_column(String(length=255), nullable=False)
+    patronymic: Mapped[str] = mapped_column(String(length=255))
 
     user: Mapped["User"] = relationship(back_populates='tutor', lazy='selectin')
     employees: Mapped[list["Employee"]] = relationship(back_populates='tutor', lazy='selectin')
@@ -26,5 +27,6 @@ class Tutor(BaseModel):
     def to_read_schema(self) -> TutorRead:
         return TutorRead(id=self.id,
                          name=self.name,
-                         user=self.user,
-                         last_name=self.last_name)
+                         last_name=self.last_name,
+                         patronymic=self.patronymic,
+                         user=self.user)
